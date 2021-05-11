@@ -1,0 +1,29 @@
+{
+  "accounts": [
+    {
+      "id": 1,
+      "email": "aze@gmailcom",
+      "password": "typicode"
+    },
+    {
+      "id": 2,
+      "email": "lorem@gmail.com",
+      "password": "bioup"
+    },
+    {
+      "email": "aze",
+      "password": "aze",
+      "id": 3
+    },
+    {
+      "email": "doudou",
+      "password": "dou",
+      "id": 4
+    },
+    {
+      "email": "top@top.com",
+      "password": "f",
+      "id": 5
+    }
+  ]
+}
