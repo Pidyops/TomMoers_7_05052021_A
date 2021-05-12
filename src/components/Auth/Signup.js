@@ -1,6 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
+import Button from './Button';
+
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -28,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleModal(actionAuth) {
-// export default function SimpleModal(actionAuth, authValues, handleAuthChange, authValues, handleAuthChange, Button, bioup) {
+export default function SimpleModal({authValues, handleAuthChange, setAuthValues}) {
+
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
@@ -43,15 +45,75 @@ export default function SimpleModal(actionAuth) {
     setOpen(false);
   };
 
+
+  console.log(authValues)
+
+  const actionSignUp = e => {
+    e.preventDefault();
+
+    console.log(authValues)
+
+
+    fetch('http://localhost:5000/accounts', {
+      method: 'POST',
+      headers: {
+      'Content-type': 'application/json'
+      },
+      body: JSON.stringify(authValues)
+
+    }).then(() => {
+      setAuthValues({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        password2: ''
+      });
+    })
+  }
+
+  
+
+
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <h2 id="simple-modal-title">Sign Up</h2>
-      <p id="simple-modal-description">
+      {/* <p id="simple-modal-description">
         Join the community
-      </p>
+      </p> */}
       <div className="auth__container-right">
-            <form action="" className="auth__form" onSubmit={actionAuth} >
-                {/* <div className="auth__inputs">
+            <form action="" className="auth__form">
+                <div className="auth__inputs">
+                    <label htmlFor="first-name" className="auth__inputs--label">
+                        First Name
+                    </label>
+                    <input 
+                        id='first-name' 
+                        type="text" 
+                        name="firstName" 
+                        className="form__inputs--input" 
+                        placeholder="Enter your first name"
+                        value= {authValues.firstName}
+                        onChange={handleAuthChange}
+                    />
+                    
+                </div>
+                <div className="auth__inputs">
+                    <label htmlFor="last-name" className="auth__inputs--label">
+                        First Name
+                    </label>
+                    <input 
+                        id='last-name' 
+                        type="text" 
+                        name="lastName" 
+                        className="form__inputs--input" 
+                        placeholder="Enter your last name"
+                        value= {authValues.lastName}
+                        onChange={handleAuthChange}
+                    />
+                    
+                </div>
+                <div className="auth__inputs">
                     <label htmlFor="email" className="auth__inputs--label">
                         Email
                     </label>
@@ -80,30 +142,41 @@ export default function SimpleModal(actionAuth) {
                         onChange={handleAuthChange}
                     />
                 </div>
-
+                <div className="auth__inputs">
+                    <label htmlFor="password2" className="auth__inputs--label">
+                        Password
+                    </label>
+                    <input 
+                        id='password2'  
+                        type="password2" 
+                        name="password2" 
+                        className="auth__inputs--input" 
+                        placeholder="Confirm your password"
+                        value= {authValues.password2}
+                        onChange={handleAuthChange}
+                    />
+                </div>
                 
-
-
-                <Button className="auth__signup-btn" color='blue' text='Create New Account' onClick={bioup} />
-                 */}
+                <Button className="auth__signup-btn" color='blue' text='Sign Up' onClick={actionSignUp}/>
+                
             </form>
             
             
         </div>
-      <SimpleModal />
+
     </div>
   );
 
   return (
     <div>
       <button type="button" onClick={handleOpen}>
-        Create New Account
+        Sign Up
       </button>
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
+        // aria-describedby="simple-modal-description"
       >
         {body}
       </Modal>

@@ -2,30 +2,26 @@ import React from 'react'
 import { useState } from 'react'
 import Button from './Button';
 import Signup from './Signup';
+import Toforum from './Toforum';
 
-
-// ??? Why can"t I console.log(e) in the return()?
-// ??? Sometimes, I can't type text in my input (in the client) (problem solved, but don't know why)
-// ??? When using my Component react developper tool, I see that my setAuthValues is not updating my AuthValues
 
 const Signin = () => {
-    const clikou = () => {
-        console.log('Clickou')
-        console.log()
-    }
-    const bioup = () => {
-        console.log('Bioup')
-        console.log()
-    }
+    // const clikou = () => {
+    //     console.log('Clickou')
+    //     console.log()
+    // }
 
     const[authValues, setAuthValues] = useState({
+        firstName: '',
+        lastName: '',
         email: '',
-        password: ''
+        password: '',
+        password2: ''
     });
 
     const handleAuthChange = e => {
         const { name, value } = e.target;
-        console.log(e)
+        console.log(e.target)
 
         setAuthValues({
             ...authValues,
@@ -34,11 +30,7 @@ const Signin = () => {
         });
     };
 
-    // ??? When I was using this mehod, they where overwritting each other (don't undestand why)
-    // const[email, setEmail] = useState('')
-    // const[password, setPassword] = useState('')
-
-    const actionAuth = e => {
+    const actionSignIn = e => {
         e.preventDefault();
 
         if(!authValues.email) {
@@ -51,7 +43,6 @@ const Signin = () => {
             return
         }
 
-        console.log(authValues)
 
         fetch('http://localhost:5000/accounts', {
             method: 'POST',
@@ -60,13 +51,12 @@ const Signin = () => {
             },
             body: JSON.stringify(authValues)
 
-            // ????? Why isn't it working?
-            // setAuthValues.email('')
-            // setAuthValues.password('')
-
-        })
-    
-
+        }).then(() => {
+            setAuthValues({
+              email: '',
+              password: ''
+            });
+          })
         
         // ????? What are the advantage and how could I use const x = async ...
         // const postLogger = async (authValues) => {
@@ -83,13 +73,12 @@ const Signin = () => {
         //     // setTasks([...tasks, data])
         // }
     
-        
-
     }
 
     return (
         <div className="auth__container-right">
-            <form action="" className="auth__form" onSubmit={actionAuth} >
+            <form action="" className="auth__form">
+            {/* <form action="" className="auth__form" onSubmit={actionAuth} > */}
                 <div className="auth__inputs">
                     <label htmlFor="email" className="auth__inputs--label">
                         Email
@@ -101,7 +90,6 @@ const Signin = () => {
                         className="form__inputs--input" 
                         placeholder="Enter your email"
                         value= {authValues.email}
-                        // ????? What do you think of it?
                         // onChange={(e) => setAuthValues(e.target.value)}
                         onChange={handleAuthChange}
                     />
@@ -126,16 +114,12 @@ const Signin = () => {
 
                 
 
-                <Button className="auth__login-btn" color='green' text='Log In' onClick={clikou} />
-                <a className="auth__forgotten" href='top'>Forgotten password?</a>
-                <Button className="auth__signup-btn" color='blue' text='Create New Account' onClick={bioup} />
-                <input className='btn btn-block' type='submit' value='Save Task' />
-            
-                <Button variant="contained" color="primary" disableElevation>
-                Disable elevation
-                </Button>
+                <Button className="auth__login-btn" color='green' text='Log In' onClick={actionSignIn} />
 
-                {/* <Signup /> */}
+                <Toforum />
+                <a className="auth__forgotten" href='top'>Forgotten password?</a>
+
+                <Signup className="auth__signup-btn" authValues={authValues} handleAuthChange={handleAuthChange} setAuthValues={setAuthValues} />
                 
             </form>
             

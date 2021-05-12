@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  height: 100px;
+  border: solid teal 1px;
+  align-items: center;
+  position: relative;
+
+  &__left {
+  }
+  &__middle {
+    display: flex;
+    align-items: center;
+    border: 1px solid teal;
+  }
+  &__right {
+    border: dashed teal 1px;
+    display: flex;
+    align-items: center;
+
+    right: 0;
+  }
+}
+
+.auth-btn {
+  margin-right: 20px;
+}
+
+.header-logo {
+  height: 70px;
+}
