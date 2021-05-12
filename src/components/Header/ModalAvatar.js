@@ -50,8 +50,92 @@ export default function TransitionsAvatarModal() {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <h2 id="transition-modal-title">Yo</h2>
-            <p id="transition-modal-description">react-transition-group animates me.</p>
+          <h2 id="simple-modal-title">My Account</h2>
+      {/* <p id="simple-modal-description">
+        Join the community
+      </p> */}
+      <div className="auth__container-right">
+            <form action="" className="auth__form">
+                <div className="auth__inputs">
+                    <label htmlFor="first-name" className="auth__inputs--label">
+                        First Name
+                    </label>
+                    <input 
+                        id='first-name' 
+                        type="text" 
+                        name="firstName" 
+                        className="form__inputs--input" 
+                        placeholder="Enter your first name"
+                        // value= {authValues.firstName}
+                        // onChange={handleAuthChange}
+                    />
+                    
+                </div>
+                <div className="auth__inputs">
+                    <label htmlFor="last-name" className="auth__inputs--label">
+                        First Name
+                    </label>
+                    <input 
+                        id='last-name' 
+                        type="text" 
+                        name="lastName" 
+                        className="form__inputs--input" 
+                        placeholder="Enter your last name"
+                        // value= {authValues.lastName}
+                        // onChange={handleAuthChange}
+                    />
+                    
+                </div>
+                <div className="auth__inputs">
+                    <label htmlFor="email" className="auth__inputs--label">
+                        Email
+                    </label>
+                    <input 
+                        id='email' 
+                        type="text" 
+                        name="email" 
+                        className="form__inputs--input" 
+                        placeholder="Enter your email"
+                        // value= {authValues.email}
+                        // onChange={handleAuthChange}
+                    />
+                    
+                </div>
+                <div className="auth__inputs">
+                    <label htmlFor="password" className="auth__inputs--label">
+                        Password
+                    </label>
+                    <input 
+                        id='password'  
+                        type="password" 
+                        name="password" 
+                        className="auth__inputs--input" 
+                        placeholder="Enter your password"
+                        // value= {authValues.password}
+                        // onChange={handleAuthChange}
+                    />
+                </div>
+                <div className="auth__inputs">
+                    <label htmlFor="password2" className="auth__inputs--label">
+                        Password
+                    </label>
+                    <input 
+                        id='password2'  
+                        type="password2" 
+                        name="password2" 
+                        className="auth__inputs--input" 
+                        placeholder="Confirm your password"
+                        // value= {authValues.password2}
+                        // onChange={handleAuthChange}
+                    />
+                </div>
+                
+                {/* <Button className="auth__signup-btn" color='blue' text='Sign Up' onClick={actionSignUp}/> */}
+                
+            </form>
+            
+            
+        </div>
           </div>
         </Fade>
       </Modal>
