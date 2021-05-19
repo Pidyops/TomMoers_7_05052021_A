@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ButtonSizes({variant, color, text}) {
   const classes = useStyles();
 
-  console.log(text)
+  // console.log(text)
 
   return (
     <div>

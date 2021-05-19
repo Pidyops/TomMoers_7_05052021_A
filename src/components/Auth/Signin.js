@@ -1,23 +1,25 @@
 import React from 'react'
-import { useState } from 'react'
+
+import { useHistory } from 'react-router-dom';
 import Button from './Button';
 import Signup from './Signup';
-import Toforum from './Toforum';
+// import ModalAvatar from '../Header/ModalAvatar'
 
 
-const Signin = () => {
+const Signin = ({ authValues, setAuthValues}) => {
+    const history = useHistory()
     // const clikou = () => {
     //     console.log('Clickou')
     //     console.log()
     // }
 
-    const[authValues, setAuthValues] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        password2: ''
-    });
+    // const[authValues, setAuthValues] = useState({
+    //     firstName: '',
+    //     lastName: '',
+    //     email: '',
+    //     password: '',
+    //     password2: ''
+    // });
 
     const handleAuthChange = e => {
         const { name, value } = e.target;
@@ -32,6 +34,7 @@ const Signin = () => {
 
     const actionSignIn = e => {
         e.preventDefault();
+        
 
         if(!authValues.email) {
             alert('Please add email')
@@ -51,12 +54,12 @@ const Signin = () => {
             },
             body: JSON.stringify(authValues)
 
-        }).then(() => {
-            setAuthValues({
-              email: '',
-              password: ''
-            });
-          })
+            }).then(() => {
+                setAuthValues({
+                email: '',
+                password: ''
+                });
+            }).then(() => history.push('/Forum'))
         
         // ????? What are the advantage and how could I use const x = async ...
         // const postLogger = async (authValues) => {
@@ -116,7 +119,7 @@ const Signin = () => {
 
                 <Button className="auth__login-btn" color='green' text='Log In' onClick={actionSignIn} />
 
-                <Toforum />
+ 
                 <a className="auth__forgotten" href='top'>Forgotten password?</a>
 
                 <Signup className="auth__signup-btn" authValues={authValues} handleAuthChange={handleAuthChange} setAuthValues={setAuthValues} />

@@ -4,6 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import ImageAvatars from './Avatar';
+// import Signin from '../Auth/Signin'
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TransitionsAvatarModal() {
+export default function TransitionsAvatarModal({ authValues, setAuthValues }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -30,6 +31,9 @@ export default function TransitionsAvatarModal() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  console.log(authValues)
+
 
   return (
     <div>
