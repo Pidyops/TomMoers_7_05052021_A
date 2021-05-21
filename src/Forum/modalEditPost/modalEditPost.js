@@ -8,7 +8,10 @@ import Button from '@material-ui/core/Button';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import { EditOutlined } from '@material-ui/icons';
 // import { useHistory } from 'react-router-dom';
+import './modalEditPost.scss'
+import UploadImage from '../../components/utils/UploadImage/UpladImage';
 
 
 
@@ -37,11 +40,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function TransitionsCreatePostModal({
+export default function ModalEditPost({
   onPostCreated, post, setPost, title, setTitle, 
   description, setDescription, image, setImage,
-  date, setDate, userId, like, comment
+  date, setDate, userId, like, comment,
+  
 }) {
+  // console.log(image)
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -79,6 +84,7 @@ export default function TransitionsCreatePostModal({
   // console.log(post.description)
 
 
+  console.log(post)
 
   const handleSubmitPost = (e) => {
     e.preventDefault();
@@ -92,18 +98,18 @@ export default function TransitionsCreatePostModal({
     //   setDetailsError(true)
     // }
     // if (title && details)
-    fetch('http://localhost:5000/posts', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ title, description, image, date, userId, like, comment })
-    })
-      .then(() => {
-        onPostCreated();
-        handleClose();
-      }) 
+    // fetch('http://localhost:5000/posts', {
+    //   method: 'POST',
+    //   headers: { 'content-type': 'application/json' },
+    //   body: JSON.stringify({ title, description, image, date, userId, like, comment })
+    // })
+    //   .then(() => {
+    //     onPostCreated();
+    //     handleClose();
+    //   }) 
 
-    console.log(date)
-    console.log(title)
+    // console.log(date)
+    // console.log(title)
 
 
 
@@ -121,7 +127,7 @@ export default function TransitionsCreatePostModal({
   return (
     <div>
       <button type="button" onClick={handleOpen}>
-        Create A Post
+        <EditOutlined />
       </button>
       <Modal
         aria-labelledby="transition-modal-title"
@@ -140,26 +146,18 @@ export default function TransitionsCreatePostModal({
           <div className={classes.paper}>
             <form noValidate autoComplete="off" onSubmit={handleSubmitPost}>
               <h2 id="transition-modal-title">Post your comment</h2>
-              <TextField
-                // className={classes.field}
-                label='Title'
-                variant='outlined'
-                color='secondary'
-                fullWidth
-                required // Add *
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              // error={titleError}
-              />
+
               <TextareaAutosize
                 className={classes.textArea}
                 aria-label="empty textarea to write your post"
                 rowsMin={4}
                 placeholder="Write you post"
-                value={description}
+                value={post.description}
                 onChange={(e) => setDescription(e.target.value)}
               />
-              <div>
+              <UploadImage post={post} setPost={setPost} image={image} setImage={setImage} />
+              {/* <div>
+                <img className='edit-post--img' src={post.image}></img>
                 <input
                   accept="image/*" className={classes.input} id="icon-button-file" type="file"
                   value={image} onChange={(e) => setImage(e.target.value)}
@@ -169,9 +167,8 @@ export default function TransitionsCreatePostModal({
                     <PhotoCamera />
                   </IconButton>
                 </label>
-              </div>
+              </div> */}
               <Button
-                // onClick={() => console.log('you clicked')}
                 type='submit'
                 color='secondary'
                 variant='contained'

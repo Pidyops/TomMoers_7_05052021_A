@@ -1,18 +1,22 @@
 {
   "accounts": [
     {
+      "firstName": "Laurent",
+      "lastName": "Paau",
       "id": 1,
       "email": "aze@gmailcom",
       "password": "typicode"
     },
     {
+      "firstName": "Ange",
+      "lastName": "Lia",
       "id": 2,
       "email": "lorem@gmail.com",
       "password": "bioup"
     },
     {
-      "firstName": "eza",
-      "lastName": "eza",
+      "firstName": "Bougou",
+      "lastName": "Dji",
       "email": "eza",
       "password": "eza",
       "password2": "eza",
@@ -73,22 +77,31 @@
   ],
   "posts": [
     {
-      "title": "life is good",
-      "description": "very good",
+      "description": "lorem 15",
       "image": "",
-      "id": 1
+      "id": 2,
+      "date": "10 May",
+      "userId": 2,
+      "like": 20,
+      "comment": 34
     },
     {
-      "title": "Who saw this flower?",
-      "description": "Not me ...",
-      "image": "",
-      "id": 2
+      "description": "What a beautifull day",
+      "image": "assets/posts/bike.jpg",
+      "id": 3,
+      "date": "9 May",
+      "userId": 3,
+      "like": 45,
+      "comment": 53
     },
     {
-      "title": "hey",
-      "description": "God?",
-      "image": "",
-      "id": 3
+      "description": "eza",
+      "image": "assets/posts/ski.jpg",
+      "id": 4,
+      "date": "9 May",
+      "userId": 3,
+      "like": 45,
+      "comment": 53
     }
   ]
 }

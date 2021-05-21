@@ -1,30 +1,52 @@
 import { Container } from '@material-ui/core'
 import { useEffect, useState } from 'react'
+import { getPosts } from '../api/posts'
+import { getUsers } from '../api/users'
 import Header from '../components/Header/Header'
 import PostCard from '../Forum/PostCard'
 
 
-export const Forum = ({authValues, setAuthValues}) => {
-    const[title, setTitle] = useState('')
-    const[description, setDescription] = useState('')
-    const[image, setImage] = useState('')
 
-    const[posts, setPosts] = useState('')
+export const Forum = ({ authValues, setAuthValues }) => {
+    const [title, setTitle] = useState('a')
+    const [description, setDescription] = useState('')
+    const [image, setImage] = useState('imm')
 
-    useEffect(() => {
-        fetch('http://localhost:5000/posts') // GET
-          .then(res => res.json()) //res is what we get
-          .then(data => setPosts(data)) // we then receive the data, that we store in the useState (require one function and one import)
-    }, [title])
+    const [date, setDate] = useState('20th May')
+    const [userId, setUserId] = useState(1)
+    // const [like, setLike] = useState(0)
+    const [comment, setComment] = useState(0)
+
+
+    const [posts, setPosts] = useState('')
+    const [users, setUsers] = useState('')
+
+
+    console.log('image', image)
 
     
-    const handleDeletePost = async (id) => {
-        await fetch('http://localhost:5000/posts/' + id, {
-            method: 'DELETE'
-        })
+    // API 
+    // posts ______________________________________________________
+    const refreshPosts = () => getPosts() //res is what we get
+        .then(data => setPosts(data)) // we then receive the data, that we store in the useState (require one function and one import)
 
-        const newPosts = posts.filter(post => post.id != id)
-        setPosts(newPosts)
+    useEffect(() => {
+        refreshPosts();
+    }, []);
+
+
+    // API ---data--> React
+
+    const handleDeletePost = async (id) => {
+
+        try {
+            await fetch('http://localhost:5000/posts/' + id, {
+                method: 'DELETE'
+            })
+        } catch (err) {
+
+        }
+        await refreshPosts()
     }
 
     // const handlePutPost = () => {
@@ -32,7 +54,7 @@ export const Forum = ({authValues, setAuthValues}) => {
     // }
 
 
-    
+
 
     // const handlePutPost = async (id) => {
     //     await fetch('http://localhost:5000/posts/' + id, {
@@ -44,25 +66,71 @@ export const Forum = ({authValues, setAuthValues}) => {
     // }
 
 
+    // API 
+    // users ______________________________________________________
+    const refreshUsers = () => getUsers() //res is what we get
+    .then(data => setUsers(data)) // we then receive the data, that we store in the useState (require one function and one import)
+
+    useEffect(() => {
+        refreshUsers();
+    }, []);
+
+
+    // console.log(users)
+    // const user = users.filter(p=>p.id ===1)
+    // console.log(user[0].email)
+
+    // console.log(users)
+    // const user = users.map(u=>u.id !=1)
+    // console.log(user)
+
+    // const results = users.filter(function(i){
+    //     if(i.id >=2) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // });
+    // console.log(results)
+
+    // console.log(date)
+    // const xx = users.map(u => 
+    //     <p key={u.id}>{u.firstName}</p>)
     
-
-
+    
     return (
         <Container>
             <Header
-                title={title} setTitle={setTitle} 
+                title={title} setTitle={setTitle}
                 description={description} setDescription={setDescription}
                 image={image} setImage={setImage}
-                authValues={authValues} 
-                setAuthValues={setAuthValues} 
+                authValues={authValues}
+                setAuthValues={setAuthValues}
+                onPostCreated={refreshPosts}
+                date={date}
+                setDate={setDate}
+                userId={userId}
+                // like={like}
+                comment={comment}
             />
+            
             <div>
                 {(posts && posts.length > 0) && posts.map(post => (
-                    <p key={post.id}><PostCard post={post} handleDeletePost={handleDeletePost}  /></p>
+                    <div key={post.id}><PostCard 
+                    post={post} 
+                    handleDeletePost={handleDeletePost} 
+                    image={image} setImage={setImage}
+                    users={users}
+                    // date={date} setDate={setDate}
+                    // userId={userId}
+                    // like={like}
+                    // comment={comment}
+                    /></div>
                 ))}
 
 
             </div>
+            
         </Container>
     )
 }

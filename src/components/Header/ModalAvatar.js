@@ -32,7 +32,6 @@ export default function TransitionsAvatarModal({ authValues, setAuthValues }) {
     setOpen(false);
   };
 
-  console.log(authValues)
 
 
   return (

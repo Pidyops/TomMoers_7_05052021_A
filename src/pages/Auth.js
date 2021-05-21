@@ -1,5 +1,4 @@
 import Signin from '../components/Auth/Signin'
-import { useState } from 'react'
 
 const Auth = ({authValues, setAuthValues}) => {
 
