@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { getPosts } from '../api/posts'
 import { getUsers } from '../api/users'
 import Header from '../components/Header/Header'
-import PostCard from '../Forum/PostCard'
+import PostCard from '../components/Forum/PostCard'
 
 
 

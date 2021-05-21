@@ -11,7 +11,7 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { EditOutlined } from '@material-ui/icons';
 // import { useHistory } from 'react-router-dom';
 import './modalEditPost.scss'
-import UploadImage from '../../components/utils/UploadImage/UpladImage';
+import UploadImage from '../../utils/UploadImage/UpladImage'
 
 
 
