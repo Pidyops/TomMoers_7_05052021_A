@@ -32,6 +32,8 @@ const useStyles = makeStyles((theme) => ({
 const PostCard = ({ post, handleDeletePost, handlePutPost, users, image, setImage
     // date, userId, like, comment
     }) => {
+    console.log('post.date', post.date)
+
     const classes = useStyles();
 
 

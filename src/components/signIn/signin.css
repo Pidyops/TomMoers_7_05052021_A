@@ -62,10 +62,10 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  margin-bottom: 20px;
 }
 
 .signin__wrapper__right__form {
-  height: 300px;
   padding: 20px;
   background-color: white;
   border-radius: 10px;
@@ -79,6 +79,10 @@
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+}
+
+.signin__wrapper__right__form--item {
+  margin-bottom: 15px;
 }
 
 .signin__wrapper__right__form--item--label {
@@ -113,6 +117,7 @@
 .signin__wrapper__right__form--forgot {
   text-align: center;
   color: #1775ee;
+  margin: 15px 0;
 }
 
 .signin__wrapper__right__form--hr {
@@ -120,17 +125,15 @@
 }
 
 .signin__wrapper__right__form--signup {
-  width: 60%;
-  -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
-      align-self: center;
-  height: 50px;
-  border-radius: 10px;
-  border: none;
-  background-color: #42b72a;
-  color: white;
-  font-size: 20px;
-  font-weight: 500;
-  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 20px;
 }
 /*# sourceMappingURL=signin.css.map */

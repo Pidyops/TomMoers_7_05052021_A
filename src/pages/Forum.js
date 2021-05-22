@@ -4,16 +4,19 @@ import { getPosts } from '../api/posts'
 import { getUsers } from '../api/users'
 import Header from '../components/Header/Header'
 import PostCard from '../components/Forum/PostCard'
+import moment from 'moment';
 
 
 
 export const Forum = ({ authValues, setAuthValues }) => {
     const randomTo10 = Math.floor(Math.random()*5)
+    const time = moment().calendar();   
+    console.log(time)
 
     const [description, setDescription] = useState('')
     const [image, setImage] = useState('')
 
-    const [date, setDate] = useState('20th May') //session storage
+    const [date, setDate] = useState(time) //session storage
     const [userId] = useState(randomTo10) //session storage
     // const [like, setLike] = useState(0)
     const [comment, setComment] = useState(0)
@@ -117,6 +120,7 @@ export const Forum = ({ authValues, setAuthValues }) => {
                     post={post} 
                     handleDeletePost={handleDeletePost} 
                     image={image} setImage={setImage}
+                    date={date}
                     users={users}
                     // date={date} setDate={setDate}
                     // userId={userId}

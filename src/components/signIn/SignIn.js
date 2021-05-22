@@ -1,7 +1,8 @@
 import './signin.scss'
 import { useHistory } from 'react-router-dom';
-import Button from '../utils/button/Button';
-import Signup from '../Auth/Signup';
+import ButtonLarge from '../utils/button/Button';
+import Signup from '../Signup/Signup';
+import { TextField } from '@material-ui/core';
 // import ModalAvatar from '../Header/ModalAvatar'
 
 
@@ -21,6 +22,7 @@ const Signin = ({ authValues, setAuthValues}) => {
 
     const actionSignIn = e => {
         e.preventDefault();
+        console.log('hey')
 
         if(!authValues.email) {
             alert('Please add email')
@@ -60,52 +62,46 @@ const Signin = ({ authValues, setAuthValues}) => {
                 <div className="signin__wrapper__right">
                     <form action="" className="signin__wrapper__right__form">
                     {/* <form action="" className="auth__form" onSubmit={actionAuth} > */}
-                        <div className="signin__wrapper__right__form--item">
-                            <label htmlFor="email" className="signin__wrapper__right__form--item--label">
-                                Email
-                            </label>
-                            <input 
-                                id='email' 
-                                type="text" 
-                                name="email" 
-                                className="signin__wrapper__right__form--item--input" 
-                                placeholder="Enter your email"
-                                value= {authValues.email}
-                                // onChange={(e) => setAuthValues(e.target.value)}
-                                onChange={handleAuthChange}
-                            />
-                            {/* {errors.email && <p>{errors.email}</p>} */}
-                            
-                        </div>
-                        <div className="signin__wrapper__right__form--item">
-                            <label htmlFor="password" className="signin__wrapper__right__form--item--label">
-                                Password
-                            </label>
-                            <input 
-                                id='password'  
-                                type="password" 
-                                name="password" 
-                                className="signin__wrapper__right__form--item--input" 
-                                placeholder="Enter your password"
-                                value= {authValues.password}
-                                onChange={handleAuthChange}
-                            />
-                            {/* {errors.email && <p>{errors.email}</p>} */}
-                        </div>
 
+
+
+
+                        <TextField
+                            className="signin__wrapper__right__form--item"
+                            label="Email" variant="outlined" 
+                            size="small" margin='dense'  
+                            id='email' 
+                            type="email" 
+                            name="email" 
+                            className="form__inputs--input" 
+                            placeholder="Enter your email"
+                            value= {authValues.email}
+                            onChange={handleAuthChange}
+                        />
+
+                        <TextField
+                            className="signin__wrapper__right__form--item"
+                            label="Password" variant="outlined" 
+                            size="small" margin='dense'  
+                            id='password'  
+                            type="password" 
+                            name="password" 
+                            className="auth__inputs--input" 
+                            placeholder="Enter your password"
+                            value= {authValues.password}
+                            onChange={handleAuthChange}
+                        />
+
+                        <div className="signin__wrapper__right__form--btn">
+                            <ButtonLarge fullWidth='fullWidth'  color='primary' text='Sign In' className="signin__wrapper__right__form--btn" onClick={actionSignIn}/>
+                        </div>
                         
-
-                        <button className="signin__wrapper__right__form--btn" onClick={actionSignIn} >
-                            Sign In
-                        </button>
-
         
                         <a className="signin__wrapper__right__form--forgot" href='top'>Forgot your password?</a>
 
                         <hr className="signin__wrapper__right__form--hr"/>
 
-
-                        <Signup className="signin__wrapper__right__signup" authValues={authValues} handleAuthChange={handleAuthChange} setAuthValues={setAuthValues} />
+                        <Signup color='secondary' className="signin__wrapper__right__form--signup" authValues={authValues} handleAuthChange={handleAuthChange} setAuthValues={setAuthValues} text='Sign Up' />
                         
                     </form>
                 
@@ -122,3 +118,49 @@ const Signin = ({ authValues, setAuthValues}) => {
 
 
 export default Signin
+
+
+
+
+
+
+
+
+
+{/* <div className="signin__wrapper__right__form--item">
+<label htmlFor="email" className="signin__wrapper__right__form--item--label">
+    Email
+</label>
+<input 
+    id='email' 
+    type="text" 
+    name="email" 
+    className="signin__wrapper__right__form--item--input" 
+    placeholder="Enter your email"
+    value= {authValues.email}
+    // onChange={(e) => setAuthValues(e.target.value)}
+    onChange={handleAuthChange}
+/>
+{errors.email && <p>{errors.email}</p>}
+
+</div> */}
+
+
+
+{/* <div className="signin__wrapper__right__form--item">
+<label htmlFor="password" className="signin__wrapper__right__form--item--label">
+    Password
+</label>
+<input 
+    id='password'  
+    type="password" 
+    name="password" 
+    className="signin__wrapper__right__form--item--input" 
+    placeholder="Enter your password"
+    value= {authValues.password}
+    onChange={handleAuthChange}
+/>
+{errors.email && <p>{errors.email}</p>}
+</div> */}
+
+{/* <button className="signin__wrapper__right__form--btn" onClick={actionSignIn} </button> */}

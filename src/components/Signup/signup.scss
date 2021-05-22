@@ -1,0 +1,24 @@
+.signup {
+  h2 {
+    color: #607d8b;
+  }
+  &--hr {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+
+    &--input {
+      margin: 20px 0 !important;
+      margin-top: 15px !important;
+    }
+    &--btn {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
