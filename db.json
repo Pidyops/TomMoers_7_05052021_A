@@ -73,6 +73,14 @@
       "password": "eza",
       "password2": "",
       "id": 10
+    },
+    {
+      "firstName": "",
+      "lastName": "",
+      "email": "eza",
+      "password": "eza",
+      "password2": "",
+      "id": 11
     }
   ],
   "posts": [
@@ -102,6 +110,52 @@
       "userId": 3,
       "like": 45,
       "comment": 53
+    },
+    {
+      "title": "a",
+      "description": "azezaezaeaze",
+      "image": "imm",
+      "date": "20th May",
+      "id": 5
+    },
+    {
+      "title": "a",
+      "description": "userId",
+      "image": "",
+      "date": "20th May",
+      "userId": 1,
+      "id": 6
+    },
+    {
+      "title": "a",
+      "description": "Set uId",
+      "image": "",
+      "date": "20th May",
+      "userId": 2,
+      "id": 7
+    },
+    {
+      "description": "not title",
+      "image": "",
+      "date": "20th May",
+      "userId": 2,
+      "id": 8
+    },
+    {
+      "description": "comment",
+      "image": "",
+      "date": "20th May",
+      "userId": 2,
+      "comment": 0,
+      "id": 9
+    },
+    {
+      "description": "ezae",
+      "image": "",
+      "date": "20th May",
+      "userId": 2,
+      "comment": 0,
+      "id": 10
     }
   ]
 }

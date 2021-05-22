@@ -3,15 +3,12 @@ import TransitionsCreatePostModal from './ModalCreatePost'
 import ButtonSizes from './ButtonSizes'
 import TransitionsAvatarModal from './ModalAvatar'
 
-const Header = ({ authValues, setAuthValues, title, setTitle, description, setDescription, image, setImage, onPostCreated }) => {
+const Header = ({ date, comment, authValues, setAuthValues, description, setDescription, image, setImage, onPostCreated, userId }) => {
     // const[post, setPost] = useState({
     //     title: '',
     //     description: '',
     //     image: '',
     //   });
-
-
-
 
     return (
         <header className='header'>
@@ -29,19 +26,18 @@ const Header = ({ authValues, setAuthValues, title, setTitle, description, setDe
             <div className='header__right'>
                 <TransitionsCreatePostModal
                     // post={post} setPost={setPost} 
-                    title={title} setTitle={setTitle}
                     description={description} setDescription={setDescription}
+                    comment={comment}
                     image={image} setImage={setImage}
                     onPostCreated={onPostCreated}
+                    date={date} userId={userId}
+                    
                 />
                 <TransitionsAvatarModal
                     authValues={authValues}
                     setAuthValues={setAuthValues}
                 />
             </div>
-
-
-
         </header>
     )
 }

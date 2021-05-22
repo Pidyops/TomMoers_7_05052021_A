@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import { Avatar, IconButton, Typography } from '@material-ui/core';
-import { DeleteOutlined, EditOutlined , 
+import { Avatar } from '@material-ui/core';
+import { DeleteOutlined,
         ThumbDownAltOutlined, ThumbUpAltOutlined
         } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
@@ -35,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
 const PostCard = ({ post, handleDeletePost, handlePutPost, users, image, setImage
     // date, userId, like, comment
     }) => {
-    console.log('img',image)
     const classes = useStyles();
 
 
@@ -45,7 +41,7 @@ const PostCard = ({ post, handleDeletePost, handlePutPost, users, image, setImag
     const [isDisliked, setIsDisliked] = useState(false)
 
     const likeHandler = () => {
-        if (isDisliked == true) {
+        if (isDisliked === true) {
             setLike(like+2)
             setIsLiked(true)
             setIsDisliked(false)
@@ -56,7 +52,7 @@ const PostCard = ({ post, handleDeletePost, handlePutPost, users, image, setImag
     }
 
     const dislikeHandler = () => {
-        if (isLiked == true) {
+        if (isLiked === true) {
             setLike(like-2)
             setIsLiked(false)
             setIsDisliked(true)

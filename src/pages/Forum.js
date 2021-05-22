@@ -8,21 +8,21 @@ import PostCard from '../components/Forum/PostCard'
 
 
 export const Forum = ({ authValues, setAuthValues }) => {
-    const [title, setTitle] = useState('a')
-    const [description, setDescription] = useState('')
-    const [image, setImage] = useState('imm')
+    const randomTo10 = Math.floor(Math.random()*5)
 
-    const [date, setDate] = useState('20th May')
-    const [userId, setUserId] = useState(1)
+    const [description, setDescription] = useState('')
+    const [image, setImage] = useState('')
+
+    const [date, setDate] = useState('20th May') //session storage
+    const [userId] = useState(randomTo10) //session storage
     // const [like, setLike] = useState(0)
     const [comment, setComment] = useState(0)
+
+    
 
 
     const [posts, setPosts] = useState('')
     const [users, setUsers] = useState('')
-
-
-    console.log('image', image)
 
     
     // API 
@@ -96,12 +96,9 @@ export const Forum = ({ authValues, setAuthValues }) => {
     // console.log(date)
     // const xx = users.map(u => 
     //     <p key={u.id}>{u.firstName}</p>)
-    
-    
     return (
         <Container>
             <Header
-                title={title} setTitle={setTitle}
                 description={description} setDescription={setDescription}
                 image={image} setImage={setImage}
                 authValues={authValues}

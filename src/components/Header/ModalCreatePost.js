@@ -3,11 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import IconButton from '@material-ui/core/IconButton';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
 // import { useHistory } from 'react-router-dom';
 
 
@@ -38,10 +35,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TransitionsCreatePostModal({
-  onPostCreated, post, setPost, title, setTitle, 
+  onPostCreated, post, setPost,
   description, setDescription, image, setImage,
   date, setDate, userId, like, comment
 }) {
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -52,33 +50,6 @@ export default function TransitionsCreatePostModal({
   const handleClose = () => {
     setOpen(false);
   };
-
-  
-
-  // console.log(title)
-  // console.log(userId)
-  // console.log(like)
-  // console.log(comment)
-
-  // custom
-
-
-  // const handlePostChange = e => {
-  //   const { name, value } = e.target;
-  //   console.log(value)
-  //   console.log(name)
-
-  //   // setPost({
-  //   //     ...post,
-  //   //     // [e.target.name]: e.target.value // the name of the form
-  //   //     [name]: value
-  //   // });
-  // };
-
-  // console.log(post.title)
-  // console.log(post.description)
-
-
 
   const handleSubmitPost = (e) => {
     e.preventDefault();
@@ -95,28 +66,14 @@ export default function TransitionsCreatePostModal({
     fetch('http://localhost:5000/posts', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ title, description, image, date, userId, like, comment })
+      body: JSON.stringify({ description, image, date, userId, like, comment })
     })
       .then(() => {
         onPostCreated();
         handleClose();
-      }) 
-
-    console.log(date)
-    console.log(title)
-
-
-
-    // if (title && details) {
-    //   console.log(title, details, category)
-    // }
+        setDescription('');
+      })
   }
-
-
-
-  // console.log(post.description)
-
-
 
   return (
     <div>
@@ -140,17 +97,6 @@ export default function TransitionsCreatePostModal({
           <div className={classes.paper}>
             <form noValidate autoComplete="off" onSubmit={handleSubmitPost}>
               <h2 id="transition-modal-title">Post your comment</h2>
-              <TextField
-                // className={classes.field}
-                label='Title'
-                variant='outlined'
-                color='secondary'
-                fullWidth
-                required // Add *
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              // error={titleError}
-              />
               <TextareaAutosize
                 className={classes.textArea}
                 aria-label="empty textarea to write your post"
@@ -160,7 +106,7 @@ export default function TransitionsCreatePostModal({
                 onChange={(e) => setDescription(e.target.value)}
               />
               <div>
-                <input
+                {/* <input
                   accept="image/*" className={classes.input} id="icon-button-file" type="file"
                   value={image} onChange={(e) => setImage(e.target.value)}
                 />
@@ -168,10 +114,9 @@ export default function TransitionsCreatePostModal({
                   <IconButton color="primary" aria-label="upload picture" component="span">
                     <PhotoCamera />
                   </IconButton>
-                </label>
+                </label> */}
               </div>
               <Button
-                // onClick={() => console.log('you clicked')}
                 type='submit'
                 color='secondary'
                 variant='contained'

@@ -1,4 +1,4 @@
-import Signin from '../components/Auth/Signin'
+import SignIn from '../components/signIn/SignIn'
 
 const Auth = ({authValues, setAuthValues}) => {
 
@@ -6,7 +6,7 @@ const Auth = ({authValues, setAuthValues}) => {
 
     return (
         <div>
-            <Signin 
+            <SignIn 
                 authValues={authValues} 
                 setAuthValues={setAuthValues} 
             />

@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import ImageUploader from "react-images-upload";
 
 // https://github.com/jakehartnell/react-images-upload#readme
