@@ -79,7 +79,8 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
   }
 
   const body = (
-    <div style={modalStyle} className={classes.paper} >
+    <div style={modalStyle} className={classes.paper}  >
+    {/* // <div style={modalStyle} className={classes.paper} className='signup' > */}
       <h2 id="simple-modal-title">Sign Up</h2>
       <hr className="signup--hr"/>
       <div className="signup__wrapper">
@@ -138,7 +139,7 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
                 onChange={handleAuthChange}
               />
 
-              <TextField
+              {/* <TextField
                 className="signup__wrapper--input"
                 label="Confirm password" variant="outlined" 
                 size="small" margin='dense'            
@@ -150,13 +151,13 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
                 value= {authValues.password2}
                 onChange={handleAuthChange}
                 
-              />
+              /> */}
 
-              {/* <InputAdornments 
+              <InputAdornments 
                 authValues={authValues} 
                 handleAuthChange={handleAuthChange}
                 setAuthValues={setAuthValues}
-              /> */}
+              />
 
               <div className="signup__wrapper--btn">
                 <ButtonLarge className={classes.signupBtn} color='primary' text='Sign Up' onClick={actionSignUp}/>
