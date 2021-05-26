@@ -1,0 +1,13 @@
+.like {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &--number {
+    margin: 0 10px;
+  }
+
+  &--active {
+    color: grey;
+  }
+}

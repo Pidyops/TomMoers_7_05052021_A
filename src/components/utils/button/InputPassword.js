@@ -10,30 +10,30 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  margin: {
-    margin: theme.spacing(1),
-  },
-  withoutLabel: {
-    marginTop: theme.spacing(3),
-  },
-  textField: {
-    width: '25ch',
-  },
+//   root: {
+//     display: 'flex',
+//     flexWrap: 'wrap',
+//   },
+//   margin: {
+//     margin: theme.spacing(1),
+//   },
+//   withoutLabel: {
+//     marginTop: theme.spacing(3),
+//   },
+//   textField: {
+//     width: '25ch',
+//   },
 }));
 
-export default function InputAdornments({authValues, handleAuthChange, setAuthValues}) {
+export default function InputPassword({authValues, handleAuthChange, 
+    id, name, labelWidth, text, htmlFor, className, ...restProps}) {
   const classes = useStyles();
   const [values, setValues] = React.useState({
-    password: '',
     showPassword: false,
   });
 
-  console.log(authValues)
-  console.log(authValues.password2)
+  // console.log(authValues)
+  // console.log(authValues.password2)
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -50,12 +50,18 @@ export default function InputAdornments({authValues, handleAuthChange, setAuthVa
   return (
     <div className={classes.root}>
       <div>
-        <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">
-          <InputLabel htmlFor="password2">Confirm password</InputLabel>
+        <FormControl 
+            className={clsx(classes.margin, classes.textField, className)} 
+            variant="outlined" {...restProps} fullWidth={true}
+            margin='dense'
+        >
+          <InputLabel htmlFor={htmlFor}>{text}</InputLabel>
           <OutlinedInput
-            id="password2"
-            type={authValues.password2 ? 'text' : 'password'}
-            value={authValues.password2}
+            
+            id={id}
+            name={name}
+            type={values.showPassword ? 'text' : 'password'}
+            value={authValues}
             onChange={handleAuthChange}
             endAdornment={
                 <InputAdornment position="end">
@@ -69,7 +75,7 @@ export default function InputAdornments({authValues, handleAuthChange, setAuthVa
                 </IconButton>
               </InputAdornment>
             }
-            labelWidth={70}
+            labelWidth={labelWidth}
           />
         </FormControl>
 

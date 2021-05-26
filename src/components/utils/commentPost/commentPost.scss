@@ -1,0 +1,23 @@
+.comment-post {
+  display: flex;
+  margin: 15px 0;
+  margin-left: 60px;
+  border: burlywood 1px solid;
+
+  &__left {
+  }
+
+  &__right {
+    flex: 8;
+    margin-left: 20px;
+
+    &--comment {
+      width: 100%;
+      padding: 10px;
+    }
+    &--submit {
+      text-align: right;
+      margin-top: 10px;
+    }
+  }
+}

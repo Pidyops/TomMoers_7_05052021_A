@@ -3,9 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '../utils/button/Button'
 import ButtonLarge from '../utils/button/Button';
-import TextFieldsOutlined from '../utils/button/TextFiledOutlined';
+import TextFieldsOutlined from '../utils/button/InputPassword';
 import { TextField } from '@material-ui/core';
-import InputAdornments from '../utils/button/TextFiledOutlined';
+import InputPassword from '../utils/button/InputPassword';
 import './signup.scss'
 import { useHistory } from 'react-router-dom';
 
@@ -35,9 +35,9 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
-  input: {
-    marginTop: 150,
-  },
+  // input: {
+  //   marginTop: 150,
+  // },
 
 }));
 
@@ -79,8 +79,9 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
   }
 
   const body = (
-    <div style={modalStyle} className={classes.paper}  >
-    {/* // <div style={modalStyle} className={classes.paper} className='signup' > */}
+    // <div style={modalStyle} className={classes.paper}  >
+    <div className={classes.paper + ' ' + 'signup' }>
+      
       <h2 id="simple-modal-title">Sign Up</h2>
       <hr className="signup--hr"/>
       <div className="signup__wrapper">
@@ -126,7 +127,7 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
                 onChange={handleAuthChange}
               />
 
-              <TextField
+              {/* <TextField
                 className="signup__wrapper--input"
                 label="Password" variant="outlined" 
                 size="small" margin='dense'  
@@ -137,26 +138,30 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
                 placeholder="Enter your password"
                 value= {authValues.password}
                 onChange={handleAuthChange}
-              />
-
-              {/* <TextField
-                className="signup__wrapper--input"
-                label="Confirm password" variant="outlined" 
-                size="small" margin='dense'            
-                id='password2'  
-                type="password2" 
-                name="password2" 
-                className="auth__inputs--input" 
-                placeholder="Confirm your password"
-                value= {authValues.password2}
-                onChange={handleAuthChange}
-                
               /> */}
 
-              <InputAdornments 
-                authValues={authValues} 
+              <InputPassword 
+                htmlFor='password2'
+                id='password'
+                name='password'
+                text='Password'
+                
+                authValues={authValues.password} 
                 handleAuthChange={handleAuthChange}
-                setAuthValues={setAuthValues}
+                // setAuthValues={setAuthValues}
+                labelWidth={80}   
+              />
+
+              <InputPassword 
+                htmlFor='password2'
+                id='password2'
+                name='password2'
+                text='Confirm password'
+                
+                authValues={authValues.password2} 
+                handleAuthChange={handleAuthChange}
+                // setAuthValues={setAuthValues}
+                labelWidth={140}   
               />
 
               <div className="signup__wrapper--btn">

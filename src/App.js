@@ -32,7 +32,7 @@ const App = () => {
     lastName: '',
     email: '',
     password: '',
-    password2: '2'
+    password2: ''
   });
   // const isLogin = false
   return (

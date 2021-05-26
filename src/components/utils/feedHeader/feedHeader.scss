@@ -1,0 +1,36 @@
+.header-feed {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: dashed 1px teal !important;
+
+  &__left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    margin-left: 20px;
+
+    &--name {
+    }
+
+    &--date {
+    }
+  }
+
+  &__right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &--edit {
+      margin-right: 20px;
+    }
+  }
+}

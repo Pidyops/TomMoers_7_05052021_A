@@ -1,0 +1,22 @@
+.comment {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &-card {
+    // max-width: 700px !important;
+    width: 700px;
+    margin-top: 20px;
+    padding: 20px;
+    border: tomato dashed 1px;
+
+    &__post {
+    }
+
+    &__hr {
+    }
+
+    &__comment {
+    }
+  }
+}

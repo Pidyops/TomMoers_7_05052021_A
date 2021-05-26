@@ -1,14 +1,10 @@
 
 import TransitionsCreatePostModal from './ModalCreatePost'
 import ButtonSizes from './ButtonSizes'
-import TransitionsAvatarModal from './ModalAvatar'
+import AvatarModal from '../AvatarModal/AvatarModal'
 
 const Header = ({ date, comment, authValues, setAuthValues, description, setDescription, image, setImage, onPostCreated, userId }) => {
-    // const[post, setPost] = useState({
-    //     title: '',
-    //     description: '',
-    //     image: '',
-    //   });
+
 
     return (
         <header className='header'>
@@ -33,7 +29,7 @@ const Header = ({ date, comment, authValues, setAuthValues, description, setDesc
                     date={date} userId={userId}
                     
                 />
-                <TransitionsAvatarModal
+                <AvatarModal
                     authValues={authValues}
                     setAuthValues={setAuthValues}
                 />

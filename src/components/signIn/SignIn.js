@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import ButtonLarge from '../utils/button/Button';
 import Signup from '../Signup/Signup';
 import { TextField } from '@material-ui/core';
+import InputPassword from '../utils/button/InputPassword';
 // import ModalAvatar from '../Header/ModalAvatar'
 
 
@@ -79,7 +80,7 @@ const Signin = ({ authValues, setAuthValues}) => {
                             onChange={handleAuthChange}
                         />
 
-                        <TextField
+                        {/* <TextField
                             className="signin__wrapper__right__form--item"
                             label="Password" variant="outlined" 
                             size="small" margin='dense'  
@@ -90,6 +91,19 @@ const Signin = ({ authValues, setAuthValues}) => {
                             placeholder="Enter your password"
                             value= {authValues.password}
                             onChange={handleAuthChange}
+                        /> */}
+
+                        <InputPassword
+                            className="signin__wrapper__right__form--item"
+                            htmlFor='password'
+                            id='password'
+                            name='password'
+                            text='Password'
+                            
+                            authValues={authValues.password} 
+                            handleAuthChange={handleAuthChange}
+                            setAuthValues={setAuthValues}
+                            labelWidth={90}   
                         />
 
                         <div className="signin__wrapper__right__form--btn">

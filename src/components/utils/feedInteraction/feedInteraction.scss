@@ -1,0 +1,23 @@
+.feed-interaction {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  border: turquoise 1px dashed;
+
+  &__left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &--likes {
+      margin: 0 10px;
+    }
+  }
+  &__right {
+    &--number {
+    }
+
+    &--comments {
+    }
+  }
+}

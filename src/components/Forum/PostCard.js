@@ -8,6 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
 import './card.scss'
 import ModalEditPost from './modalEditPost/modalEditPost';
+import clsx from 'clsx';
+import Like from '../utils/like/Like';
 
 
 
@@ -29,44 +31,46 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const PostCard = ({ post, handleDeletePost, handlePutPost, users, image, setImage
-    // date, userId, like, comment
+const PostCard = ({ post, handleDeletePost, handlePutPost, users, image, setImage,
+     
     }) => {
-    console.log('post.date', post.date)
+
 
     const classes = useStyles();
 
+    
+    // const [like, setLike] = useState(post.like)
 
-    const [like, setLike] = useState(post.like)
+    // const [isLiked, setIsLiked] = useState(false)
+    // const [isDisliked, setIsDisliked] = useState(false)
 
-    const [isLiked, setIsLiked] = useState(false)
-    const [isDisliked, setIsDisliked] = useState(false)
+    // const likeHandler = () => {
+    //     if (isDisliked === true) {
+    //         setLike(like+2)
+    //         setIsLiked(true)
+    //         setIsDisliked(false)
+    //     } else {
+    //         setLike(isLiked ? like-1 : like+1)
+    //         setIsLiked(!isLiked)
+    //     }
+    // }
 
-    const likeHandler = () => {
-        if (isDisliked === true) {
-            setLike(like+2)
-            setIsLiked(true)
-            setIsDisliked(false)
-        } else {
-            setLike(isLiked ? like-1 : like+1)
-            setIsLiked(!isLiked)
-        }
-    }
-
-    const dislikeHandler = () => {
-        if (isLiked === true) {
-            setLike(like-2)
-            setIsLiked(false)
-            setIsDisliked(true)
-        } else {
-            setLike(isDisliked ? like+1 : like-1)
-            setIsDisliked(!isDisliked)
-        }
+    // const dislikeHandler = () => {
+    //     if (isLiked === true) {
+    //         setLike(like-2)
+    //         setIsLiked(false)
+    //         setIsDisliked(true)
+    //     } else {
+    //         setLike(isDisliked ? like+1 : like-1)
+    //         setIsDisliked(!isDisliked)
+    //     }
         
-    }
+    // }
+
 
     // console.log('+',isLiked)
     // console.log('-',isDisliked)
+
 
 
     return (
@@ -85,14 +89,14 @@ const PostCard = ({ post, handleDeletePost, handlePutPost, users, image, setImag
                 </div>
                 </div>
                 
-                    <div className="card-item__header__right">
-                        <div className="card-item__header__right--edit">
-                            {/* <EditOutlined /> */}
-                            <ModalEditPost post={post} image={image} setImage={setImage} />
-                        </div>
-                        <div className="card-item__header__right--delete">
-                            <DeleteOutlined onClick={() => handleDeletePost(post.id)} />
-                        </div>
+                <div className="card-item__header__right">
+                    <div className="card-item__header__right--edit">
+                        {/* <EditOutlined /> */}
+                        <ModalEditPost post={post} image={image} setImage={setImage} />
+                    </div>
+                    <div className="card-item__header__right--delete">
+                        <DeleteOutlined onClick={() => handleDeletePost(post.id)} />
+                    </div>
                 </div>
             </div>
 
@@ -108,18 +112,21 @@ const PostCard = ({ post, handleDeletePost, handlePutPost, users, image, setImag
             
              
             
-                
+            {/* {isLiked === false ? className='true' : 'false' }  */}
 
             <div className="card-item__footer">
-                <div className="card-item__footer__left">
-                <span onClick={likeHandler} ><ThumbUpAltOutlined /></span>
-                <span className="card-item__footer__left--likes">{ like }</span>
-                <span onClick={dislikeHandler} ><ThumbDownAltOutlined /></span>
-                </div>
+                <Like post={post.like} />
+                {/* <div className="card-item__footer__left">
+                    <span onClick={likeHandler} ><ThumbUpAltOutlined 
+                        className={isLiked ? 'like-active' : ''}
+                    /></span>
+                    <span className="card-item__footer__left--likes">{ like }</span>
+                    <span onClick={dislikeHandler} ><ThumbDownAltOutlined className={isDisliked ? 'like-active' : ''} /></span>
+                </div> */}
                 <div className="card-item__footer__right">
-                <span className="card-item__footer__left--comments--number">{ post.comment}</span>
-                <span className="card-item__footer__left--comments--comments"> Comments</span>
-            </div>
+                    <span className="card-item__footer__left--comments--number">{ post.comment}</span>
+                    <span className="card-item__footer__left--comments--comments"> Comments</span>
+                </div>
             </div>
 
         </Card>

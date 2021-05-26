@@ -1,17 +1,20 @@
 import { Container } from '@material-ui/core'
 import { useEffect, useState } from 'react'
-import { getPosts } from '../api/posts'
+import { getPosts, getPost } from '../api/posts'
 import { getUsers } from '../api/users'
 import Header from '../components/Header/Header'
 import PostCard from '../components/Forum/PostCard'
 import moment from 'moment';
+import Comment from '../components/comment/Comment'
 
 
 
 export const Forum = ({ authValues, setAuthValues }) => {
     const randomTo10 = Math.floor(Math.random()*5)
-    const time = moment().calendar();   
-    console.log(time)
+    const time = moment().format('MMMM Do YYYY, h:mm:ss a')
+    // const time = 'time'
+    
+    // console.log(time)
 
     const [description, setDescription] = useState('')
     const [image, setImage] = useState('')
@@ -25,11 +28,12 @@ export const Forum = ({ authValues, setAuthValues }) => {
 
 
     const [posts, setPosts] = useState('')
+
     const [users, setUsers] = useState('')
 
     
     // API 
-    // posts ______________________________________________________
+    // GET posts ______________________________________________________
     const refreshPosts = () => getPosts() //res is what we get
         .then(data => setPosts(data)) // we then receive the data, that we store in the useState (require one function and one import)
 
@@ -37,8 +41,7 @@ export const Forum = ({ authValues, setAuthValues }) => {
         refreshPosts();
     }, []);
 
-
-    // API ---data--> React
+    // DELETE post ______________________________________________________
 
     const handleDeletePost = async (id) => {
 
@@ -52,11 +55,17 @@ export const Forum = ({ authValues, setAuthValues }) => {
         await refreshPosts()
     }
 
+
+
+
+    
+
+
+
+
     // const handlePutPost = () => {
     //     console.log('hello',)
     // }
-
-
 
 
     // const handlePutPost = async (id) => {
@@ -99,6 +108,8 @@ export const Forum = ({ authValues, setAuthValues }) => {
     // console.log(date)
     // const xx = users.map(u => 
     //     <p key={u.id}>{u.firstName}</p>)
+
+
     return (
         <Container>
             <Header
@@ -113,19 +124,25 @@ export const Forum = ({ authValues, setAuthValues }) => {
                 // like={like}
                 comment={comment}
             />
+
+            <Comment
+            />
+
+
             
             <div>
                 {(posts && posts.length > 0) && posts.map(post => (
-                    <div key={post.id}><PostCard 
-                    post={post} 
-                    handleDeletePost={handleDeletePost} 
-                    image={image} setImage={setImage}
-                    date={date}
-                    users={users}
-                    // date={date} setDate={setDate}
-                    // userId={userId}
-                    // like={like}
-                    // comment={comment}
+                    <div key={post.id}>
+                        <PostCard 
+                            post={post} 
+                            handleDeletePost={handleDeletePost} 
+                            image={image} setImage={setImage}
+                            date={date}
+                            users={users}
+                            // date={date} setDate={setDate}
+                            // userId={userId}
+                            // like={like}
+                            // comment={comment}
                     /></div>
                 ))}
 
