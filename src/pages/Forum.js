@@ -9,7 +9,7 @@ import Comment from '../components/comment/Comment'
 
 
 
-export const Forum = ({ authValues, setAuthValues }) => {
+export const Forum = ({ authValues, setAuthValues, userConnected }) => {
     const randomTo10 = Math.floor(Math.random()*5)
     const time = moment().format('MMMM Do YYYY, h:mm:ss a')
     // const time = 'time'
@@ -123,6 +123,7 @@ export const Forum = ({ authValues, setAuthValues }) => {
                 userId={userId}
                 // like={like}
                 comment={comment}
+                userConnected={userConnected}
             />
 
             <Comment

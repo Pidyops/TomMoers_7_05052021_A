@@ -3,13 +3,14 @@ import Auth from './pages/Auth';
 import Forum from './pages/Forum';
 
 import NotFound from './pages/NotFound';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core'
 
 
 import { BrowserRouter, Switch, Route} from "react-router-dom"
 import { blueGrey, cyan, purple, teal } from '@material-ui/core/colors';
 import { dark } from '@material-ui/core/styles/createPalette';
+import { getUser } from './api/users';
 
 const theme = createMuiTheme({
   palette: {
@@ -34,6 +35,23 @@ const App = () => {
     password: '',
     password2: ''
   });
+
+  // FETCH GET _____ userConnected
+  const userConnectedId = 3
+  
+  const [userConnected, setUserConnected] = useState('')
+
+  const fetchUserConnected = (userConnectedId) => getUser(userConnectedId) //res is what we get
+    .then(data => setUserConnected(data)) 
+
+  useEffect(() => {
+    fetchUserConnected(userConnectedId)
+  }, []);
+
+  // console.log(userConnected)
+  
+
+
   // const isLogin = false
   return (
     <ThemeProvider theme={theme}>
@@ -43,13 +61,15 @@ const App = () => {
           <Route path="/" exact >
             <Auth
               authValues={authValues} 
-              setAuthValues={setAuthValues} 
+              setAuthValues={setAuthValues}
+              userConnected={userConnected}
             />
           </Route>
           <Route path="/Forum" exact >
             <Forum 
               authValues={authValues} 
               setAuthValues={setAuthValues} 
+              userConnected={userConnected}
             />
           </Route>
           <Route component={NotFound} />

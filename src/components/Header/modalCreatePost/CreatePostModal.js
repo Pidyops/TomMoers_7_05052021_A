@@ -5,6 +5,9 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Button from '@material-ui/core/Button';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import { IconButton } from '@material-ui/core';
+import { PhotoCamera } from '@material-ui/icons';
+import './createPostModal.scss';
 // import { useHistory } from 'react-router-dom';
 
 
@@ -34,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function TransitionsCreatePostModal({
+export default function CreatePostModal({
   onPostCreated, post, setPost,
   description, setDescription, image, setImage,
   date, setDate, userId, like, comment
@@ -69,7 +72,7 @@ export default function TransitionsCreatePostModal({
       body: JSON.stringify({ description, image, date, userId, like, comment })
     })
       .then(() => {
-        onPostCreated();
+        onPostCreated(); //refreshPosts()
         handleClose();
         setDescription('');
       })
@@ -77,9 +80,15 @@ export default function TransitionsCreatePostModal({
 
   return (
     <div>
-      <button type="button" onClick={handleOpen}>
-        Create A Post
-      </button>
+      <Button className='create-post--btn'
+        type='submit'
+        color='primary'
+        variant='contained'
+        onClick={handleOpen}
+      >
+        Submit
+      </Button>
+
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -94,9 +103,10 @@ export default function TransitionsCreatePostModal({
       >
 
         <Fade in={open}>
-          <div className={classes.paper}>
+          <div className={classes.paper + ' ' + "create-post" }>
             <form noValidate autoComplete="off" onSubmit={handleSubmitPost}>
-              <h2 id="transition-modal-title">Post your comment</h2>
+              <h2 id="transition-modal-title">Create your post</h2>
+              <hr className="create-post--hr"/>
               <TextareaAutosize
                 className={classes.textArea}
                 aria-label="empty textarea to write your post"
@@ -106,7 +116,7 @@ export default function TransitionsCreatePostModal({
                 onChange={(e) => setDescription(e.target.value)}
               />
               <div>
-                {/* <input
+                <input
                   accept="image/*" className={classes.input} id="icon-button-file" type="file"
                   value={image} onChange={(e) => setImage(e.target.value)}
                 />
@@ -114,7 +124,7 @@ export default function TransitionsCreatePostModal({
                   <IconButton color="primary" aria-label="upload picture" component="span">
                     <PhotoCamera />
                   </IconButton>
-                </label> */}
+                </label>
               </div>
               <Button
                 type='submit'

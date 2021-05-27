@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Button from '@material-ui/core/Button';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import { EditOutlined } from '@material-ui/icons';
+import { EditOutlined, PhotoCamera } from '@material-ui/icons';
 // import { useHistory } from 'react-router-dom';
 import './modalEditPost.scss'
 import UploadImage from '../../utils/UploadImage/UpladImage'
+import { IconButton } from '@material-ui/core';
+import { getPost } from '../../../api/posts';
 
 
 
@@ -37,6 +39,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+
+
 export default function ModalEditPost({
   onPostCreated, post, setPost, title, setTitle, 
   description, setDescription, image, setImage,
@@ -55,67 +59,81 @@ export default function ModalEditPost({
     setOpen(false);
   };
 
+  // console.log(post)
+
+
+
   
 
-  // console.log(title)
-  // console.log(userId)
-  // console.log(like)
-  // console.log(comment)
-
-  // custom
+  const [postDesc, setPostDesc] = useState('')
+  const [postImage, setPostImage] = useState('')
 
 
-  // const handlePostChange = e => {
-  //   const { name, value } = e.target;
-  //   console.log(value)
-  //   console.log(name)
+  const postId= 3
+  // const getPostId = () => { 
+  //   const postId = post.id
+  //   console.log(postId)
+    
+  // }
 
-  //   // setPost({
-  //   //     ...post,
-  //   //     // [e.target.name]: e.target.value // the name of the form
-  //   //     [name]: value
-  //   // });
-  // };
+  
 
-  // console.log(post.title)
-  // console.log(post.description)
+  const fetchSingleComment = (postId) => getPost(postId) //res is what we get
+    .then(data => {
+
+      console.log(data)
+      setPostDesc(data.description)
+      setPostImage(data.image)
+
+    })
+
+    
 
 
-  const handleSubmitPost = (e) => {
-    e.preventDefault();
-    // setTitleError(false)
-    // setDetailsError(false)
+    
 
-    // if (title == '') {
-    //   setTitleError(true)
+
+    useEffect(() => {
+      fetchSingleComment(postId);
+    }, []);
+
+    console.log(postDesc)
+    console.log(postImage)
+
+    // console.log(userFirstName)
+    // console.log(userLastName)
+    // console.log(userEmail)
+    // console.log(userImage)
+    
+    // API
+    // PATCH user by id ______________________________________________________________
+
+    // const saveUserInformation = () => {
+    //   const body = {};
+    //   if (userConnected.firstName !== userFirstName) {
+    //     body.firstName = userFirstName
+    //   }
+    //   if (userConnected.lastName !== userLastName) {
+    //     body.lastName = userLastName
+    //   }
+    //   if (userConnected.email !== userEmail) {
+    //     body.email = userEmail
+    //   }
+    //   if (userConnected.image !== userImage) {
+    //     body.image = userImage
+    //   }
+
+    //   const requestOptions = {
+    //     method: 'PATCH',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify(body)
+    //     // body: JSON.stringify({firstName : userFirstName})
+    //   };
+    //   const putUserById = () => fetch('http://localhost:5000/Accounts/' + id, requestOptions)
+    //     .then(response => response.json())
+    //     // .then(data => setUserFirstName(data.firstName));
+    //     putUserById(id);
     // }
-    // if (details == '') {
-    //   setDetailsError(true)
-    // }
-    // if (title && details)
-    // fetch('http://localhost:5000/posts', {
-    //   method: 'POST',
-    //   headers: { 'content-type': 'application/json' },
-    //   body: JSON.stringify({ title, description, image, date, userId, like, comment })
-    // })
-    //   .then(() => {
-    //     onPostCreated();
-    //     handleClose();
-    //   }) 
-
-    // console.log(date)
-    // console.log(title)
-
-
-
-    // if (title && details) {
-    //   console.log(title, details, category)
-    // }
-  }
-
-
-
-  // console.log(post.description)
 
 
 
@@ -138,21 +156,20 @@ export default function ModalEditPost({
       >
 
         <Fade in={open}>
-          <div className={classes.paper}>
-            <form noValidate autoComplete="off" onSubmit={handleSubmitPost}>
-              <h2 id="transition-modal-title">Post your comment</h2>
-
+          <div className={classes.paper + ' ' + "create-post" }>
+            <form noValidate autoComplete="off">
+              <h2 id="transition-modal-title">Edit your post</h2>
+              <hr className="create-post--hr"/>
               <TextareaAutosize
                 className={classes.textArea}
                 aria-label="empty textarea to write your post"
                 rowsMin={4}
                 placeholder="Write you post"
-                value={post.description}
+                value={postDesc}
                 onChange={(e) => setDescription(e.target.value)}
               />
-              <UploadImage post={post} setPost={setPost} image={image} setImage={setImage} />
-              {/* <div>
-                <img className='edit-post--img' src={post.image}></img>
+              {/* <UploadImage post={post} setPost={setPost} image={image} setImage={setImage} /> */}
+              <div>
                 <input
                   accept="image/*" className={classes.input} id="icon-button-file" type="file"
                   value={image} onChange={(e) => setImage(e.target.value)}
@@ -162,13 +179,13 @@ export default function ModalEditPost({
                     <PhotoCamera />
                   </IconButton>
                 </label>
-              </div> */}
+              </div>
               <Button
                 type='submit'
                 color='secondary'
                 variant='contained'
               >
-                Submit
+                Save change
               </Button>
             </form>
           </div>

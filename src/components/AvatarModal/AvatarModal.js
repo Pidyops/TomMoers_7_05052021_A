@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './avatarModal.scss';
+// import { userConnected } from '../../api/GlobalState'
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -12,6 +13,7 @@ import ButtonLarge from '../utils/button/Button';
 import { getUser } from '../../api/users'
 import { useHistory } from 'react-router-dom';
 const axios = require('axios');
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -29,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AvatarModal({ authValues, setAuthValues }) {
+export default function AvatarModal({ authValues, setAuthValues, userConnected }) {
   const classes = useStyles();
   const history = useHistory()
 
@@ -44,6 +46,10 @@ export default function AvatarModal({ authValues, setAuthValues }) {
   };
 
 
+
+  // console.log(userConnected)
+  // console.log(id)
+
   const [userFirstName, setUserFirstName] = useState('')
   const [userLastName, setUserLastName] = useState('')
   const [userEmail, setUserEmail] = useState('')
@@ -51,45 +57,63 @@ export default function AvatarModal({ authValues, setAuthValues }) {
   const [userPassword2, setUserPassword2] = useState('')
   const [userImage, setUserImage] = useState('')
 
-  let id= 3
+  let id= userConnected.id
 
 
-     const fetchSingleUser = (id) => getUser(id) //res is what we get
-        .then(data =>{
 
-        
-          setUserFirstName(data.firstName)
-          setUserLastName(data.lastName)
-          setUserEmail(data.email)
-          setUserImage(data.image)
-          }) // we then receive the data, that we store in the useState (require one function and one import)
+
+
+
+
+  const fetchSingleUser = (id) => getUser(id) //res is what we get
+    .then(data =>{
+
+    
+      setUserFirstName(data.firstName)
+      setUserLastName(data.lastName)
+      setUserEmail(data.email)
+      setUserImage(data.image)
+      }) // we then receive the data, that we store in the useState (require one function and one import)
 
     useEffect(() => {
       fetchSingleUser(id);
     }, []);
 
-    console.log(userFirstName)
-    console.log(userLastName)
-    console.log(userEmail)
-    console.log(userImage)
+    // console.log(userFirstName)
+    // console.log(userLastName)
+    // console.log(userEmail)
+    // console.log(userImage)
     
     // API
-    // PUT user by id ______________________________________________________________
+    // PATCH user by id ______________________________________________________________
 
-    const requestOptions = {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userFirstName, userLastName, userEmail, userPassword, userPassword2, userImage
-       })
-    };
-    const putUserById = () => fetch('http://localhost:5000/Accounts/' + id, requestOptions)
-      .then(response => response.json())
-      // .then(data => setUserFirstName(data.firstName));
+    const saveUserInformation = () => {
+      const body = {};
+      if (userConnected.firstName !== userFirstName) {
+        body.firstName = userFirstName
+      }
+      if (userConnected.lastName !== userLastName) {
+        body.lastName = userLastName
+      }
+      if (userConnected.email !== userEmail) {
+        body.email = userEmail
+      }
+      if (userConnected.image !== userImage) {
+        body.image = userImage
+      }
 
-    useEffect(() => {
-      // putUserById(id);
-      
-    },[]);
+      const requestOptions = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+        // body: JSON.stringify({firstName : userFirstName})
+      };
+      const putUserById = () => fetch('http://localhost:5000/Accounts/' + id, requestOptions)
+        .then(response => response.json())
+        // .then(data => setUserFirstName(data.firstName));
+        putUserById(id);
+    }
+    
       
     const deleteUserById = () => 
       fetch('http://localhost:5000/Accounts/' + id, { method: 'DELETE' })
@@ -233,7 +257,7 @@ export default function AvatarModal({ authValues, setAuthValues }) {
                   
                   <div className="avatar-modal__form--btn">
                     <ButtonLarge variant='outlined' color='error' text='Delete account' onClick={deleteUserById}/>
-                    <ButtonLarge color='primary' text='Save information'/>
+                    <ButtonLarge color='primary' text='Save information' onClick={saveUserInformation}/>
                   </div>
                   
             </form>
