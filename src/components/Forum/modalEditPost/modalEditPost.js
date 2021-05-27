@@ -63,7 +63,7 @@ export default function ModalEditPost({
 
 
 
-  
+  // const [postId, setPostId] = useState(3)
 
   const [postDesc, setPostDesc] = useState('')
   const [postImage, setPostImage] = useState('')
@@ -71,13 +71,17 @@ export default function ModalEditPost({
 
   const postId= 3
   // const getPostId = () => { 
-  //   const postId = post.id
-  //   console.log(postId)
+  //   console.log("hey")
+  //   setPostId(post.id)
+  //   //or
+  //   // const postId = post.id
+  //   // console.log(postId)
     
   // }
+  console.log(postId)
 
-  
-
+  // FETCH
+  // GET single comment
   const fetchSingleComment = (postId) => getPost(postId) //res is what we get
     .then(data => {
 
@@ -86,12 +90,6 @@ export default function ModalEditPost({
       setPostImage(data.image)
 
     })
-
-    
-
-
-    
-
 
     useEffect(() => {
       fetchSingleComment(postId);
@@ -108,38 +106,30 @@ export default function ModalEditPost({
     // API
     // PATCH user by id ______________________________________________________________
 
-    // const saveUserInformation = () => {
-    //   const body = {};
-    //   if (userConnected.firstName !== userFirstName) {
-    //     body.firstName = userFirstName
-    //   }
-    //   if (userConnected.lastName !== userLastName) {
-    //     body.lastName = userLastName
-    //   }
-    //   if (userConnected.email !== userEmail) {
-    //     body.email = userEmail
-    //   }
-    //   if (userConnected.image !== userImage) {
-    //     body.image = userImage
-    //   }
+    const savePostInformation = () => {
+      const body = {};
+      if (post.description !== postDesc) {
+        body.description = postDesc
+      }
 
-    //   const requestOptions = {
-    //     method: 'PATCH',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(body)
-    //     // body: JSON.stringify({firstName : userFirstName})
-    //   };
-    //   const putUserById = () => fetch('http://localhost:5000/Accounts/' + id, requestOptions)
-    //     .then(response => response.json())
-    //     // .then(data => setUserFirstName(data.firstName));
-    //     putUserById(id);
-    // }
+
+      const requestOptions = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+        // body: JSON.stringify({firstName : userFirstName})
+      };
+      const putPostById = () => fetch('http://localhost:5000/posts/' + postId, requestOptions)
+        .then(response => response.json())
+        // .then(data => setUserFirstName(data.firstName));
+        putPostById(postId);
+    }
 
 
 
   return (
     <div>
-      <button type="button" onClick={handleOpen}>
+      <button type="button" onClick={handleOpen}  >
         <EditOutlined />
       </button>
       <Modal
@@ -166,13 +156,13 @@ export default function ModalEditPost({
                 rowsMin={4}
                 placeholder="Write you post"
                 value={postDesc}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => setPostDesc(e.target.value)}
               />
               {/* <UploadImage post={post} setPost={setPost} image={image} setImage={setImage} /> */}
               <div>
                 <input
                   accept="image/*" className={classes.input} id="icon-button-file" type="file"
-                  value={image} onChange={(e) => setImage(e.target.value)}
+                  value={image} onChange={(e) => setPostImage(e.target.value)}
                 />
                 <label htmlFor="icon-button-file">
                   <IconButton color="primary" aria-label="upload picture" component="span">
@@ -184,6 +174,7 @@ export default function ModalEditPost({
                 type='submit'
                 color='secondary'
                 variant='contained'
+                onClick={savePostInformation}
               >
                 Save change
               </Button>

@@ -27,13 +27,14 @@
       "comment": 34
     },
     {
-      "description": "What a beautifull day",
+      "description": "What a beautifull day !",
       "image": "assets/posts/bike.jpg",
       "id": 3,
       "date": "9 May",
       "userId": 3,
       "like": 45,
-      "comment": 53
+      "comment": 53,
+      "discription": "What a beautifull day !"
     },
     {
       "description": "eza",
