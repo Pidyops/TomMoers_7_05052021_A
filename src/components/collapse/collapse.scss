@@ -1,0 +1,22 @@
+.collapse {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &--like {
+    padding: 0;
+    margin: 0;
+  }
+
+  &--comments {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.MuiCardActions-root {
+  justify-content: space-around;
+}
+
+.MuiPaper-elevation1 {
+}

@@ -3,8 +3,8 @@ import './like.scss'
 
 import React, { useState } from 'react'
 
-export default function Like({post}) {
-    const [like, setLike] = useState(post)
+export default function Like(props) {
+    const [like, setLike] = useState(props.numberOfLikes)
 
     const [isLiked, setIsLiked] = useState(false)
     const [isDisliked, setIsDisliked] = useState(false)
@@ -35,12 +35,12 @@ export default function Like({post}) {
     return (
 
 
-        <div className="like">
+        <div className="card-item__footer__left">
             <span onClick={likeHandler} ><ThumbUpAltOutlined 
-                className={isLiked ? 'like--active' : ''}
+                className={isLiked ? 'like-active' : ''}
             /></span>
-            <span className="like--number">{ like }</span>
-            <span onClick={dislikeHandler} ><ThumbDownAltOutlined className={isDisliked ? 'like--active' : ''} /></span>
+            <span className="card-item__footer__left--likes">{ like }</span>
+            <span onClick={dislikeHandler} ><ThumbDownAltOutlined className={isDisliked ? 'like-active' : ''} /></span>
         </div>
             
             

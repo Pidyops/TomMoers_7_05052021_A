@@ -53,6 +53,7 @@ export default function ModalEditPost({
 
   const handleOpen = () => {
     setOpen(true);
+    fetchSingleComment(postId)
   };
 
   const handleClose = () => {
@@ -63,29 +64,30 @@ export default function ModalEditPost({
 
 
 
-  // const [postId, setPostId] = useState(3)
+  const [postId, setPostId] = useState(3)
 
   const [postDesc, setPostDesc] = useState('')
   const [postImage, setPostImage] = useState('')
 
 
-  const postId= 3
+  // const postId= 3
   // const getPostId = () => { 
   //   console.log("hey")
   //   setPostId(post.id)
-  //   //or
-  //   // const postId = post.id
-  //   // console.log(postId)
+    //or
+    // const postId = post.id
+    // console.log(postId)
     
   // }
-  console.log(postId)
+  // console.log(postId)
 
   // FETCH
   // GET single comment
   const fetchSingleComment = (postId) => getPost(postId) //res is what we get
     .then(data => {
 
-      console.log(data)
+      // console.log(data)
+      setPostId(post.id)
       setPostDesc(data.description)
       setPostImage(data.image)
 
@@ -95,8 +97,8 @@ export default function ModalEditPost({
       fetchSingleComment(postId);
     }, []);
 
-    console.log(postDesc)
-    console.log(postImage)
+    // console.log(postDesc)
+    // console.log(postImage)
 
     // console.log(userFirstName)
     // console.log(userLastName)

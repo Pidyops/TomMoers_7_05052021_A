@@ -1,5 +1,4 @@
 
-// import TransitionsCreatePostModal from './modalCreatePost/ModalCreatePost'
 import ButtonSizes from './ButtonSizes'
 import AvatarModal from '../AvatarModal/AvatarModal'
 import CreatePostModal from './modalCreatePost/CreatePostModal'

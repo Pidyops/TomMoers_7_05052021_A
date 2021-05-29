@@ -6,6 +6,7 @@ import Header from '../components/Header/Header'
 import PostCard from '../components/Forum/PostCard'
 import moment from 'moment';
 import Comment from '../components/comment/Comment'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 
 
@@ -42,6 +43,8 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
     }, []);
 
     // DELETE post ______________________________________________________
+
+
 
     const handleDeletePost = async (id) => {
 
@@ -126,8 +129,9 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
                 userConnected={userConnected}
             />
 
-            <Comment
-            />
+            
+
+            
 
 
             
@@ -140,14 +144,13 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
                             image={image} setImage={setImage}
                             date={date}
                             users={users}
+                            userConnected={userConnected}
                             // date={date} setDate={setDate}
                             // userId={userId}
                             // like={like}
                             // comment={comment}
                     /></div>
                 ))}
-
-
             </div>
             
         </Container>
