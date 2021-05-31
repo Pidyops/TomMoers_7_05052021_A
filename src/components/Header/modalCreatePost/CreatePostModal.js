@@ -43,6 +43,9 @@ export default function CreatePostModal({
   date, setDate, userId, like, comment
 }) {
 
+
+
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -86,7 +89,7 @@ export default function CreatePostModal({
         variant='contained'
         onClick={handleOpen}
       >
-        Submit
+        Create a post
       </Button>
 
       <Modal

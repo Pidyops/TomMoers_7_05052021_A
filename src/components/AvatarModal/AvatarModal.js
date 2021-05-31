@@ -8,11 +8,10 @@ import Fade from '@material-ui/core/Fade';
 import ImageAvatars from '../Header/Avatar';
 import { TextField } from '@material-ui/core';
 import InputPassword from '../utils/button/InputPassword';
-import clsx from 'clsx';
 import ButtonLarge from '../utils/button/Button';
 import { getUser } from '../../api/users'
 import { useHistory } from 'react-router-dom';
-const axios = require('axios');
+// const axios = require('axios');
 
 
 
@@ -58,12 +57,6 @@ export default function AvatarModal({ authValues, setAuthValues, userConnected }
   const [userImage, setUserImage] = useState('')
 
   let id= userConnected.id
-
-
-
-
-
-
 
   const fetchSingleUser = (id) => getUser(id) //res is what we get
     .then(data =>{

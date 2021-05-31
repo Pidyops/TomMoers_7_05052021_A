@@ -22,11 +22,8 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
 
     const [date, setDate] = useState(time) //session storage
     const [userId] = useState(randomTo10) //session storage
-    // const [like, setLike] = useState(0)
+    const [like, setLike] = useState(0)
     const [comment, setComment] = useState(0)
-
-    
-
 
     const [posts, setPosts] = useState('')
 
@@ -60,27 +57,6 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
 
 
 
-
-    
-
-
-
-
-    // const handlePutPost = () => {
-    //     console.log('hello',)
-    // }
-
-
-    // const handlePutPost = async (id) => {
-    //     await fetch('http://localhost:5000/posts/' + id, {
-    //         method: 'PUT',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify({ title, description, image })
-    //     })
-    //     // call the useEffect
-    // }
-
-
     // API 
     // users ______________________________________________________
     const refreshUsers = () => getUsers() //res is what we get
@@ -89,29 +65,6 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
     useEffect(() => {
         refreshUsers();
     }, []);
-
-
-    // console.log(users)
-    // const user = users.filter(p=>p.id ===1)
-    // console.log(user[0].email)
-
-    // console.log(users)
-    // const user = users.map(u=>u.id !=1)
-    // console.log(user)
-
-    // const results = users.filter(function(i){
-    //     if(i.id >=2) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // });
-    // console.log(results)
-
-    // console.log(date)
-    // const xx = users.map(u => 
-    //     <p key={u.id}>{u.firstName}</p>)
-
 
     return (
         <Container>
@@ -124,17 +77,11 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
                 date={date}
                 setDate={setDate}
                 userId={userId}
-                // like={like}
+                like={like}
                 comment={comment}
                 userConnected={userConnected}
             />
 
-            
-
-            
-
-
-            
             <div>
                 {(posts && posts.length > 0) && posts.map(post => (
                     <div key={post.id}>
@@ -149,9 +96,15 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
                             // userId={userId}
                             // like={like}
                             // comment={comment}
+                            refreshPosts={refreshPosts}
                     /></div>
                 ))}
+
+
+
+
             </div>
+
             
         </Container>
     )

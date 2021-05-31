@@ -24,7 +24,9 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const PostCard = ({ post, handleDeletePost, handlePutPost, users, image, setImage, userConnected
+const PostCard = ({ 
+    post, handleDeletePost, handlePutPost, users, image, 
+    setImage, userConnected, refreshPosts
      
     }) => {
     const classes = useStyles();
@@ -96,6 +98,7 @@ const PostCard = ({ post, handleDeletePost, handlePutPost, users, image, setImag
                 numberOfPosts={post.comment}
                 userConnected={userConnected}
                 post={post}
+                refreshPosts={refreshPosts}
                 
             />
 

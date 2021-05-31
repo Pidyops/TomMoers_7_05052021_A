@@ -54,17 +54,93 @@
       "password": "fds",
       "password2": "fdsf",
       "id": 8
+    },
+    {
+      "firstName": "",
+      "lastName": "",
+      "email": "",
+      "password": "",
+      "password2": "",
+      "id": 9
     }
   ],
   "posts": [
     {
+      "0": {
+        "commentDesc": "test1"
+      },
       "description": "lorem 15",
       "image": "",
       "id": 2,
       "date": "10 May",
       "userId": 2,
       "like": 20,
-      "comment": 34
+      "comment": 34,
+      "comments": [
+        {
+          "commentDesc": "TEST 8",
+          "id": 1622481362634,
+          "userId": 3,
+          "authorFirstName": "Tom",
+          "authorLastName": "Moers"
+        },
+        {
+          "commentDesc": "TEST 9",
+          "id": 1622481365875,
+          "userId": 3,
+          "authorFirstName": "Tom",
+          "authorLastName": "Moers"
+        },
+        {
+          "commentDesc": "test 10",
+          "id": 1622481437476,
+          "userId": 3,
+          "authorFirstName": "Tom",
+          "authorLastName": "Moers"
+        },
+        {
+          "commentDesc": "nouveay ommebnt",
+          "id": 1622491148278,
+          "userId": 3,
+          "authorFirstName": "Tom",
+          "authorLastName": "Moers"
+        },
+        {
+          "commentDesc": "nouveay ommebntgregr",
+          "id": 1622491272660,
+          "userId": 3,
+          "authorFirstName": "Tom",
+          "authorLastName": "Moers"
+        },
+        {
+          "commentDesc": "J'adore cette feature",
+          "id": 1622493046965,
+          "userId": 3,
+          "authorFirstName": "Tom",
+          "authorLastName": "Moers"
+        },
+        {
+          "commentDesc": "J'adore cette feature",
+          "id": 1622493046965,
+          "userId": 3,
+          "authorFirstName": "Tom",
+          "authorLastName": "Moers"
+        },
+        {
+          "commentDesc": "hey",
+          "id": 1622493653841,
+          "userId": 3,
+          "authorFirstName": "Tom",
+          "authorLastName": "Moers"
+        },
+        {
+          "commentDesc": "hey",
+          "id": 1622493694677,
+          "userId": 3,
+          "authorFirstName": "Tom",
+          "authorLastName": "Moers"
+        }
+      ]
     },
     {
       "description": "What a beautifull day monday !\n",
@@ -74,16 +150,41 @@
       "userId": 3,
       "like": 45,
       "comment": 53,
-      "discription": "What a beautifull day !"
+      "discription": "What a beautifull day !",
+      "comments": [
+        {
+          "commentDesc": "2 test 1",
+          "id": 1622481477255,
+          "userId": 3,
+          "authorFirstName": "Tom",
+          "authorLastName": "Moers"
+        },
+        {
+          "commentDesc": "2 test 2",
+          "id": 1622481501417,
+          "userId": 3,
+          "authorFirstName": "Tom",
+          "authorLastName": "Moers"
+        }
+      ]
     },
     {
-      "description": "test change",
+      "description": "test changee",
       "image": "assets/posts/ski.jpg",
       "id": 4,
       "date": "9 May",
       "userId": 3,
       "like": 45,
-      "comment": 53
+      "comment": 53,
+      "comments": [
+        {
+          "commentDesc": "z",
+          "id": 1622495488877,
+          "userId": 3,
+          "authorFirstName": "Tom",
+          "authorLastName": "Moers"
+        }
+      ]
     },
     {
       "description": "time",
@@ -113,12 +214,13 @@
       "id": 18
     },
     {
-      "description": "Milan",
+      "description": "eza",
       "image": "",
-      "date": "May 29th 2021, 7:19:18 pm",
-      "userId": 4,
+      "date": "May 31st 2021, 11:23:45 pm",
+      "userId": 1,
+      "like": 0,
       "comment": 0,
-      "id": 19
+      "id": 22
     }
   ],
   "comments": [
@@ -158,8 +260,15 @@
       ]
     },
     {
-      "commentDesc": "blablou",
-      "id": 3
+      "0": "hey",
+      "1": "e",
+      "2": "l",
+      "3": "l",
+      "4": "o",
+      "5": "z",
+      "6": "f",
+      "id": 3,
+      "comment": ""
     }
   ]
 }

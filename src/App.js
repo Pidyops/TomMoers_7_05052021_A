@@ -8,8 +8,8 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core'
 
 
 import { BrowserRouter, Switch, Route} from "react-router-dom"
-import { blueGrey, cyan, purple, teal } from '@material-ui/core/colors';
-import { dark } from '@material-ui/core/styles/createPalette';
+import { blueGrey, teal } from '@material-ui/core/colors';
+
 import { getUser } from './api/users';
 
 const theme = createMuiTheme({

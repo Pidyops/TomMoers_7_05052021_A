@@ -4,7 +4,7 @@ import AvatarModal from '../AvatarModal/AvatarModal'
 import CreatePostModal from './modalCreatePost/CreatePostModal'
 
 
-const Header = ({ date, comment, authValues, setAuthValues, description, setDescription, image, setImage, onPostCreated, userId, userConnected }) => {
+const Header = ({ date, comment, authValues, setAuthValues, description, setDescription, image, setImage, onPostCreated, userId, userConnected, like }) => {
 
     return (
         <header className='header'>
@@ -23,7 +23,7 @@ const Header = ({ date, comment, authValues, setAuthValues, description, setDesc
                 <CreatePostModal
                     // post={post} setPost={setPost} 
                     description={description} setDescription={setDescription}
-                    comment={comment}
+                    comment={comment} like={like}
                     image={image} setImage={setImage}
                     onPostCreated={onPostCreated}
                     date={date} userId={userId}

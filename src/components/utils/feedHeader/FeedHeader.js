@@ -2,7 +2,9 @@ import { Avatar } from '@material-ui/core'
 import { DeleteOutlined, EditOutlined } from '@material-ui/icons'
 import './feedHeader.scss'
 
-export default function HeaderFeed({arial, id, desc, date}) {
+export default function HeaderFeed({arial, id, desc, date, c}) {
+
+    console.log(c)
     return (
         <div className="header-feed">
 
@@ -10,7 +12,7 @@ export default function HeaderFeed({arial, id, desc, date}) {
             <Avatar aria-label={arial} className='header-feed__left'/>
             
             <div className="header-feed__center">
-                <div className="header-feed__center--name"> Bougou Dji
+                <div className="header-feed__center--name">{c.authorFirstName} {c.authorLastName}
                 </div>
                 <div className="header-feed__center--date">{date}</div>
             </div>

@@ -8,9 +8,9 @@ export default function CommentCard() {
     return (
         <div className='comment-module'>
             
-            <FeedHeader />
+            {/* <FeedHeader />
             <FeedBody />
-            <FeedInteraction />
+            <FeedInteraction /> */}
         </div>
     )
 }

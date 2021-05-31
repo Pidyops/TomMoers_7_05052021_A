@@ -39,13 +39,32 @@ export default function RecipeReviewCard(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
-  
-
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  
+  
+  const storage = 
+  props.post.comments
 
+  // [
+  //   { data: '1', status: '0' },
+  //   { data: '2', status: '0' },
+  //   { data: '3', status: '0' },
+  //   { data: '4', status: '0' },
+  //   { data: '5', status: '0' },
+  //   { data: '6', status: '0' },
+  //   { data: '7', status: '1' },
+  // ];
+    console.log(storage)
+  
+  
+  // let counter = 0;
+  // for (let i = 0; i < storage.length; i++) {
+  //   if (storage[i].status === '0') counter++;
+  // }
+  
+  // console.log(counter); // 6
 
 
   return (
@@ -82,6 +101,7 @@ export default function RecipeReviewCard(props) {
         <Comment 
             userConnected={props.userConnected}
             post={props.post}
+            refreshPosts={props.refreshPosts}
         />
       </Collapse>
     </Card>
