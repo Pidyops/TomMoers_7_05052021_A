@@ -1,21 +1,18 @@
 import './commentPost.scss'
-
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Avatar, Button, TextareaAutosize } from '@material-ui/core'
 import moment from 'moment';
-import { getPosts } from '../../../api/posts';
 import FeedHeader from '../feedHeader/FeedHeader'
 import FeedBody from '../feedBody/FeedBody'
-import FeedInteraction from '../feedInteraction/FeedInteraction'
 // import './commentCard.scss'
 
 
-export default function CommentPost({handleSubmitComment, userConnected, post, refreshPosts}) {
+export default function CommentPost({ userConnected, post, refreshPosts}) {
     // console.log(userConnected)
     const m = moment().valueOf()
 
     const [singlePost, setSinglePost] = useState (post)
-    console.log(singlePost)
+    // console.log(singlePost)
 
     const [commentDesc, setCommentDesc] = useState('')
 

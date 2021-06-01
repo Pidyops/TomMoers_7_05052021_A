@@ -2,9 +2,9 @@ import { Avatar } from '@material-ui/core'
 import { DeleteOutlined, EditOutlined } from '@material-ui/icons'
 import './feedHeader.scss'
 
-export default function HeaderFeed({arial, id, desc, date, c}) {
+export default function HeaderFeed({arial, id, date, c}) {
 
-    console.log(c)
+    // console.log(c)
     return (
         <div className="header-feed">
 

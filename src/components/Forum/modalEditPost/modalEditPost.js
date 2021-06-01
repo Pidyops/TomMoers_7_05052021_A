@@ -8,7 +8,6 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import { EditOutlined, PhotoCamera } from '@material-ui/icons';
 // import { useHistory } from 'react-router-dom';
 import './modalEditPost.scss'
-import UploadImage from '../../utils/UploadImage/UpladImage'
 import { IconButton } from '@material-ui/core';
 import { getPost } from '../../../api/posts';
 
@@ -42,10 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function ModalEditPost({
-  onPostCreated, post, setPost, title, setTitle, 
-  description, setDescription, image, setImage,
-  date, setDate, userId, like, comment,
-  
+   post, image
 }) {
   // console.log(image)
   const classes = useStyles();

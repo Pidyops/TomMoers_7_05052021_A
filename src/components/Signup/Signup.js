@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '../utils/button/Button'
 import ButtonLarge from '../utils/button/Button';
-import TextFieldsOutlined from '../utils/button/InputPassword';
 import { TextField } from '@material-ui/core';
 import InputPassword from '../utils/button/InputPassword';
 import './signup.scss'
@@ -58,7 +57,8 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
   const actionSignUp = e => {
     e.preventDefault();
 
-    fetch('http://localhost:5000/accounts', {
+    // fetch('http://localhost:5000/accounts', {
+    fetch('http://localhost:4000/auth/register', {
       method: 'POST',
       headers: {
       'Content-type': 'application/json'

@@ -44,8 +44,15 @@ export default function RecipeReviewCard(props) {
   };
   
   
-  const storage = 
-  props.post.comments
+  // const storage = 
+  // props.post.comments
+
+  // console.log(props.post.comments)
+  let numberOfComments = 0
+
+  if( props.post.comments != undefined) {
+    numberOfComments = props.post.comments.length
+  }
 
   // [
   //   { data: '1', status: '0' },
@@ -56,7 +63,7 @@ export default function RecipeReviewCard(props) {
   //   { data: '6', status: '0' },
   //   { data: '7', status: '1' },
   // ];
-    console.log(storage)
+  //   console.log(storage)
   
   
   // let counter = 0;
@@ -77,7 +84,7 @@ export default function RecipeReviewCard(props) {
         <Like className='collapse__action--like' numberOfLikes={props.numberOfLikes} />
 
         <div className='collapse__action--comments'>
-            <span className="card-item__footer__left--comments--number">{ props.numberOfPosts}</span>
+            <span className="card-item__footer__left--comments--number">{numberOfComments}</span>
             <span className="card-item__footer__left--comments--comments"> Comments </span>  
             <IconButton
                 className={clsx(classes.expand, {

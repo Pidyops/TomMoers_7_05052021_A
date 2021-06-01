@@ -38,9 +38,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CreatePostModal({
-  onPostCreated, post, setPost,
+  onPostCreated,
   description, setDescription, image, setImage,
-  date, setDate, userId, like, comment
+  date, userId, like, comment
 }) {
 
 

@@ -1,4 +1,4 @@
-import { ThumbDownAltOutlined, ThumbUpAltOutlined } from '@material-ui/icons'
+// import { ThumbDownAltOutlined, ThumbUpAltOutlined } from '@material-ui/icons'
 import Like from '../like/Like'
 import './feedInteraction.scss'
 

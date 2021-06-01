@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AvatarModal({ authValues, setAuthValues, userConnected }) {
+export default function AvatarModal({ userConnected }) {
   const classes = useStyles();
   const history = useHistory()
 
