@@ -1,14 +1,10 @@
 import { Container } from '@material-ui/core'
 import { useEffect, useState } from 'react'
-import { getPosts, getPost } from '../api/posts'
+import { getPosts, getPost, getPostsSQL } from '../api/posts'
 import { getUsers } from '../api/users'
 import Header from '../components/Header/Header'
 import PostCard from '../components/Forum/PostCard'
 import moment from 'moment';
-import Comment from '../components/comment/Comment'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
-
-
 
 export const Forum = ({ authValues, setAuthValues, userConnected }) => {
     const randomTo10 = Math.floor(Math.random()*5)
@@ -29,11 +25,37 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
 
     const [users, setUsers] = useState('')
 
-    
+    let posty =''
     // API 
     // GET posts ______________________________________________________
-    const refreshPosts = () => getPosts() //res is what we get
-        .then(data => setPosts(data)) // we then receive the data, that we store in the useState (require one function and one import)
+    // const refreshPosts = () => getPosts() 
+    //     .then(data => setPosts(data)) 
+
+    // const refreshPosts = () => getPostsSQL() 
+    // .then(data => setPosts(data)) 
+
+    const refreshPosts = () => fetch('http://localhost:4000/feed/posts')
+    .then(res => res.json())
+    // .then(data => console.log('data', data))
+    .then((res) => {
+        // return data
+        setPosts(res)
+        posty = res
+        console.log(res)
+    })
+
+    console.log('posts',posts)
+    // console.log('posty',posty)
+
+    // const refreshPosts = () => fetch("http://localhost:4000/feed/posts", {
+    //     method: "GET",
+    //     })
+    //     .then(res => res.json())
+    //     .then(data => console.log('data', data))
+    
+
+
+
 
     useEffect(() => {
         refreshPosts();

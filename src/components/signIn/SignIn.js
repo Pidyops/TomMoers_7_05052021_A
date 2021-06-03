@@ -9,10 +9,11 @@ import InputPassword from '../utils/button/InputPassword';
 
 const Signin = ({ authValues, setAuthValues}) => {
     const history = useHistory()
+    let resMessage = ''
 
     const handleAuthChange = e => {
         const { name, value } = e.target;
-        console.log(e.target)
+        // console.log(e.target)
 
         setAuthValues({
             ...authValues,
@@ -20,6 +21,7 @@ const Signin = ({ authValues, setAuthValues}) => {
             [name]: value
         });
     };
+    var cookieDate = new Date (Date.now() +  24 * 60 * 60 * 1000)
 
     const actionSignIn = e => {
         e.preventDefault();
@@ -34,19 +36,43 @@ const Signin = ({ authValues, setAuthValues}) => {
             return
         }
 
-        fetch('http://localhost:5000/accounts', {
+        // fetch('http://localhost:5000/accounts', {
+        fetch('http://localhost:4000/auth/login', {
             method: 'POST',
             headers: {
             'Content-type': 'application/json'
             },
             body: JSON.stringify(authValues)
 
-            }).then(() => {
-                setAuthValues({
-                email: '',
-                password: ''
-                });
-            }).then(() => history.push('/Forum'))
+        })  
+            .then((res) => {
+                console.log('login: first then')
+                return res.json()})
+
+            .then((res) => {
+                if(res.token) {
+                    console.log('login (token)', res)
+                    sessionStorage.setItem('jwt', res.token)
+                    setAuthValues({
+                        email: '',
+                        password: ''
+                        });
+                    history.push('/Forum')
+
+                } else {
+                    console.log('login (no token)', res)
+                    resMessage = res.message
+                }
+            })
+
+            console.log({resMessage})
+
+            // .then(() => {
+                
+            //     // console.log(authValues)
+                
+            // })
+            // .then(() => )
     }
 
     return (
@@ -64,9 +90,6 @@ const Signin = ({ authValues, setAuthValues}) => {
                     <form action="" className="signin__wrapper__right__form">
                     {/* <form action="" className="auth__form" onSubmit={actionAuth} > */}
 
-
-
-
                         <TextField
                             className="signin__wrapper__right__form--item"
                             label="Email" variant="outlined" 
@@ -80,26 +103,12 @@ const Signin = ({ authValues, setAuthValues}) => {
                             onChange={handleAuthChange}
                         />
 
-                        {/* <TextField
-                            className="signin__wrapper__right__form--item"
-                            label="Password" variant="outlined" 
-                            size="small" margin='dense'  
-                            id='password'  
-                            type="password" 
-                            name="password" 
-                            className="auth__inputs--input" 
-                            placeholder="Enter your password"
-                            value= {authValues.password}
-                            onChange={handleAuthChange}
-                        /> */}
-
                         <InputPassword
                             className="signin__wrapper__right__form--item"
                             htmlFor='password'
                             id='password'
                             name='password'
                             text='Password'
-                            
                             authValues={authValues.password} 
                             handleAuthChange={handleAuthChange}
                             setAuthValues={setAuthValues}
@@ -110,7 +119,6 @@ const Signin = ({ authValues, setAuthValues}) => {
                             <ButtonLarge fullWidth='fullWidth'  color='primary' text='Sign In' className="signin__wrapper__right__form--btn" onClick={actionSignIn}/>
                         </div>
                         
-        
                         <a className="signin__wrapper__right__form--forgot" href='top'>Forgot your password?</a>
 
                         <hr className="signin__wrapper__right__form--hr"/>
@@ -118,15 +126,9 @@ const Signin = ({ authValues, setAuthValues}) => {
                         <Signup color='secondary' className="signin__wrapper__right__form--signup" authValues={authValues} handleAuthChange={handleAuthChange} setAuthValues={setAuthValues} text='Sign Up' />
                         
                     </form>
-                
-                
                 </div>
             </div>
-            
-            
         </div>
-        
-        
     )
 }
 

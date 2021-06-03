@@ -8,5 +8,6 @@ export const getUser = (id) => fetch('http://localhost:5000/Accounts/' + id,) //
     
 
     
-    
+export const getUsersSql = () => fetch('http://localhost:4000/') // GET
+    .then(res => res.json())
     

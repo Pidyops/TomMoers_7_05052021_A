@@ -8,8 +8,6 @@ import InputPassword from '../utils/button/InputPassword';
 import './signup.scss'
 import { useHistory } from 'react-router-dom';
 
-
-
 function rand() {
   return Math.round(Math.random() * 20) - 10;
 }
@@ -34,10 +32,6 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
-  // input: {
-  //   marginTop: 150,
-  // },
-
 }));
 
 export default function SimpleModal({authValues, handleAuthChange, setAuthValues, text, color, variant}) {
@@ -54,6 +48,8 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
     setOpen(false);
   };
 
+  let responseMessage = ''
+
   const actionSignUp = e => {
     e.preventDefault();
 
@@ -64,19 +60,46 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
       'Content-type': 'application/json'
       },
       body: JSON.stringify(authValues)
+    })
+  
+    // .then(res => res.json())
+    // .then(data => console.log(data))
 
-    }).then(() => {
-      handleClose();
-      history.push('/Forum')
-      setAuthValues({
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        password2: ''
-      });
+    .then((res) => {
+      console.log('first then')
+      return res.json()})
+
+    .then((res) => {
+      console.log('2nd then',res)
+
+      if(res.token) {
+        console.log('then if')
+        console.log({res})
+        console.log(res.token)
+        sessionStorage.setItem('token', res.token)
+
+        handleClose();
+        history.push('/Forum')
+      
+        setAuthValues({
+          firstName: '',
+          lastName: '',
+          email: '',
+          password: '',
+          password2: ''
+        });
+
+      } else {
+        console.log(res)
+        console.log('register: else (no token)')
+        responseMessage = res.message
+        console.log({responseMessage})
+        return responseMessage
+      }
     })
   }
+
+  // console.log({responseMessage})
 
   const body = (
     // <div style={modalStyle} className={classes.paper}  >
@@ -127,25 +150,11 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
                 onChange={handleAuthChange}
               />
 
-              {/* <TextField
-                className="signup__wrapper--input"
-                label="Password" variant="outlined" 
-                size="small" margin='dense'  
-                id='password'  
-                type="password" 
-                name="password" 
-                className="auth__inputs--input" 
-                placeholder="Enter your password"
-                value= {authValues.password}
-                onChange={handleAuthChange}
-              /> */}
-
               <InputPassword 
                 htmlFor='password2'
                 id='password'
                 name='password'
                 text='Password'
-                
                 authValues={authValues.password} 
                 handleAuthChange={handleAuthChange}
                 // setAuthValues={setAuthValues}
@@ -163,10 +172,19 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
                 // setAuthValues={setAuthValues}
                 labelWidth={140}   
               />
+              <div>
+                {responseMessage}
+              </div>
+
+              {/* {{#if message }}
+                <h4 class="alert alert-danger mt-4">{{message}}</h4>
+              {{/if}} */}
 
               <div className="signup__wrapper--btn">
                 <ButtonLarge className={classes.signupBtn} color='primary' text='Sign Up' onClick={actionSignUp}/>
               </div>
+
+              <div>{responseMessage}</div>
               
                 
             {/* </form> */}

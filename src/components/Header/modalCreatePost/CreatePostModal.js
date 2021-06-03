@@ -69,7 +69,9 @@ export default function CreatePostModal({
     //   setDetailsError(true)
     // }
     // if (title && details)
-    fetch('http://localhost:5000/posts', {
+
+    // fetch('http://localhost:5000/posts', {
+    fetch('http://localhost:4000/feed/post', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ description, image, date, userId, like, comment })
