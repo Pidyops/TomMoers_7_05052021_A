@@ -4,10 +4,11 @@ import ButtonLarge from '../utils/button/Button';
 import Signup from '../Signup/Signup';
 import { TextField } from '@material-ui/core';
 import InputPassword from '../utils/button/InputPassword';
+import { useState } from 'react';
 // import ModalAvatar from '../Header/ModalAvatar'
 
 
-const Signin = ({ authValues, setAuthValues}) => {
+const Signin = ({ authValues, setAuthValues, userConnected, setUserConnected}) => {
     const history = useHistory()
     let resMessage = ''
 
@@ -22,6 +23,8 @@ const Signin = ({ authValues, setAuthValues}) => {
         });
     };
     var cookieDate = new Date (Date.now() +  24 * 60 * 60 * 1000)
+
+    const [errorMessage, setErrorMessage] = useState('')
 
     const actionSignIn = e => {
         e.preventDefault();
@@ -53,19 +56,35 @@ const Signin = ({ authValues, setAuthValues}) => {
                 if(res.token) {
                     console.log('login (token)', res)
                     sessionStorage.setItem('jwt', res.token)
+                    sessionStorage.setItem('userConnectedId', 'test')
+                    
+                    sessionStorage.setItem('userConnectedId', res.userConnected.id)
+                    sessionStorage.setItem('userConnectedFirstName', res.userConnected.firstName)
+                    sessionStorage.setItem('userConnectedLastName', res.userConnected.lastName)
+                    sessionStorage.setItem('userConnectedEmail', res.userConnected.email)
+
+                    setUserConnected(res.userConnected)
+                    
                     setAuthValues({
                         email: '',
                         password: ''
                         });
-                    history.push('/Forum')
+                    // history.push('/Forum')
 
                 } else {
                     console.log('login (no token)', res)
-                    resMessage = res.message
+                    setErrorMessage(res.message)
                 }
             })
+            .then(() => {
+                console.log({userConnected})
+                console.log(errorMessage)
+                
+            
+            })
+            // console.log({userConnected})
 
-            console.log({resMessage})
+            // console.log(errorMessage)
 
             // .then(() => {
                 
@@ -78,7 +97,8 @@ const Signin = ({ authValues, setAuthValues}) => {
     return (
         <div className="signin">
             <div className="signin__wrapper">
-
+            <div>{errorMessage}</div>
+            {/* <div>{userConnected}</div> */}
                 <div className="signin__wrapper__left">
                     <img src="/assets/logo.png" alt="logo" className="signin__wrapper__left--logo"/>
                     <div className="signin__wrapper__left--desc">

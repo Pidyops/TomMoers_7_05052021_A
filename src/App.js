@@ -37,16 +37,17 @@ const App = () => {
   });
 
   // FETCH GET _____ userConnected
-  const userConnectedId = 3
+  // const userConnectedId = 3
   
   const [userConnected, setUserConnected] = useState('')
+  // console.log('userConnected', userConnected)
 
-  const fetchUserConnected = (userConnectedId) => getUser(userConnectedId) //res is what we get
-    .then(data => setUserConnected(data)) 
+  // const fetchUserConnected = (userConnectedId) => getUser(userConnectedId) //res is what we get
+  //   .then(data => setUserConnected(data)) 
 
-  useEffect(() => {
-    fetchUserConnected(userConnectedId)
-  }, []);
+  // useEffect(() => {
+  //   fetchUserConnected(userConnectedId)
+  // }, []);
 
   // console.log(userConnected)
   
@@ -63,6 +64,7 @@ const App = () => {
               authValues={authValues} 
               setAuthValues={setAuthValues}
               userConnected={userConnected}
+              setUserConnected={setUserConnected}
             />
           </Route>
           <Route path="/Forum" exact >

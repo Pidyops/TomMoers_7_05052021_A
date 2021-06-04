@@ -49,8 +49,9 @@ export default function ModalEditPost({
 
   const handleOpen = () => {
     setOpen(true);
-    fetchSingleComment(postId)
+    fetchSingleComment(post.id)
   };
+  console.log(post.id)
 
   const handleClose = () => {
     setOpen(false);
@@ -60,7 +61,7 @@ export default function ModalEditPost({
 
 
 
-  const [postId, setPostId] = useState(3)
+  // const [postId, setPostId] = useState('')
 
   const [postDesc, setPostDesc] = useState('')
   const [postImage, setPostImage] = useState('')
@@ -79,18 +80,31 @@ export default function ModalEditPost({
 
   // FETCH
   // GET single comment
-  const fetchSingleComment = (postId) => getPost(postId) //res is what we get
-    .then(data => {
+  // const fetchSingleComment = (post) => getPost(post) //res is what we get
+  //   .then(data => {
 
-      // console.log(data)
-      setPostId(post.id)
-      setPostDesc(data.description)
-      setPostImage(data.image)
+  //     // console.log(data)
+  //     // setPostId(post.id)
+  //     setPostDesc(data.description)
+  //     setPostImage(data.image)
 
+  //   })
+
+
+
+    const fetchSingleComment = (id) => fetch('http://localhost:4000/feed/post/' + id, {
+      method: 'GET'
+    })
+    .then(res => res.json())
+    // .then(data => console.log('data', data))
+    .then((res) => {
+      console.log({res})
+      // setPostDesc(data.description)
+      // setPostImage(data.image)
     })
 
     useEffect(() => {
-      fetchSingleComment(postId);
+      fetchSingleComment(post.id);
     }, []);
 
     // console.log(postDesc)
@@ -117,10 +131,10 @@ export default function ModalEditPost({
         body: JSON.stringify(body)
         // body: JSON.stringify({firstName : userFirstName})
       };
-      const putPostById = () => fetch('http://localhost:5000/posts/' + postId, requestOptions)
+      const putPostById = () => fetch('http://localhost:5000/posts/' + post.id, requestOptions)
         .then(response => response.json())
         // .then(data => setUserFirstName(data.firstName));
-        putPostById(postId);
+        putPostById(post.id);
     }
 
 

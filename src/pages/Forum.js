@@ -17,7 +17,9 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
     const [image, setImage] = useState('')
 
     const [date, setDate] = useState(time) //session storage
-    const [userId] = useState(randomTo10) //session storage
+
+    const userConnectedId = sessionStorage.getItem("userConnectedId");
+    const [userId] = useState(userConnectedId) //session storage
     const [like, setLike] = useState(0)
     const [comment, setComment] = useState(0)
 
@@ -25,36 +27,16 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
 
     const [users, setUsers] = useState('')
 
-    let posty =''
     // API 
     // GET posts ______________________________________________________
-    // const refreshPosts = () => getPosts() 
-    //     .then(data => setPosts(data)) 
-
-    // const refreshPosts = () => getPostsSQL() 
-    // .then(data => setPosts(data)) 
-
     const refreshPosts = () => fetch('http://localhost:4000/feed/posts')
     .then(res => res.json())
     // .then(data => console.log('data', data))
     .then((res) => {
-        // return data
         setPosts(res)
-        posty = res
-        console.log(res)
     })
 
     console.log('posts',posts)
-    // console.log('posty',posty)
-
-    // const refreshPosts = () => fetch("http://localhost:4000/feed/posts", {
-    //     method: "GET",
-    //     })
-    //     .then(res => res.json())
-    //     .then(data => console.log('data', data))
-    
-
-
 
 
     useEffect(() => {
@@ -68,11 +50,14 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
     const handleDeletePost = async (id) => {
 
         try {
-            await fetch('http://localhost:5000/posts/' + id, {
-                method: 'DELETE'
+            // console.log(id)
+            await fetch('http://localhost:4000/feed/postDelete/' + id, {
+                method: 'DELETE',
             })
+            .then(res => res.json())
+            .then(data => console.log(data))
         } catch (err) {
-
+            console.log(err)
         }
         await refreshPosts()
     }
@@ -87,6 +72,7 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
     useEffect(() => {
         refreshUsers();
     }, []);
+
 
     return (
         <Container>

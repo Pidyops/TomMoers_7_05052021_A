@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -8,6 +8,7 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import { IconButton } from '@material-ui/core';
 import { PhotoCamera } from '@material-ui/icons';
 import './createPostModal.scss';
+import ImageUploader from "react-images-upload";
 // import { useHistory } from 'react-router-dom';
 
 
@@ -57,6 +58,22 @@ export default function CreatePostModal({
     setOpen(false);
   };
 
+  // Upload
+  const [pictures, setPictures] = useState([]);
+  const [imageTest, setImageTest] = useState('')
+
+  const onDrop = picture => {
+    setPictures([...pictures, picture]);
+    setImageTest(picture[0]);
+  }
+
+  // console.log(pictures)
+  // console.log({imageTest})
+
+  const formData = new FormData();
+    formData.append("image", imageTest);
+  
+
   const handleSubmitPost = (e) => {
     e.preventDefault();
     // setTitleError(false)
@@ -74,7 +91,7 @@ export default function CreatePostModal({
     fetch('http://localhost:4000/feed/post', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ description, image, date, userId, like, comment })
+      body: JSON.stringify({ description, pictures, imageTest, date, userId, like, comment })
     })
       .then(() => {
         onPostCreated(); //refreshPosts()
@@ -82,6 +99,10 @@ export default function CreatePostModal({
         setDescription('');
       })
   }
+
+
+
+  
 
   return (
     <div>
@@ -120,7 +141,7 @@ export default function CreatePostModal({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
-              <div>
+              {/* <div>
                 <input
                   accept="image/*" className={classes.input} id="icon-button-file" type="file"
                   value={image} onChange={(e) => setImage(e.target.value)}
@@ -130,7 +151,20 @@ export default function CreatePostModal({
                     <PhotoCamera />
                   </IconButton>
                 </label>
-              </div>
+              </div> */}
+
+              <ImageUploader
+                // {...props}
+                withIcon={true}
+                onChange={onDrop}
+                imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+                maxFileSize={5242880}
+                withPreview={true}
+              />
+
+
+
+
               <Button
                 type='submit'
                 color='secondary'

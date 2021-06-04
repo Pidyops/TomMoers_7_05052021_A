@@ -44,11 +44,6 @@ export default function AvatarModal({ userConnected }) {
     setOpen(false);
   };
 
-
-
-  // console.log(userConnected)
-  // console.log(id)
-
   const [userFirstName, setUserFirstName] = useState('')
   const [userLastName, setUserLastName] = useState('')
   const [userEmail, setUserEmail] = useState('')
@@ -129,40 +124,6 @@ export default function AvatarModal({ userConnected }) {
         ).then(() => handleClose()
         ).then(() => history.push('/'))
         
-    // deleteUserById(id)
-
-
-
-    // const getSinglePost = (id) => getPost(id) //res is what we get
-    // .then(data => setPost(data))
-  
-    // useEffect(() => {
-    //   getSinglePost(id)
-    // },[]);
-
-  // useEffect(() => {
-    
-  //   axios.get('http://localhost:5000/accounts/' + id)
-  //   .then(function (response) {
-  //     // handle success
-
-  //     console.log(response);
-  //   })
-  //   .catch(function (error) {
-  //     // handle error
-  //     console.log(error);
-  //   })
-  //   .then(function (response) {
-  //     setUser(response)
-  //   });
-
-  // }, []);
-  // console.log(user)
-
-
-
-
-
   return (
     <div>
       <button type="button" onClick={handleOpen}>

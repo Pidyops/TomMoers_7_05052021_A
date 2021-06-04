@@ -76,7 +76,14 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
         console.log('then if')
         console.log({res})
         console.log(res.token)
-        sessionStorage.setItem('token', res.token)
+        sessionStorage.setItem('jwt', res.token)
+
+        sessionStorage.setItem('userConnectedId', 'test')
+        sessionStorage.setItem('userConnectedId', res.userConnected.id)
+        sessionStorage.setItem('userConnectedFirstName', res.userConnected.first_name)
+        sessionStorage.setItem('userConnectedLastName', res.userConnected.last_name)
+        sessionStorage.setItem('userConnectedEmail', res.userConnected.email)
+
 
         handleClose();
         history.push('/Forum')
@@ -99,7 +106,7 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
     })
   }
 
-  // console.log({responseMessage})
+  console.log({responseMessage})
 
   const body = (
     // <div style={modalStyle} className={classes.paper}  >

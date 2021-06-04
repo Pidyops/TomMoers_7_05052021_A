@@ -1,6 +1,6 @@
 import SignIn from '../components/signIn/SignIn'
 
-const Auth = ({authValues, setAuthValues}) => {
+const Auth = ({authValues, setAuthValues, setUserConnected, userConnected}) => {
 
 
 
@@ -9,6 +9,8 @@ const Auth = ({authValues, setAuthValues}) => {
             <SignIn 
                 authValues={authValues} 
                 setAuthValues={setAuthValues} 
+                setUserConnected={setUserConnected}
+                userConnected={userConnected}
             />
         </div>
     )

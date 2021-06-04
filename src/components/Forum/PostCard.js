@@ -24,15 +24,26 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
+  
+
+
+  
+
 const PostCard = ({ 
     post, handleDeletePost, image, 
     setImage, userConnected, refreshPosts
-     
     }) => {
     const classes = useStyles();
 
+    console.log('postCard: userConnected', userConnected)
+
+    const userConnectedId = sessionStorage.getItem("userConnectedId");
+    // console.log(userConnectedId)
+    // console.log(post.user_id)
+
     return (
         <div className='card'>
+        <div>userConnected {userConnected.id}</div>
         <Card className='card-item' elevation={3}>
             <div className="card-item__header">
                 <div className="card-item__header__left">
@@ -47,7 +58,8 @@ const PostCard = ({
                 </div>
                 </div>
                 
-                {userConnected.id === post.userId &&
+                {/* {userConnected.id === post.userId && */}
+                {userConnectedId == post.user_id &&
                     <div className="card-item__header__right">
                         <div className="card-item__header__right--edit">
                             {/* <EditOutlined /> */}
