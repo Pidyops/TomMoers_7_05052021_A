@@ -1,10 +1,11 @@
 import { ThumbDownAltOutlined, ThumbUpAltOutlined } from '@material-ui/icons'
 import './like.scss'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function Like(props) {
-    const [like, setLike] = useState(props.numberOfLikes)
+    const [like, setLike] = useState(0)
+    let userId = sessionStorage.getItem('userConnectedId')
 
     const [isLiked, setIsLiked] = useState(false)
     const [isDisliked, setIsDisliked] = useState(false)
@@ -31,6 +32,61 @@ export default function Like(props) {
         }
         
     }
+
+    // console.log(like)
+    // console.log(props.post.id)
+
+    const [likeBoolean, setLikeBoolean] = useState(undefined)
+
+    // if (like === -1) {
+    //     setLikeBoolean(false) 
+    // } else if (like === 0) {
+    //     setLikeBoolean(undefined)
+    // } else if (like ===1) {
+    //     setLikeBoolean(true)
+    // } else {
+    //     console.log('like error')
+    // }
+
+
+    // const likeToFetch = () => {
+    //     if (like === -1) {
+    //         setLikeBoolean(false) 
+    //     } else if (like ===1) {
+    //         setLikeBoolean(true)
+    //     } else {
+    //         console.log('like error')
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     likeToFetch()
+    // }, []);
+
+    // console.log('like Boolean', likeBoolean)
+    
+
+
+
+    let body = {
+        userId: userId,
+        postId: props.post.id,
+        like: like
+    }
+
+    console.log(body)
+
+    fetch('http://localhost:4000/feed/likes', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(body)
+    })
+    .then(res => res.json())
+    .then((res) => {
+        console.log(res)
+    //   onPostCreated(); //refreshPosts()
+    })
+
 
     return (
 

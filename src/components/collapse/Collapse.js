@@ -42,6 +42,8 @@ export default function RecipeReviewCard(props) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+
   
   
   // const storage = 
@@ -62,7 +64,7 @@ export default function RecipeReviewCard(props) {
     >
       
       <CardActions className='collapse__action'>
-        <Like className='collapse__action--like' numberOfLikes={props.numberOfLikes} />
+        <Like className='collapse__action--like' numberOfLikes={props.numberOfLikes} post={props.post} />
 
         <div className='collapse__action--comments'>
             <span className="card-item__footer__left--comments--number">{numberOfComments}</span>

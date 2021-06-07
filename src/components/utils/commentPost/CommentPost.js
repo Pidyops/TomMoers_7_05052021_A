@@ -7,44 +7,41 @@ import FeedBody from '../feedBody/FeedBody'
 // import './commentCard.scss'
 
 
-export default function CommentPost({ userConnected, post, refreshPosts}) {
+export default function CommentPost({ post, refreshPosts}) {
     // console.log(userConnected)
     const m = moment().valueOf()
+
+    const userConnected = sessionStorage.getItem('userConnectedId')
 
     const [singlePost, setSinglePost] = useState (post)
     // console.log(singlePost)
 
     const [commentDesc, setCommentDesc] = useState('')
 
-
+    console.log(userConnected)
+    console.log(post)
 
 
     // API 
-    // PATCH post ______________________________________________________
-
+    // POST FETCH ______________________________________________________
     function sendComment() {
         // e.preventDefault();
         console.log('Le lien a été cliqué.');
 
-        if ( !singlePost.comments ) {
-            singlePost.comments = []
-
+        const body = {
+            commentDesc : commentDesc,
+            postId: post.id,
+            userId: userConnected,
         }
 
-        singlePost.comments.push({ 
-            commentDesc : commentDesc,
-            id : m,
-            userId: userConnected.id,
-            authorFirstName: userConnected.firstName,
-            authorLastName: userConnected.lastName,
-            authorImage: userConnected.image
-        })
+        console.log(body)
         
         
-        fetch('http://localhost:5000/posts/' + post.id, {
-            method: 'PATCH',
+        // fetch('http://localhost:5000/posts/' + post.id, {
+        fetch('http://localhost:4000/feed/comments', {
+            method: 'POST',
             headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({ comments : singlePost.comments })
+            body: JSON.stringify(body)
         }).then(() => {
             refreshPosts()
             setCommentDesc('')
@@ -126,3 +123,48 @@ export default function CommentPost({ userConnected, post, refreshPosts}) {
         </div>
     )
 }
+
+
+
+
+
+
+
+// function sendComment() {
+//     // e.preventDefault();
+//     console.log('Le lien a été cliqué.');
+
+//     if ( !singlePost.comments ) {
+//         singlePost.comments = []
+
+//     }
+
+//     singlePost.comments.push({ 
+//         commentDesc : commentDesc,
+//         id : m,
+//         userId: userConnected.id,
+//         authorFirstName: userConnected.firstName,
+//         authorLastName: userConnected.lastName,
+//         authorImage: userConnected.image
+//     })
+
+//     const body = {
+//         userId: userConnected.id,
+//         commentDesc : commentDesc,
+//         authorFirstName: userConnected.firstName,
+//         authorLastName: userConnected.lastName,
+//         authorImage: userConnected.image
+//     }
+    
+    
+//     fetch('http://localhost:5000/posts/' + post.id, {
+//         method: 'PATCH',
+//         headers: { 'content-type': 'application/json' },
+//         body: JSON.stringify({ comments : singlePost.comments })
+//     }).then(() => {
+//         refreshPosts()
+//         setCommentDesc('')
+//     })
+
+    
+// }
