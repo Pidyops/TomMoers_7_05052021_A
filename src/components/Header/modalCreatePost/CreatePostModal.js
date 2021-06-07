@@ -1,17 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Button from '@material-ui/core/Button';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import { IconButton } from '@material-ui/core';
-import { PhotoCamera } from '@material-ui/icons';
 import './createPostModal.scss';
 import ImageUploader from "react-images-upload";
-// import { useHistory } from 'react-router-dom';
-
-
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -45,8 +40,6 @@ export default function CreatePostModal({
 }) {
 
 
-
-
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -63,19 +56,25 @@ export default function CreatePostModal({
   const [imageTest, setImageTest] = useState('')
 
   const onDrop = picture => {
-    setPictures([...pictures, picture]);
+    // setPictures([...pictures, picture]);
     setImageTest(picture[0]);
   }
 
-  // console.log(pictures)
-  // console.log({imageTest})
+  // console.log('pictures',pictures)
+  // console.log({imageTest})  
 
-  const formData = new FormData();
-    formData.append("image", imageTest);
-  
-
-  const handleSubmitPost = (e) => {
+  const handleSubmitPost = async (e) => {
     e.preventDefault();
+
+    let myHeader = new Headers({})
+    myHeader.append("jwt", sessionStorage.jwt)
+    myHeader.append("id", sessionStorage.userConnectedId)
+    console.log(myHeader)
+
+    const formData = new FormData();
+    formData.append("image", imageTest);
+    formData.append("description", description);
+    formData.append("userId", userId);
     // setTitleError(false)
     // setDetailsError(false)
 
@@ -88,21 +87,35 @@ export default function CreatePostModal({
     // if (title && details)
 
     // fetch('http://localhost:5000/posts', {
-    fetch('http://localhost:4000/feed/post', {
+    // fetch('http://localhost:4000/feed/post', {
+    //   method: 'POST',
+    //   headers: { 'content-type': 'application/json' },
+    //   body: JSON.stringify({ description, date, userId, like, comment })
+    // })
+    //   // .then(() => {
+    //   //   onPostCreated(); //refreshPosts()
+    //   //   handleClose();
+    //   //   setDescription('');
+
+    //   // })
+
+
+      
+    const res = await fetch("http://localhost:4000/feed/post",{
       method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ description, pictures, imageTest, date, userId, like, comment })
+      headers: myHeader,
+      body: formData
+    }).then(res => res.json())
+    // alert(JSON.stringify(res))
+
+    .then(() => {
+      onPostCreated(); //refreshPosts()
+      handleClose();
+      setDescription('');
+      setImageTest('')
     })
-      .then(() => {
-        onPostCreated(); //refreshPosts()
-        handleClose();
-        setDescription('');
-      })
+
   }
-
-
-
-  
 
   return (
     <div>
@@ -162,6 +175,11 @@ export default function CreatePostModal({
                 withPreview={true}
               />
 
+              {/* <form onSubmit={handleSubmit((onSubmit))}>
+                <input ref={register} type="file" name='picture'/>
+                <button>Submit !</button>
+              </form> */}
+
 
 
 
@@ -179,3 +197,25 @@ export default function CreatePostModal({
     </div>
   );
 }
+
+
+
+
+
+
+// import {useForm} from 'react-hook-form'
+
+  // const {register, handleSubmit } = useForm()
+
+  // const onSubmit = async (data) => {
+  //   const formData = new FormData()
+  //   formData.append('picture', data.picture[0])
+
+  //   const res = await fetch("http://localhost:4000/feed/post",{
+  //     method: 'POST',
+  //     body: formData
+  //   }).then(res => res.json())
+  //   alert(JSON.stringify(res))
+  // }
+
+

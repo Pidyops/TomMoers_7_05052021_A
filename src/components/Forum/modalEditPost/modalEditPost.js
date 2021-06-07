@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function ModalEditPost({
-   post, image
+   post, image, refreshPosts
 }) {
   // console.log(image)
   const classes = useStyles();
@@ -49,9 +49,12 @@ export default function ModalEditPost({
 
   const handleOpen = () => {
     setOpen(true);
-    fetchSingleComment(post.id)
+    // fetchSinglePost(post.id)
+    fetchSinglePost(post.id);
+    // fetchSinglePost()
+    console.log(post.id)
   };
-  console.log(post.id)
+  // console.log(post.id)
 
   const handleClose = () => {
     setOpen(false);
@@ -79,33 +82,21 @@ export default function ModalEditPost({
   // console.log(postId)
 
   // FETCH
-  // GET single comment
-  // const fetchSingleComment = (post) => getPost(post) //res is what we get
-  //   .then(data => {
-
-  //     // console.log(data)
-  //     // setPostId(post.id)
-  //     setPostDesc(data.description)
-  //     setPostImage(data.image)
-
-  //   })
-
-
-
-    const fetchSingleComment = (id) => fetch('http://localhost:4000/feed/post/' + id, {
+  // GET single Post
+    // const fetchSinglePost = (id) => fetch('http://localhost:4000/feed/post/' + id, {
+    const fetchSinglePost = () => fetch('http://localhost:4000/feed/post/' + post.id, {
       method: 'GET'
     })
-    .then(res => res.json())
+    .then(singlePost => singlePost.json())
     // .then(data => console.log('data', data))
-    .then((res) => {
-      console.log({res})
-      // setPostDesc(data.description)
-      // setPostImage(data.image)
+    .then((singlePost) => {
+      console.log({singlePost})
+      setPostDesc(singlePost.description)
     })
 
-    useEffect(() => {
-      fetchSingleComment(post.id);
-    }, []);
+    // useEffect(() => {
+    //   fetchSinglePost(post.id);
+    // }, []);
 
     // console.log(postDesc)
     // console.log(postImage)
@@ -118,12 +109,20 @@ export default function ModalEditPost({
     // API
     // PATCH user by id ______________________________________________________________
 
-    const savePostInformation = () => {
-      const body = {};
-      if (post.description !== postDesc) {
-        body.description = postDesc
-      }
+    const savePostInformation = (e) => {
+      e.preventDefault();
+      console.log('save post information')
 
+      console.log('post.desc: ',post.description)
+      console.log('post.id', post.id)
+
+      // const body = {};
+      // if (post.description !== postDesc) {
+      //   body.description = postDesc
+      // }
+
+      let body= {desc: postDesc}
+      console.log(body)
 
       const requestOptions = {
         method: 'PATCH',
@@ -131,12 +130,22 @@ export default function ModalEditPost({
         body: JSON.stringify(body)
         // body: JSON.stringify({firstName : userFirstName})
       };
-      const putPostById = () => fetch('http://localhost:5000/posts/' + post.id, requestOptions)
-        .then(response => response.json())
+      const putPostById = () => fetch('http://localhost:4000/feed/post/' + post.id, requestOptions)
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .then(()=> {
+          handleClose()
+          refreshPosts()
+        })
         // .then(data => setUserFirstName(data.firstName));
         putPostById(post.id);
+        
+
+      
     }
 
+
+    
 
 
   return (
@@ -197,3 +206,28 @@ export default function ModalEditPost({
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // FETCH
+  // GET single comment
+  // const fetchSingleComment = (post) => getPost(post) //res is what we get
+  //   .then(data => {
+
+  //     // console.log(data)
+  //     // setPostId(post.id)
+  //     setPostDesc(data.description)
+  //     setPostImage(data.image)
+
+  //   })
+  

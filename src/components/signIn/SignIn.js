@@ -56,20 +56,21 @@ const Signin = ({ authValues, setAuthValues, userConnected, setUserConnected}) =
                 if(res.token) {
                     console.log('login (token)', res)
                     sessionStorage.setItem('jwt', res.token)
-                    sessionStorage.setItem('userConnectedId', 'test')
                     
                     sessionStorage.setItem('userConnectedId', res.userConnected.id)
-                    sessionStorage.setItem('userConnectedFirstName', res.userConnected.firstName)
-                    sessionStorage.setItem('userConnectedLastName', res.userConnected.lastName)
-                    sessionStorage.setItem('userConnectedEmail', res.userConnected.email)
+                    // sessionStorage.setItem('userConnectedFirstName', res.userConnected.firstName)
+                    // sessionStorage.setItem('userConnectedLastName', res.userConnected.lastName)
+                    // sessionStorage.setItem('userConnectedEmail', res.userConnected.email)
 
-                    setUserConnected(res.userConnected)
+                    console.log(res.userConnected.id)
+                    setUserConnected(res.userConnected.id)
+                    console.log(userConnected)
                     
                     setAuthValues({
                         email: '',
                         password: ''
                         });
-                    // history.push('/Forum')
+                    history.push('/Forum')
 
                 } else {
                     console.log('login (no token)', res)
@@ -104,6 +105,10 @@ const Signin = ({ authValues, setAuthValues, userConnected, setUserConnected}) =
                     <div className="signin__wrapper__left--desc">
                         With Grouponamina Social Media, keep in touch with you collegues
                     </div>
+                    <div>
+                        {userConnected}
+                    </div>
+                    
                 </div>
 
                 <div className="signin__wrapper__right">

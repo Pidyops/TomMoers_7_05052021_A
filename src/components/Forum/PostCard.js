@@ -6,6 +6,7 @@ import { red } from '@material-ui/core/colors';
 import './card.scss'
 import ModalEditPost from './modalEditPost/modalEditPost';
 import Collapse from '../collapse/Collapse';
+import { useEffect, useState } from 'react';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -24,26 +25,70 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-  
-
-
-  
-
 const PostCard = ({ 
     post, handleDeletePost, image, 
     setImage, userConnected, refreshPosts
     }) => {
     const classes = useStyles();
 
-    console.log('postCard: userConnected', userConnected)
+    // console.log('postCard: userConnected', userConnected)
 
     const userConnectedId = sessionStorage.getItem("userConnectedId");
+
+    const [isRead, setIsRead] = useState(false)
     // console.log(userConnectedId)
     // console.log(post.user_id)
+    const handleRead = () => {
+        if (isRead === false) {
+            setIsRead(true)
+            // console.log(isRead)
+
+            let id = sessionStorage.getItem('userConnectedId')
+            // console.log(id)
+            // console.log(post.id)
+            // console.log({isRead})
+
+            let body = {
+                userId: id,
+                postId: post.id,
+                isRead: isRead
+            }
+
+            console.log(body)
+
+            fetch('http://localhost:4000/feed/read', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(body)
+            })
+            // .then(() => {
+            //   onPostCreated(); //refreshPosts()
+            // })
+
+        } else {
+            console.log('message already set as seen', isRead)
+        }
+    }
+
+
+    // console.log(userConnectedId)
+    const getReadStatus = () => 
+    fetch('http://localhost:4000/feed/read/' + userConnectedId, {
+        method: 'GET'
+    })
+        .then(res => res.json())
+        .then((res) => {
+            // console.log(res)
+        })
+
+
+    useEffect(() => {
+        getReadStatus();
+    }, []);
+
 
     return (
-        <div className='card'>
-        <div>userConnected {userConnected.id}</div>
+        <div className='card' onClick={handleRead}>
         <Card className='card-item' elevation={3}>
             <div className="card-item__header">
                 <div className="card-item__header__left">
@@ -57,13 +102,38 @@ const PostCard = ({
                     <div className="card-item__header__center--date">{post.date}</div>
                 </div>
                 </div>
+
+                <div className='card--read'>
+                {isRead === true? 
+                    <div className='card__read'>
+                         seen
+                        
+                    </div>
+                    
+                    :
+                    <div className='card__to-read'>
+                        new !
+                        
+                    </div>
+                    
+                }
+
+                {isRead === true? 
+                <div className='card__read--color'></div>
+
+                :
+                <div className='card__to-read--color'></div>
+
+                }  
+
+                </div>
                 
                 {/* {userConnected.id === post.userId && */}
                 {userConnectedId == post.user_id &&
                     <div className="card-item__header__right">
                         <div className="card-item__header__right--edit">
                             {/* <EditOutlined /> */}
-                            <ModalEditPost post={post} image={image} setImage={setImage} />
+                            <ModalEditPost post={post} image={image} setImage={setImage} refreshPosts={refreshPosts} />
                         </div>
                         <div className="card-item__header__right--delete">
                             <DeleteOutlined onClick={() => handleDeletePost(post.id)} />
@@ -80,9 +150,7 @@ const PostCard = ({
                 <img className='card-item__body--media' src={post.image} alt=""/>
             </div>
                 
-            
-            
-             
+        
             
             {/* {isLiked === false ? className='true' : 'false' }  */}
 

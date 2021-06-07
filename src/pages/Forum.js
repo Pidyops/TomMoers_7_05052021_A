@@ -25,18 +25,30 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
 
     const [posts, setPosts] = useState('')
 
-    const [users, setUsers] = useState('')
+    // const [users, setUsers] = useState('')
 
     // API 
     // GET posts ______________________________________________________
-    const refreshPosts = () => fetch('http://localhost:4000/feed/posts')
-    .then(res => res.json())
-    // .then(data => console.log('data', data))
-    .then((res) => {
-        setPosts(res)
-    })
+    // const refreshPosts = () => 
+    // fetch('http://localhost:4000/feed/posts')
+    //     .then(res => res.json())
+    //     // .then(data => console.log('data', data))
+    //     .then((res) => {
+    //         setPosts(res)
+    //     })
 
-    console.log('posts',posts)
+    // console.log('posts',posts)
+
+    console.log('userConnectedId: ', userConnectedId)
+    const refreshPosts = () => 
+    fetch('http://localhost:4000/feed/posts/' + userConnectedId, {
+        method: 'GET'
+    })
+        .then(res => res.json())
+        .then((res) => {
+            setPosts(res)
+            // console.log(res)
+        })
 
 
     useEffect(() => {
@@ -66,12 +78,12 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
 
     // API 
     // users ______________________________________________________
-    const refreshUsers = () => getUsers() //res is what we get
-    .then(data => setUsers(data)) // we then receive the data, that we store in the useState (require one function and one import)
+    // const refreshUsers = () => getUsers() //res is what we get
+    // .then(data => setUsers(data)) // we then receive the data, that we store in the useState (require one function and one import)
 
-    useEffect(() => {
-        refreshUsers();
-    }, []);
+    // useEffect(() => {
+    //     refreshUsers();
+    // }, []);
 
 
     return (
@@ -98,7 +110,8 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
                             handleDeletePost={handleDeletePost} 
                             image={image} setImage={setImage}
                             date={date}
-                            users={users}
+                            refreshPosts={refreshPosts}
+                            // users={users}
                             userConnected={userConnected}
                             // date={date} setDate={setDate}
                             // userId={userId}
