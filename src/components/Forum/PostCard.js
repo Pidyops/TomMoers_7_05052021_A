@@ -86,19 +86,19 @@ const PostCard = ({
     console.log(isRead)
 
     // console.log(userConnectedId)
-    const getReadStatus = () => 
-    fetch('http://localhost:4000/feed/read/' + userConnectedId, {
-        method: 'GET'
-    })
-        .then(res => res.json())
-        .then((res) => {
-            // console.log(res)
-        })
+    // const getReadStatus = () => 
+    // fetch('http://localhost:4000/feed/read/' + userConnectedId, {
+    //     method: 'GET'
+    // })
+    //     .then(res => res.json())
+    //     .then((res) => {
+    //         // console.log(res)
+    //     })
 
 
-    useEffect(() => {
-        getReadStatus();
-    }, []);
+    // useEffect(() => {
+    //     getReadStatus();
+    // }, []);
 
 
     // const dateSql = post.date

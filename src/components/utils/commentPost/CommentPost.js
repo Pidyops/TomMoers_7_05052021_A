@@ -18,8 +18,8 @@ export default function CommentPost({ post, refreshPosts}) {
 
     const [commentDesc, setCommentDesc] = useState('')
 
-    console.log(userConnected)
-    console.log(post)
+    // console.log(userConnected)
+    // console.log(post)
 
 
     // API 
@@ -34,7 +34,7 @@ export default function CommentPost({ post, refreshPosts}) {
             userId: userConnected,
         }
 
-        console.log(body)
+        // console.log(body)
         
         
         // fetch('http://localhost:5000/posts/' + post.id, {

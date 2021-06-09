@@ -2,10 +2,80 @@ import { Card } from "@material-ui/core";
 import "./comment.scss";
 import CommentPost from "../utils/commentPost/CommentPost";
 import CommentCard from "../utils/commentCard/CommentCard";
+import { useEffect, useState } from "react";
 const axios = require("axios");
 
 export default function Comment(props) {
-  let id = 3;
+
+
+console.log(props.post.id)
+
+
+    const [comments, setComments] = useState ('')
+
+
+    const getComments = () => {
+    fetch('http://localhost:4000/feed/comments/' + props.post.id, {
+        method: 'GET'
+    })
+        .then(res => res.json())
+        .then((res) => {
+            setComments(res)
+            // console.log(res)
+            console.log(res)
+        })
+    }
+
+    useEffect(() => {
+        getComments();
+    }, []);
+
+    // comments.map(comment => (
+    //     <div key={comment.id}>
+            
+    //     </div>
+  
+
+    // console.log(singlePost.comments)
+    // singlePost.comments.map(comment => (
+    //     <div> comment</div>
+    // ))
+
+    // console.log(singlePost.comments)
+
+
+
+  // console.log(post)
+
+  return (
+    <div className="comment">
+      <Card className="comment-card">
+        {/* <div className="comment-card__post">
+            <FeedHeader date={post.date} />
+            <FeedBody desc={post.description} src={post.image} />
+            <FeedInteraction like={post.like} comment={post.comment} />
+        </div> */}
+
+        <hr className="comment-card--hr" />
+
+        <div className="comment-cart__comment">
+          <CommentPost
+            userConnected={props.userConnected}
+            post={props.post}
+            // commentDesc={commentDesc}
+            refreshPosts={props.refreshPosts}
+            // setCommentDesc={setCommentDesc}
+          />
+          <CommentCard />
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+
+
+
   // console.log(props.post)
 
   // const [post, setPost] = useState('')
@@ -25,83 +95,3 @@ export default function Comment(props) {
   //     headers: { 'content-type': 'application/json' },
   //     body: JSON.stringify({ commentDesc })
   //   })
-
-  // axios.post('http://localhost:5000/posts/4', {
-  //     test: 'test'
-  //   })
-  //   .then(function (response) {
-  //     console.log(response);
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  //   });
-
-  // axios.get('http://localhost:5000/posts/4')
-  // .then(function (response) {
-  // // handle success
-  // console.log(response);
-  // })
-  // .catch(function (error) {
-  // // handle error
-  // console.log(error);
-  // })
-  // .then(function () {
-  // // always executed
-  // });
-
-  // API
-  // GET post ______________________________________________________
-  const handleSubmitComment = (id) => {
-    console.log("hi");
-    // e.preventDefault(); ???????
-    // setTitleError(false)
-    // setDetailsError(false)
-
-    // if (title == '') {
-    //   setTitleError(true)
-    // }
-    // if (details == '') {
-    //   setDetailsError(true)
-    // }
-    // if (title && details)
-    // fetch('http://localhost:5000/posts/' + id, {
-    //   method: 'POST',
-    //   headers: { 'content-type': 'application/json' },
-    //   body: JSON.stringify({ commentDesc })
-    // })
-    //   .then(() => {
-
-    //   })
-  };
-
-  // console.log(post)
-
-  return (
-    <div className="comment">
-      <Card className="comment-card">
-        {/* <div className="comment-card__post">
-                       
-                        <FeedHeader date={post.date} />
-
-                        <FeedBody desc={post.description} src={post.image} />
-
-                        <FeedInteraction like={post.like} comment={post.comment} />
-                    </div> */}
-
-        <hr className="comment-card--hr" />
-
-        <div className="comment-cart__comment">
-          <CommentPost
-            userConnected={props.userConnected}
-            post={props.post}
-            // commentDesc={commentDesc}
-            handleSubmitComment={handleSubmitComment}
-            refreshPosts={props.refreshPosts}
-            // setCommentDesc={setCommentDesc}
-          />
-          <CommentCard />
-        </div>
-      </Card>
-    </div>
-  );
-}
