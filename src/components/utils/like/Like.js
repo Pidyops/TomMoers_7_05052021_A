@@ -4,7 +4,8 @@ import './like.scss'
 import React, { useEffect, useState } from 'react'
 
 export default function Like(props) {
-    const [like, setLike] = useState(0)
+    const [like, setLike] = useState(props.post.likes_sum)
+
     let userId = sessionStorage.getItem('userConnectedId')
 
     const [isLiked, setIsLiked] = useState(false)
@@ -15,9 +16,11 @@ export default function Like(props) {
             setLike(like+2)
             setIsLiked(true)
             setIsDisliked(false)
+
         } else {
             setLike(isLiked ? like-1 : like+1)
             setIsLiked(!isLiked)
+
         }
     }
 
@@ -26,17 +29,84 @@ export default function Like(props) {
             setLike(like-2)
             setIsLiked(false)
             setIsDisliked(true)
+
         } else {
             setLike(isDisliked ? like+1 : like-1)
             setIsDisliked(!isDisliked)
+
         }
         
     }
+    const postLikes = () => {
 
-    // console.log(like)
-    // console.log(props.post.id)
+        let body = {
+            userId: userId,
+            postId: props.post.id,
+            like: like
+        }
+    
+        console.log(body)
+    
+        fetch('http://localhost:4000/feed/likes', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(body)
+        })
+        .then(res => res.json())
+        .then((res) => {
+            console.log(res)
+        //   onPostCreated(); //refreshPosts()
+        })
+    
+    }
+    
+    useEffect(() => {
+        postLikes()
+    }, [like]);
 
-    const [likeBoolean, setLikeBoolean] = useState(undefined)
+
+
+    // const checkLikes =  () => { 
+    //     let numberOfLikes = 0
+    
+    //     if (!props.post.comments_count) {
+    //         numberOfLikes = 0
+    //     } else {
+    //         numberOfLikes = props.post.comments_count
+    //     }
+    
+
+    // }
+
+    // useEffect(() => {
+    //     checkLikes();
+    // }, [props.post.comments_count]);
+
+
+
+    
+
+
+    return (
+        <div className="card-item__footer__left">
+            <span onClick={likeHandler} ><ThumbUpAltOutlined 
+                className={isLiked ? 'like-active' : ''}
+            /></span>
+            <span className="card-item__footer__left--likes">{like}</span>
+            <span onClick={dislikeHandler} ><ThumbDownAltOutlined className={isDisliked ? 'like-active' : ''} /></span>
+        </div>
+            
+            
+
+    )
+}
+
+
+
+
+
+
+    // const [likeBoolean, setLikeBoolean] = useState(undefined)
 
     // if (like === -1) {
     //     setLikeBoolean(false) 
@@ -64,42 +134,3 @@ export default function Like(props) {
     // }, []);
 
     // console.log('like Boolean', likeBoolean)
-    
-
-
-
-    let body = {
-        userId: userId,
-        postId: props.post.id,
-        like: like
-    }
-
-    console.log(body)
-
-    fetch('http://localhost:4000/feed/likes', {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(body)
-    })
-    .then(res => res.json())
-    .then((res) => {
-        console.log(res)
-    //   onPostCreated(); //refreshPosts()
-    })
-
-
-    return (
-
-
-        <div className="card-item__footer__left">
-            <span onClick={likeHandler} ><ThumbUpAltOutlined 
-                className={isLiked ? 'like-active' : ''}
-            /></span>
-            <span className="card-item__footer__left--likes">{ like }</span>
-            <span onClick={dislikeHandler} ><ThumbDownAltOutlined className={isDisliked ? 'like-active' : ''} /></span>
-        </div>
-            
-            
-
-    )
-}

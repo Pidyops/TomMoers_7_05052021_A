@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './avatarModal.scss';
+// import './avatarModal.scss';
 // import { userConnected } from '../../api/GlobalState'
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -30,9 +30,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AvatarModal({ userConnected }) {
+export default function EditProfile({ userConnected }) {
   const classes = useStyles();
-  const history = useHistory()
+
 
   const [open, setOpen] = React.useState(false);
 
@@ -44,26 +44,13 @@ export default function AvatarModal({ userConnected }) {
     setOpen(false);
   };
 
-  const [userFirstName, setUserFirstName] = useState('eh')
-  const [userLastName, setUserLastName] = useState('e')
-  const [userEmail, setUserEmail] = useState('e')
-  const [userPassword, setUserPassword] = useState('')
-  const [userPassword2, setUserPassword2] = useState('')
+  const [userFirstName, setUserFirstName] = useState('')
+  const [userLastName, setUserLastName] = useState('')
+  const [userEmail, setUserEmail] = useState('')
   const [userImage, setUserImage] = useState('')
 
   let id= sessionStorage.getItem('userConnectedId')
 
-  // console.log({id})
-
-  // const fetchSingleUser = (id) => getUser(id) //res is what we get
-  //   .then(data =>{
-
-  //     setUserFirstName(data.firstName)
-  //     setUserLastName(data.lastName)
-  //     setUserEmail(data.email)
-  //     setUserImage(data.image)
-  //     }) // we then receive the data, that we store in the useState (require one function and one import)
-  
   const fetchSingleUser = (id) => fetch('http://localhost:4000/auth//user/' + id, {
     method: 'GET'
   })
@@ -75,14 +62,11 @@ export default function AvatarModal({ userConnected }) {
     setUserLastName(singleUser.last_name)
     setUserEmail(singleUser.email)
   //     setUserImage(data.image)
-
   })
-
 
     useEffect(() => {
       fetchSingleUser(id);
     }, []);
-
 
 
     // console.log(userFirstName)
@@ -92,7 +76,6 @@ export default function AvatarModal({ userConnected }) {
     
     // API
     // PATCH user by id ______________________________________________________________
-
     const saveUserInformation = () => {
       const body = {};
       if (userConnected.firstName !== userFirstName) {
@@ -120,38 +103,16 @@ export default function AvatarModal({ userConnected }) {
         .then(response => response.json())
         // .then(data => setUserFirstName(data.firstName));
         putUserById(id);
+        handleClose();
     }
-    
-
-        const deleteUserById = async () => {
-          try {
-              // console.log(id)
-              await fetch('http://localhost:4000/auth/userDelete/' + id, {
-                  method: 'DELETE',
-              })
-              .then(res => res.json())
-              .then(data => console.log(data))
-              .then(() => {
-                setUserFirstName('')
-                setUserLastName('')
-                setUserEmail('')
-                sessionStorage.setItem('jwt', '')
-                sessionStorage.setItem('userConnectedId', '')
-                handleClose()
-                history.push('/')
-              })
-              // .then
-          } catch (err) {
-              console.log(err)
-          }
-
-      }
+  
         
   return (
     <div>
-      <button type="button" onClick={handleOpen}>
-        <ImageAvatars alt="Remy Sharp" src='static/images/avatar/1.jpg' />
-      </button>
+      <div type="button" onClick={handleOpen}>
+        Edit Profile
+      </div>
+
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -208,32 +169,9 @@ export default function AvatarModal({ userConnected }) {
                     value={userEmail}
                     onChange={(e) => setUserEmail(e.target.value)}
                   />
-                      
-                  <InputPassword 
-                    className="avatar-modal__form--input" 
-                    htmlFor='password2'
-                    id='password'
-                    name='password'
-                    text='Password'
-                    
-                    authValues={userPassword} 
-                    handleAuthChange={(e) => setUserPassword(e.target.value)}
-                    labelWidth={80}   
-                  />
-
-                  <InputPassword 
-                    className="avatar-modal__form--input" 
-                    htmlFor='password2'
-                    id='password2'
-                    name='password2'
-                    text='Confirm password'
-                    authValues={userPassword2} 
-                    handleAuthChange={(e) => setUserPassword2(e.target.value)}
-                    labelWidth={140}   
-                  />
+                  
                   
                   <div className="avatar-modal__form--btn">
-                    <ButtonLarge variant='outlined' color='error' text='Delete account' onClick={deleteUserById}/>
                     <ButtonLarge color='primary' text='Save information' onClick={saveUserInformation}/>
                   </div>
                   
@@ -245,19 +183,3 @@ export default function AvatarModal({ userConnected }) {
     </div>
   );
 }
-
-
-
-
-
-
-// const requestOptions = {
-//   method: 'PATCH',
-//   headers: { 'Content-Type': 'application/json' },
-//   body: JSON.stringify(body)
-//   // body: JSON.stringify({firstName : userFirstName})
-// };
-// const putUserById = () => fetch('http://localhost:5000/Accounts/' + id, requestOptions)
-//   .then(response => response.json())
-//   // .then(data => setUserFirstName(data.firstName));
-//   putUserById(id);

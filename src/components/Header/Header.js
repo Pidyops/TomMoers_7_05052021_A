@@ -2,6 +2,7 @@
 import ButtonSizes from './ButtonSizes'
 import AvatarModal from '../AvatarModal/AvatarModal'
 import CreatePostModal from './modalCreatePost/CreatePostModal'
+import ProfileMenu from './ProfileMenu'
 
 
 const Header = ({ date, comment, authValues, setAuthValues, description, setDescription, image, setImage, onPostCreated, userId, userConnected, like }) => {
@@ -29,11 +30,13 @@ const Header = ({ date, comment, authValues, setAuthValues, description, setDesc
                     date={date} userId={userId}
                     
                 />
-                <AvatarModal
+
+                <ProfileMenu 
                     authValues={authValues}
                     setAuthValues={setAuthValues}
                     userConnected={userConnected}
                 />
+
             </div>
         </header>
     )

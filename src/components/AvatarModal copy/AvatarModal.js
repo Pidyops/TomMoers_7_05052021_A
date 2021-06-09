@@ -122,8 +122,31 @@ export default function AvatarModal({ userConnected }) {
         putUserById(id);
     }
     
+      
+    // const deleteUserById = () => 
+    //   fetch('http://localhost:4000/userDelete/' + id, { method: 'DELETE' })
+    //     .then(() => console.log('Delete successful'))
+    //     // .then(() => {
+    //     //   setUserFirstName(''),
+    //     //   setUserLastName(''),
+    //     //   setUserEmail(''),
+    //     //   setUserImage(''),
+    //     //   setUserPassword(''),
+    //     //   setUserPassword2('')
+    //     // })
+    //     .then(() => 
+    //       setUserFirstName(''),
+    //       setUserLastName(''),
+    //       setUserEmail(''),
+    //       setUserImage(''),
+    //       setUserPassword(''),
+    //       setUserPassword2('')
+    //     ).then(() => handleClose()
+        // ).then(() => history.push('/'))
 
         const deleteUserById = async () => {
+          // console.log('148',id)
+          // console.log('http://localhost:4000/userDelete/' + id)
           try {
               // console.log(id)
               await fetch('http://localhost:4000/auth/userDelete/' + id, {

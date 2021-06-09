@@ -1,0 +1,25 @@
+.avatar-modal {
+  //   top: 50%;
+  //   left: 50%;
+  //   transform: translate(-50%, -50%);
+  h2 {
+    color: #607d8b;
+  }
+  &--hr {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+
+    &--input {
+    }
+    &--btn {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

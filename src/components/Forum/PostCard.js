@@ -36,30 +36,43 @@ const PostCard = ({
     const userConnectedId = sessionStorage.getItem("userConnectedId");
 
     const [isRead, setIsRead] = useState(false)
+
+    const readStatus = () => {
+        if (post.read_status ===0 || post.read_status == undefined ) {
+            console.log('not read')
+        } else if (post.read_status === 1) {
+            console.log('to read')
+            setIsRead(true)
+        } else {
+            console.log('status undefined -> not read')
+        }
+    }
+
+    useEffect(() => {
+        readStatus();
+    }, []);
     // console.log(userConnectedId)
     // console.log(post.user_id)
-    const handleRead = () => {
+    const handleRead = async () => {
+
         if (isRead === false) {
-            setIsRead(true)
-            // console.log(isRead)
+            setIsRead(true);
 
             let id = sessionStorage.getItem('userConnectedId')
-            // console.log(id)
-            // console.log(post.id)
-            // console.log({isRead})
 
             let body = {
-                userId: id,
-                postId: post.id,
-                isRead: isRead
+                    userId: id,
+                    postId: post.id,
+                    isRead: true
             }
-
+            
+        
             console.log(body)
 
             fetch('http://localhost:4000/feed/read', {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
-            body: JSON.stringify(body)
+            body: JSON.stringify(body) 
             })
             // .then(() => {
             //   onPostCreated(); //refreshPosts()
@@ -70,6 +83,7 @@ const PostCard = ({
         }
     }
 
+    console.log(isRead)
 
     // console.log(userConnectedId)
     const getReadStatus = () => 
@@ -87,6 +101,10 @@ const PostCard = ({
     }, []);
 
 
+    // const dateSql = post.date
+
+
+
     return (
         <div className='card' onClick={handleRead}>
         <Card className='card-item' elevation={3}>
@@ -95,7 +113,7 @@ const PostCard = ({
                     <Avatar aria-label="recipe" className={classes.avatar}/>
                     
                     <div className="card-item__header__center">
-                    <div className="card-item__header__center--name"> Bougou Dji
+                    <div className="card-item__header__center--name"> {post.users_concat}
                         {/* {users.filter(u=>u.id === post.userId)[0].firstName}&nbsp;
                         {users.filter(u=>u.id === post.userId)[0].lastName} */}
                     </div>

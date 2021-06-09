@@ -48,9 +48,11 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
         .then((res) => {
             setPosts(res)
             // console.log(res)
+            console.log(res)
         })
 
 
+    
     useEffect(() => {
         refreshPosts();
     }, []);
@@ -118,6 +120,7 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
                             // like={like}
                             // comment={comment}
                             refreshPosts={refreshPosts}
+                            
                     /></div>
                 ))}
 

@@ -52,8 +52,8 @@ export default function RecipeReviewCard(props) {
   // console.log(props.post.comments)
   let numberOfComments = 0
 
-  if( props.post.comments != undefined) {
-    numberOfComments = props.post.comments.length
+  if( props.post.comments_count) {
+    numberOfComments = props.post.comments_count
   }
 
 
@@ -68,7 +68,8 @@ export default function RecipeReviewCard(props) {
 
         <div className='collapse__action--comments'>
             <span className="card-item__footer__left--comments--number">{numberOfComments}</span>
-            <span className="card-item__footer__left--comments--comments"> Comments </span>  
+            
+            <span className="card-item__footer__left--comments--comments">{numberOfComments <= 1? ' Comment' : ' comments'}</span>  
             <IconButton
                 className={clsx(classes.expand, {
                     [classes.expandOpen]: expanded,
