@@ -9,9 +9,12 @@ import moment from 'moment';
 export const Forum = ({ authValues, setAuthValues, userConnected }) => {
     const randomTo10 = Math.floor(Math.random()*5)
     const time = moment().format('MMMM Do YYYY, h:mm:ss a')
+    // const time = moment.unix(1622716545).fromNow();
+    // var day = moment.unix(1318781876).utc();
     // const time = 'time'
     
     // console.log(time)
+    // console.log(day)
 
     const [description, setDescription] = useState('')
     const [image, setImage] = useState('')
@@ -48,19 +51,15 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
         .then((res) => {
             setPosts(res)
             // console.log(res)
-            console.log(res)
+            console.log('posts', res)
         })
 
-
-    
     useEffect(() => {
         refreshPosts();
     }, []);
 
+
     // DELETE post ______________________________________________________
-
-
-
     const handleDeletePost = async (id) => {
 
         try {
@@ -75,17 +74,6 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
         }
         await refreshPosts()
     }
-
-
-
-    // API 
-    // users ______________________________________________________
-    // const refreshUsers = () => getUsers() //res is what we get
-    // .then(data => setUsers(data)) // we then receive the data, that we store in the useState (require one function and one import)
-
-    // useEffect(() => {
-    //     refreshUsers();
-    // }, []);
 
 
     return (
@@ -120,7 +108,7 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
                             // like={like}
                             // comment={comment}
                             refreshPosts={refreshPosts}
-                            
+
                     /></div>
                 ))}
 

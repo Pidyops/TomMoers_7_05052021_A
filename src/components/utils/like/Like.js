@@ -5,11 +5,28 @@ import React, { useEffect, useState } from 'react'
 
 export default function Like(props) {
     const [like, setLike] = useState(props.post.likes_sum)
+    let userIsLiked = props.post.is_liked
+    // console.log(userIsLiked)
 
     let userId = sessionStorage.getItem('userConnectedId')
 
     const [isLiked, setIsLiked] = useState(false)
     const [isDisliked, setIsDisliked] = useState(false)
+
+    const uploadUserLike = () => {
+        if (userIsLiked  === 1) {
+            setIsLiked(true)
+        } else if(userIsLiked === -1) {
+            setIsDisliked(true)
+        } else {
+            // console.log('the like is neutrale')
+        }
+    }
+    useEffect(() => {
+        uploadUserLike()
+    }, [userIsLiked]);
+
+    // console.log(isLiked, isDisliked)
 
     const likeHandler = () => {
         if (isDisliked === true) {
@@ -45,7 +62,7 @@ export default function Like(props) {
             like: like
         }
     
-        console.log(body)
+        // console.log(body)
     
         fetch('http://localhost:4000/feed/likes', {
         method: 'POST',
@@ -54,7 +71,7 @@ export default function Like(props) {
         })
         .then(res => res.json())
         .then((res) => {
-            console.log(res)
+            // console.log(res)
         //   onPostCreated(); //refreshPosts()
         })
     
@@ -90,10 +107,10 @@ export default function Like(props) {
     return (
         <div className="card-item__footer__left">
             <span onClick={likeHandler} ><ThumbUpAltOutlined 
-                className={isLiked ? 'like-active' : ''}
+                className={isLiked ? 'like--active' : ''}
             /></span>
             <span className="card-item__footer__left--likes">{like}</span>
-            <span onClick={dislikeHandler} ><ThumbDownAltOutlined className={isDisliked ? 'like-active' : ''} /></span>
+            <span onClick={dislikeHandler} ><ThumbDownAltOutlined className={isDisliked ? 'like--active' : ''} /></span>
         </div>
             
             

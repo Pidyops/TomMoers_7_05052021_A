@@ -68,10 +68,10 @@ export default function ChangePassword({ userConnected }) {
   const [currentPassword , setCurrentPassword] = useState('')
   let currentToken = sessionStorage.getItem('jwt')
 
-    console.log(id)
-    console.log(newPassword)
-    console.log(newPassword2)
-    console.log(currentPassword)
+    // console.log(id)
+    // console.log(newPassword)
+    // console.log(newPassword2)
+    // console.log(currentPassword)
 
     
     // API
@@ -102,7 +102,7 @@ export default function ChangePassword({ userConnected }) {
                 setNewPassword('')
                 setNewPassword2('')
                 setCurrentPassword('')
-                console.log(res)
+                // console.log(res)
                 // console.log(res.newToken)
 
                 

@@ -7,6 +7,7 @@ import './card.scss'
 import ModalEditPost from './modalEditPost/modalEditPost';
 import Collapse from '../collapse/Collapse';
 import { useEffect, useState } from 'react';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -30,6 +31,11 @@ const PostCard = ({
     setImage, userConnected, refreshPosts
     }) => {
     const classes = useStyles();
+
+    const dateSQL = post.publish_date
+    console.log(dateSQL)
+    const timeFromNow = moment.unix(dateSQL).fromNow();
+    console.log(timeFromNow)
 
     // console.log('postCard: userConnected', userConnected)
 
@@ -83,7 +89,7 @@ const PostCard = ({
         }
     }
 
-    console.log(isRead)
+    // console.log(isRead)
 
     // console.log(userConnectedId)
     // const getReadStatus = () => 
@@ -117,7 +123,7 @@ const PostCard = ({
                         {/* {users.filter(u=>u.id === post.userId)[0].firstName}&nbsp;
                         {users.filter(u=>u.id === post.userId)[0].lastName} */}
                     </div>
-                    <div className="card-item__header__center--date">{post.date}</div>
+                    <div className="card-item__header__center--date">{timeFromNow}</div>
                 </div>
                 </div>
 
@@ -168,29 +174,7 @@ const PostCard = ({
                 <img className='card-item__body--media' src={post.image} alt=""/>
             </div>
                 
-        
-            
-            {/* {isLiked === false ? className='true' : 'false' }  */}
-
-            {/* <div className="card-item__footer"> */}
-                {/* <Like numberOfLikes={post.like} /> */}
-                {/* <div className="card-item__footer__left">
-                    <span onClick={likeHandler} ><ThumbUpAltOutlined 
-                        className={isLiked ? 'like-active' : ''}
-                    /></span>
-                    <span className="card-item__footer__left--likes">{ like }</span>
-                    <span onClick={dislikeHandler} ><ThumbDownAltOutlined className={isDisliked ? 'like-active' : ''} /></span>
-                </div> */}
-                {/* <div className="card-item__footer__right">
-                    <span className="card-item__footer__left--comments--number">{ post.comment}</span>
-                    <span className="card-item__footer__left--comments--comments"> Comments </span>
-                    
-                    
-                </div> */}
-
-                
-                
-            {/* </div> */}
+    
             <Collapse 
                 numberOfLikes={post.like} 
                 numberOfPosts={post.comment}

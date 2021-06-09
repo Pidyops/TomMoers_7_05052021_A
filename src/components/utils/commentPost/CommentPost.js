@@ -1,5 +1,5 @@
 import './commentPost.scss'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Avatar, Button, TextareaAutosize } from '@material-ui/core'
 import moment from 'moment';
 import FeedHeader from '../feedHeader/FeedHeader'
@@ -17,10 +17,6 @@ export default function CommentPost({ post, refreshPosts}) {
     // console.log(singlePost)
 
     const [commentDesc, setCommentDesc] = useState('')
-
-    // console.log(userConnected)
-    // console.log(post)
-
 
     // API 
     // POST FETCH ______________________________________________________
@@ -43,41 +39,36 @@ export default function CommentPost({ post, refreshPosts}) {
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify(body)
         }).then(() => {
-            refreshPosts()
+            // refreshPosts()
             setCommentDesc('')
+            getComments()
         })
 
         
     }
 
-    
-
-    // ---------------
-    // GET COMMENTS
-
-    // const [comments, setComments] = useState ('')
-    // const getComments = () => getPosts() //res is what we get
-    // .then(data => setComments(data)) // we then receive the data, that we store in the useState (require one function and one import)
-
-    // useEffect(() => {
-    //     getComments();
-    // }, []);
-
-    // console.log(comments)
+    console.log(post.id)
 
 
-    // comments.map(comment => (
-    //     <div key={comment.id}>
-            
-    //     </div>
-  
+    const [comments, setComments] = useState ('')
 
-    // console.log(singlePost.comments)
-    // singlePost.comments.map(comment => (
-    //     <div> comment</div>
-    // ))
 
-    // console.log(singlePost.comments)
+    const getComments = () => {
+    fetch('http://localhost:4000/feed/comments/' + post.id, {
+        method: 'GET'
+    })
+        .then(res => res.json())
+        .then((res) => {
+            setComments(res)
+            // console.log(res)
+            console.log(res)
+        })
+    }
+
+    useEffect(() => {
+        getComments();
+    }, []);
+
 
     const theComments = singlePost.comments
 
@@ -111,15 +102,17 @@ export default function CommentPost({ post, refreshPosts}) {
                 </div>
             </div>
 
-            <div>
-                {(theComments && theComments.length > 0) && theComments.map(c => (
+                  
+                <div>
+                {(comments && comments.length > 0) && comments.map(c => (
                     <div key={c.id} className='comment-module'>
                         <FeedHeader c={c} />
-                        <FeedBody desc={c.commentDesc} />
+                        <FeedBody desc={c.description} />
                         {/* <FeedInteraction c={c} /> */}
                     </div>
                 ))}
             </div>
+            
         </div>
     )
 }
