@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+const fs = require ('fs');
 
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
@@ -120,6 +121,22 @@ exports.deletePost = async (req, res) => {
         // console.log('deletePost try:')
         const postId = parseInt(req.params.id)
         // console.log(postId )
+
+        db.query('SELECT image FROM posts WHERE id = ?', [req.params.id], (error, result) => {
+            // console.log(result)
+            // res.status(200).json(result[0])
+            // res.status(200).json('hello')
+            console.log('reslut[0]', result[0] )
+
+            if (result[0].image){
+                const filename = result[0].image.split('/images/')[1];
+                console.log(filename)
+                fs.unlink('images/' + filename, () => {
+                    console.log('file deleted')
+                })
+            }
+            
+        });
 
         const sqlRequest = await db.query('DELETE FROM posts WHERE id = ?', [postId], (error, result) => {
             // console.log(result)
