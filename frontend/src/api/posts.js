@@ -30,3 +30,7 @@ export const myHeader = new Headers({})
 //     setDescription('');
 //     setImageTest('')
 //   })
+
+// import {myHeader} from '../../api/posts'
+
+// headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')},

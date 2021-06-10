@@ -6,6 +6,7 @@ import FeedHeader from '../feedHeader/FeedHeader'
 import FeedBody from '../feedBody/FeedBody'
 // import './commentCard.scss'
 import {myHeader} from '../../../api/posts'
+import Pagination from '../Pagination/Pagination'
 
 
 export default function CommentPost({ post, refreshPosts}) {
@@ -29,11 +30,12 @@ export default function CommentPost({ post, refreshPosts}) {
         
         fetch('http://localhost:4000/feed/comments', {
             method: 'POST',
-            headers: myHeader,
+            headers:  { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId') },
             body: JSON.stringify(body)
         }).then(() => {
             // refreshPosts()
             setCommentDesc('')
+            refreshPosts()
             getComments()
         })
 
@@ -41,6 +43,8 @@ export default function CommentPost({ post, refreshPosts}) {
     }
 
     const [comments, setComments] = useState ('')
+
+
 
     const getComments = () => {
     fetch('http://localhost:4000/feed/comments/' + post.id, {
@@ -58,6 +62,18 @@ export default function CommentPost({ post, refreshPosts}) {
     useEffect(() => {
         getComments();
     }, []);
+
+    const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage] = useState(5);
+
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = comments.slice(indexOfFirstPost, indexOfLastPost);
+
+    //Change Page
+    const paginate =(pageNumber)=> setCurrentPage(pageNumber)
+
 
 
     return (
@@ -87,13 +103,17 @@ export default function CommentPost({ post, refreshPosts}) {
 
                   
                 <div>
-                {(comments && comments.length > 0) && comments.map(c => (
+                {(comments && comments.length > 0) && currentPosts.map(c => (
                     <div key={c.id} className='comment-module'>
                         <FeedHeader c={c} />
                         <FeedBody desc={c.description} />
                         {/* <FeedInteraction c={c} /> */}
                     </div>
+                    
                 ))}
+                {comments.length > postsPerPage &&
+                <Pagination postsPerPage={postsPerPage} totalPosts={comments.length} paginate={paginate} />}
+                
             </div>
             
         </div>

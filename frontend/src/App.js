@@ -49,7 +49,7 @@ const App = () => {
               setUserConnected={setUserConnected}
             />
           </Route>
-          <Route path="/Forum" exact >
+          <Route path="/Forum" >
             <Forum 
               authValues={authValues} 
               setAuthValues={setAuthValues} 

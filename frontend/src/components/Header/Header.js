@@ -12,11 +12,11 @@ const Header = ({ date, comment, authValues, setAuthValues, description, setDesc
                 <img src="/assets/logo.png" className="header-logo" alt="logo" />
             </div>
 
-            <div className='header__middle'>
+            {/* <div className='header__middle'>
                 <ButtonSizes variant="contained" text="Hot" color='primary' />
                 <ButtonSizes variant="outlined" text="Popular" />
                 <ButtonSizes variant="outlined" text="New" />
-            </div>
+            </div> */}
 
             <div className='header__right'>
                 <CreatePostModal
