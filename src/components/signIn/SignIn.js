@@ -22,7 +22,6 @@ const Signin = ({ authValues, setAuthValues, userConnected, setUserConnected}) =
             [name]: value
         });
     };
-    var cookieDate = new Date (Date.now() +  24 * 60 * 60 * 1000)
 
     const [errorMessage, setErrorMessage] = useState('')
 
@@ -54,45 +53,39 @@ const Signin = ({ authValues, setAuthValues, userConnected, setUserConnected}) =
 
             .then((res) => {
                 if(res.token) {
-                    console.log('login (token)', res)
                     sessionStorage.setItem('jwt', res.token)
-                    
                     sessionStorage.setItem('userConnectedId', res.userConnected.id)
-                    // sessionStorage.setItem('userConnectedFirstName', res.userConnected.firstName)
-                    // sessionStorage.setItem('userConnectedLastName', res.userConnected.lastName)
-                    // sessionStorage.setItem('userConnectedEmail', res.userConnected.email)
 
-                    console.log(res.userConnected.id)
                     setUserConnected(res.userConnected.id)
-                    console.log(userConnected)
                     
                     setAuthValues({
                         email: '',
                         password: ''
-                        });
+                        })
                     history.push('/Forum')
+
+                    // .then((res) => {
+
+                    // })
 
                 } else {
                     console.log('login (no token)', res)
                     setErrorMessage(res.message)
                 }
+                
             })
-            .then(() => {
+            .then((res) => {
                 console.log({userConnected})
                 console.log(errorMessage)
-                
-            
+
+                // if(res.token) {
+                //     history.push('/Forum')
+                // } else {
+
+                // }
             })
-            // console.log({userConnected})
 
-            // console.log(errorMessage)
 
-            // .then(() => {
-                
-            //     // console.log(authValues)
-                
-            // })
-            // .then(() => )
     }
 
     return (
@@ -116,14 +109,13 @@ const Signin = ({ authValues, setAuthValues, userConnected, setUserConnected}) =
                     {/* <form action="" className="auth__form" onSubmit={actionAuth} > */}
 
                         <TextField
-                            className="signin__wrapper__right__form--item"
+                            className="signin__wrapper__right__form--item form__inputs--input"
                             label="Email" variant="outlined" 
                             size="small" margin='dense'  
                             id='email' 
                             type="email" 
                             name="email" 
                             className="form__inputs--input" 
-                            placeholder="Enter your email"
                             value= {authValues.email}
                             onChange={handleAuthChange}
                         />
@@ -160,48 +152,3 @@ const Signin = ({ authValues, setAuthValues, userConnected, setUserConnected}) =
 
 export default Signin
 
-
-
-
-
-
-
-
-
-{/* <div className="signin__wrapper__right__form--item">
-<label htmlFor="email" className="signin__wrapper__right__form--item--label">
-    Email
-</label>
-<input 
-    id='email' 
-    type="text" 
-    name="email" 
-    className="signin__wrapper__right__form--item--input" 
-    placeholder="Enter your email"
-    value= {authValues.email}
-    // onChange={(e) => setAuthValues(e.target.value)}
-    onChange={handleAuthChange}
-/>
-{errors.email && <p>{errors.email}</p>}
-
-</div> */}
-
-
-
-{/* <div className="signin__wrapper__right__form--item">
-<label htmlFor="password" className="signin__wrapper__right__form--item--label">
-    Password
-</label>
-<input 
-    id='password'  
-    type="password" 
-    name="password" 
-    className="signin__wrapper__right__form--item--input" 
-    placeholder="Enter your password"
-    value= {authValues.password}
-    onChange={handleAuthChange}
-/>
-{errors.email && <p>{errors.email}</p>}
-</div> */}
-
-{/* <button className="signin__wrapper__right__form--btn" onClick={actionSignIn} </button> */}

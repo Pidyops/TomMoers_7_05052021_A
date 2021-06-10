@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import './createPostModal.scss';
 import ImageUploader from "react-images-upload";
+import {myHeader} from '../../../api/posts'
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -39,7 +40,6 @@ export default function CreatePostModal({
   date, userId, like, comment
 }) {
 
-
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -52,7 +52,7 @@ export default function CreatePostModal({
   };
 
   // Upload
-  const [pictures, setPictures] = useState([]);
+  // const [pictures, setPictures] = useState([]);
   const [imageTest, setImageTest] = useState('')
 
   const onDrop = picture => {
@@ -66,10 +66,10 @@ export default function CreatePostModal({
   const handleSubmitPost = async (e) => {
     e.preventDefault();
 
-    let myHeader = new Headers({})
-    myHeader.append("jwt", sessionStorage.jwt)
-    myHeader.append("id", sessionStorage.userConnectedId)
-    console.log(myHeader)
+    // let myHeader = new Headers({})
+    // myHeader.append("jwt", sessionStorage.jwt)
+    // myHeader.append("id", sessionStorage.userConnectedId)
+    // console.log(myHeader)
 
     const formData = new FormData();
     formData.append("image", imageTest);
@@ -108,7 +108,8 @@ export default function CreatePostModal({
     }).then(res => res.json())
     // alert(JSON.stringify(res))
 
-    .then(() => {
+    .then((res) => {
+      console.log(res)
       onPostCreated(); //refreshPosts()
       handleClose();
       setDescription('');
@@ -154,17 +155,6 @@ export default function CreatePostModal({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
-              {/* <div>
-                <input
-                  accept="image/*" className={classes.input} id="icon-button-file" type="file"
-                  value={image} onChange={(e) => setImage(e.target.value)}
-                />
-                <label htmlFor="icon-button-file">
-                  <IconButton color="primary" aria-label="upload picture" component="span">
-                    <PhotoCamera />
-                  </IconButton>
-                </label>
-              </div> */}
 
               <ImageUploader
                 // {...props}
@@ -174,14 +164,6 @@ export default function CreatePostModal({
                 maxFileSize={5242880}
                 withPreview={true}
               />
-
-              {/* <form onSubmit={handleSubmit((onSubmit))}>
-                <input ref={register} type="file" name='picture'/>
-                <button>Submit !</button>
-              </form> */}
-
-
-
 
               <Button
                 type='submit'

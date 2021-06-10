@@ -1,51 +1,29 @@
 import { Container } from '@material-ui/core'
 import { useEffect, useState } from 'react'
-import { getPosts, getPost, getPostsSQL } from '../api/posts'
-import { getUsers } from '../api/users'
 import Header from '../components/Header/Header'
 import PostCard from '../components/Forum/PostCard'
-import moment from 'moment';
+import {myHeader} from '../api/posts'
 
 export const Forum = ({ authValues, setAuthValues, userConnected }) => {
-    const randomTo10 = Math.floor(Math.random()*5)
-    const time = moment().format('MMMM Do YYYY, h:mm:ss a')
-    // const time = moment.unix(1622716545).fromNow();
-    // var day = moment.unix(1318781876).utc();
-    // const time = 'time'
-    
-    // console.log(time)
-    // console.log(day)
 
     const [description, setDescription] = useState('')
     const [image, setImage] = useState('')
 
-    const [date, setDate] = useState(time) //session storage
+    const [date, setDate] = useState('') //session storage
 
     const userConnectedId = sessionStorage.getItem("userConnectedId");
     const [userId] = useState(userConnectedId) //session storage
-    const [like, setLike] = useState(0)
+    // const [like, setLike] = useState(0)
     const [comment, setComment] = useState(0)
 
     const [posts, setPosts] = useState('')
 
-    // const [users, setUsers] = useState('')
-
-    // API 
-    // GET posts ______________________________________________________
-    // const refreshPosts = () => 
-    // fetch('http://localhost:4000/feed/posts')
-    //     .then(res => res.json())
-    //     // .then(data => console.log('data', data))
-    //     .then((res) => {
-    //         setPosts(res)
-    //     })
-
-    // console.log('posts',posts)
 
     console.log('userConnectedId: ', userConnectedId)
     const refreshPosts = () => 
     fetch('http://localhost:4000/feed/posts/' + userConnectedId, {
-        method: 'GET'
+        method: 'GET',
+        headers: myHeader
     })
         .then(res => res.json())
         .then((res) => {
@@ -66,6 +44,7 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
             // console.log(id)
             await fetch('http://localhost:4000/feed/postDelete/' + id, {
                 method: 'DELETE',
+                headers: myHeader
             })
             .then(res => res.json())
             .then(data => console.log(data))
@@ -87,7 +66,7 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
                 date={date}
                 setDate={setDate}
                 userId={userId}
-                like={like}
+                // like={like}
                 comment={comment}
                 userConnected={userConnected}
             />
@@ -111,16 +90,9 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
 
                     /></div>
                 ))}
-
-
-
-
             </div>
-
-            
         </Container>
     )
 }
-
 
 export default Forum

@@ -35,9 +35,9 @@ export default function InputPassword({authValues, handleAuthChange,
   // console.log(authValues)
   // console.log(authValues.password2)
 
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
+  // const handleChange = (prop) => (event) => {
+  //   setValues({ ...values, [prop]: event.target.value });
+  // };
 
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });

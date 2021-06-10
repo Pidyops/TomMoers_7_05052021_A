@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from 'react';
-// import './avatarModal.scss';
-// import { userConnected } from '../../api/GlobalState'
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import ImageAvatars from '../Header/Avatar';
-import { TextField } from '@material-ui/core';
 import InputPassword from '../utils/button/InputPassword';
 import ButtonLarge from '../utils/button/Button';
-import { getUser } from '../../api/users'
-import { useHistory } from 'react-router-dom';
-// const axios = require('axios');
-
+import {myHeader} from '../../api/posts'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -48,7 +41,8 @@ export default function ChangePassword({ userConnected }) {
   let id= sessionStorage.getItem('userConnectedId')
 
   const fetchSingleUser = (id) => fetch('http://localhost:4000/auth//user/' + id, {
-    method: 'GET'
+    method: 'GET',
+    headers: myHeader,
   })
   .then(singleUser => singleUser.json())
   // .then(data => console.log('data', data))
@@ -66,7 +60,7 @@ export default function ChangePassword({ userConnected }) {
   const [newPassword , setNewPassword] = useState('')
   const [newPassword2 , setNewPassword2] = useState('')
   const [currentPassword , setCurrentPassword] = useState('')
-  let currentToken = sessionStorage.getItem('jwt')
+  // let currentToken = sessionStorage.getItem('jwt')
 
     // console.log(id)
     // console.log(newPassword)
@@ -90,27 +84,27 @@ export default function ChangePassword({ userConnected }) {
 
       const requestOptions = {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": id  },
         body: JSON.stringify(body)
       };
       const patchNewPassword = () => fetch('http://localhost:4000/auth/userPassword/' + id, requestOptions)
         // .then(response => response.json())
         // .then(data => setUserFirstName(data.firstName));
         .then(res => res.json())
-              .then(res => console.log(res))
+            //   .then(res => console.log(res))
               .then((res) => {
                 setNewPassword('')
                 setNewPassword2('')
                 setCurrentPassword('')
-                // console.log(res)
+                console.log('res', res)
                 // console.log(res.newToken)
 
                 
-                // sessionStorage.setItem('jwt', res.token)
+                sessionStorage.setItem('jwt', res.newToken)
                 // sessionStorage.setItem('jwt', res.token)
                 // console.log(res.responseMessage)
 
-                // handleClose()
+                handleClose()
 
               })
     

@@ -1,30 +1,28 @@
-
 import ButtonSizes from './ButtonSizes'
-import AvatarModal from '../AvatarModal/AvatarModal'
 import CreatePostModal from './modalCreatePost/CreatePostModal'
 import ProfileMenu from './ProfileMenu'
 
 
-const Header = ({ date, comment, authValues, setAuthValues, description, setDescription, image, setImage, onPostCreated, userId, userConnected, like }) => {
+const Header = ({ date, comment, authValues, setAuthValues, description, setDescription, image, setImage, onPostCreated, userId, userConnected }) => {
 
     return (
         <header className='header'>
 
             <div className="header__left">
-                <img src='img/icon-left-font-cropped.png' className="header-logo" alt="logo" />
+                <img src="/assets/logo.png" className="header-logo" alt="logo" />
             </div>
 
             <div className='header__middle'>
                 <ButtonSizes variant="contained" text="Hot" color='primary' />
-                <ButtonSizes variant="outlined" text="Popular" color='#4C7490' />
-                <ButtonSizes variant="outlined" text="New" color='blue' />
+                <ButtonSizes variant="outlined" text="Popular" />
+                <ButtonSizes variant="outlined" text="New" />
             </div>
 
             <div className='header__right'>
                 <CreatePostModal
                     // post={post} setPost={setPost} 
                     description={description} setDescription={setDescription}
-                    comment={comment} like={like}
+                    // comment={comment} like={like}
                     image={image} setImage={setImage}
                     onPostCreated={onPostCreated}
                     date={date} userId={userId}

@@ -3,14 +3,12 @@ import Auth from './pages/Auth';
 import Forum from './pages/Forum';
 
 import NotFound from './pages/NotFound';
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core'
 
 
 import { BrowserRouter, Switch, Route} from "react-router-dom"
 import { blueGrey, teal } from '@material-ui/core/colors';
-
-import { getUser } from './api/users';
 
 const theme = createMuiTheme({
   palette: {
@@ -35,13 +33,43 @@ const App = () => {
     password: '',
     password2: ''
   });
-
-  // FETCH GET _____ userConnected
-  // const userConnectedId = 3
   
   const [userConnected, setUserConnected] = useState('')
-  // console.log(sessionStorage.getItem('jwt'))
-  // console.log(sessionStorage.getItem('hello'))
+
+  // const isLogin = false
+  return (
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" exact >
+            <Auth
+              authValues={authValues} 
+              setAuthValues={setAuthValues}
+              userConnected={userConnected}
+              setUserConnected={setUserConnected}
+            />
+          </Route>
+          <Route path="/Forum" exact >
+            <Forum 
+              authValues={authValues} 
+              setAuthValues={setAuthValues} 
+              userConnected={userConnected}
+            />
+          </Route>
+          <Route component={NotFound} />
+        </Switch>
+      </BrowserRouter>
+
+    </ThemeProvider>
+  )
+}
+
+export default App
+
+
+
+
+
 
   // useEffect(() => {
   //   if (sessionStorage.getItem('jwt')){
@@ -69,45 +97,3 @@ const App = () => {
   // }, []);
 
   // console.log(userConnected)
-  
-
-
-  // const isLogin = false
-  return (
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Switch>
-        {/* {!isLogin?(<Route path="/" exact component={Auth} />) : (<Route path="/Forum" exact component={Forum} />)} */}
-          <Route path="/" exact >
-            <Auth
-              authValues={authValues} 
-              setAuthValues={setAuthValues}
-              userConnected={userConnected}
-              setUserConnected={setUserConnected}
-            />
-          </Route>
-          <Route path="/Forum" exact >
-            <Forum 
-              authValues={authValues} 
-              setAuthValues={setAuthValues} 
-              userConnected={userConnected}
-            />
-          </Route>
-          <Route component={NotFound} />
-        </Switch>
-      </BrowserRouter>
-
-
-
-      {/* <Signin />
-      <Forum />
-      <NotFound />
-      <Form /> */}
-
-
-    </ThemeProvider>
-  )
-}
-
-export default App
-

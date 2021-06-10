@@ -6,6 +6,7 @@ import Fade from '@material-ui/core/Fade';
 import ButtonLarge from '../utils/button/Button';
 import { useHistory } from 'react-router-dom';
 
+
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',

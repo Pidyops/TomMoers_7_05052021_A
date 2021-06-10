@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SimpleModal({authValues, handleAuthChange, setAuthValues, text, color, variant}) {
   const history = useHistory();
   const classes = useStyles();
-  const [modalStyle] = React.useState(getModalStyle);
+  // const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
@@ -132,26 +132,24 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
               />
 
               <TextField
-                className="signup__wrapper--input"
+                className="signup__wrapper--input form__inputs--input"
                 label="last-name" variant="outlined" 
                 size="small" margin='dense'  
                 id='last-name' 
                 type="text" 
                 name="lastName" 
-                className="form__inputs--input" 
                 placeholder="Enter your last name"
                 value= {authValues.lastName}
                 onChange={handleAuthChange}
               />
 
               <TextField
-                className="signup__wrapper--input"
+                className="signup__wrapper--input form__inputs--input"
                 label="Email" variant="outlined" 
                 size="small" margin='dense'  
                 id='email' 
                 type="email" 
                 name="email" 
-                className="form__inputs--input" 
                 placeholder="Enter your email"
                 value= {authValues.email}
                 onChange={handleAuthChange}

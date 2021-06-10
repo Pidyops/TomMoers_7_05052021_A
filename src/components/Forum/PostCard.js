@@ -26,25 +26,19 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const PostCard = ({ 
-    post, handleDeletePost, image, 
-    setImage, userConnected, refreshPosts
-    }) => {
+const PostCard = ({ post, handleDeletePost, image, setImage, userConnected, refreshPosts }) => {
     const classes = useStyles();
 
     const dateSQL = post.publish_date
-    console.log(dateSQL)
     const timeFromNow = moment.unix(dateSQL).fromNow();
-    console.log(timeFromNow)
-
-    // console.log('postCard: userConnected', userConnected)
 
     const userConnectedId = sessionStorage.getItem("userConnectedId");
 
     const [isRead, setIsRead] = useState(false)
 
     const readStatus = () => {
-        if (post.read_status ===0 || post.read_status == undefined ) {
+        if (post.read_status ===0 || post.read_status === undefined ) {
+        // if (post.read_status ===0 || post.read_status == undefined ) {
             console.log('not read')
         } else if (post.read_status === 1) {
             console.log('to read')
@@ -56,9 +50,8 @@ const PostCard = ({
 
     useEffect(() => {
         readStatus();
-    }, []);
-    // console.log(userConnectedId)
-    // console.log(post.user_id)
+    });
+
     const handleRead = async () => {
 
         if (isRead === false) {
@@ -71,45 +64,17 @@ const PostCard = ({
                     postId: post.id,
                     isRead: true
             }
-            
-        
-            console.log(body)
 
             fetch('http://localhost:4000/feed/read', {
             method: 'POST',
-            headers: { 'content-type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": id  },
             body: JSON.stringify(body) 
             })
-            // .then(() => {
-            //   onPostCreated(); //refreshPosts()
-            // })
 
         } else {
             console.log('message already set as seen', isRead)
         }
     }
-
-    // console.log(isRead)
-
-    // console.log(userConnectedId)
-    // const getReadStatus = () => 
-    // fetch('http://localhost:4000/feed/read/' + userConnectedId, {
-    //     method: 'GET'
-    // })
-    //     .then(res => res.json())
-    //     .then((res) => {
-    //         // console.log(res)
-    //     })
-
-
-    // useEffect(() => {
-    //     getReadStatus();
-    // }, []);
-
-
-    // const dateSql = post.date
-
-
 
     return (
         <div className='card' onClick={handleRead}>
@@ -128,32 +93,16 @@ const PostCard = ({
                 </div>
 
                 <div className='card--read'>
-                {isRead === true? 
-                    <div className='card__read'>
-                         seen
-                        
-                    </div>
-                    
-                    :
-                    <div className='card__to-read'>
-                        new !
-                        
-                    </div>
-                    
-                }
+                    {isRead === true? 
+                        <div className='card__read'>seen</div>:
+                        <div className='card__to-read'>new !</div> }
 
-                {isRead === true? 
-                <div className='card__read--color'></div>
-
-                :
-                <div className='card__to-read--color'></div>
-
-                }  
-
+                    {isRead === true? 
+                        <div className='card__read--color'></div> 
+                        : <div className='card__to-read--color'></div>}  
                 </div>
                 
-                {/* {userConnected.id === post.userId && */}
-                {userConnectedId == post.user_id &&
+                {parseInt(userConnectedId) === post.user_id &&
                     <div className="card-item__header__right">
                         <div className="card-item__header__right--edit">
                             {/* <EditOutlined /> */}
@@ -165,7 +114,6 @@ const PostCard = ({
                     </div>
                 }
             </div>
-
             
             <div className="card-item__body">
                 <div className="card-item__body--desc">
@@ -173,7 +121,6 @@ const PostCard = ({
                 </div>
                 <img className='card-item__body--media' src={post.image} alt=""/>
             </div>
-                
     
             <Collapse 
                 numberOfLikes={post.like} 
@@ -181,11 +128,7 @@ const PostCard = ({
                 userConnected={userConnected}
                 post={post}
                 refreshPosts={refreshPosts}
-                
             />
-
-            
-
 
         </Card>
         </div>

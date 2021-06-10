@@ -1,7 +1,7 @@
 import { ThumbDownAltOutlined, ThumbUpAltOutlined } from '@material-ui/icons'
 import './like.scss'
-
 import React, { useEffect, useState } from 'react'
+import {myHeader} from '../../../api/posts'
 
 export default function Like(props) {
     const [like, setLike] = useState(props.post.likes_sum)
@@ -66,7 +66,7 @@ export default function Like(props) {
     
         fetch('http://localhost:4000/feed/likes', {
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
+        headers: myHeader,
         body: JSON.stringify(body)
         })
         .then(res => res.json())
@@ -81,29 +81,6 @@ export default function Like(props) {
         postLikes()
     }, [like]);
 
-
-
-    // const checkLikes =  () => { 
-    //     let numberOfLikes = 0
-    
-    //     if (!props.post.comments_count) {
-    //         numberOfLikes = 0
-    //     } else {
-    //         numberOfLikes = props.post.comments_count
-    //     }
-    
-
-    // }
-
-    // useEffect(() => {
-    //     checkLikes();
-    // }, [props.post.comments_count]);
-
-
-
-    
-
-
     return (
         <div className="card-item__footer__left">
             <span onClick={likeHandler} ><ThumbUpAltOutlined 
@@ -117,37 +94,3 @@ export default function Like(props) {
 
     )
 }
-
-
-
-
-
-
-    // const [likeBoolean, setLikeBoolean] = useState(undefined)
-
-    // if (like === -1) {
-    //     setLikeBoolean(false) 
-    // } else if (like === 0) {
-    //     setLikeBoolean(undefined)
-    // } else if (like ===1) {
-    //     setLikeBoolean(true)
-    // } else {
-    //     console.log('like error')
-    // }
-
-
-    // const likeToFetch = () => {
-    //     if (like === -1) {
-    //         setLikeBoolean(false) 
-    //     } else if (like ===1) {
-    //         setLikeBoolean(true)
-    //     } else {
-    //         console.log('like error')
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     likeToFetch()
-    // }, []);
-
-    // console.log('like Boolean', likeBoolean)

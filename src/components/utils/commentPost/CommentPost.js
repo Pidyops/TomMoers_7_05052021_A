@@ -5,38 +5,31 @@ import moment from 'moment';
 import FeedHeader from '../feedHeader/FeedHeader'
 import FeedBody from '../feedBody/FeedBody'
 // import './commentCard.scss'
+import {myHeader} from '../../../api/posts'
 
 
 export default function CommentPost({ post, refreshPosts}) {
-    // console.log(userConnected)
-    const m = moment().valueOf()
 
     const userConnected = sessionStorage.getItem('userConnectedId')
 
     const [singlePost, setSinglePost] = useState (post)
-    // console.log(singlePost)
-
     const [commentDesc, setCommentDesc] = useState('')
 
     // API 
     // POST FETCH ______________________________________________________
     function sendComment() {
         // e.preventDefault();
-        console.log('Le lien a été cliqué.');
 
         const body = {
             commentDesc : commentDesc,
             postId: post.id,
             userId: userConnected,
         }
-
         // console.log(body)
         
-        
-        // fetch('http://localhost:5000/posts/' + post.id, {
         fetch('http://localhost:4000/feed/comments', {
             method: 'POST',
-            headers: { 'content-type': 'application/json' },
+            headers: myHeader,
             body: JSON.stringify(body)
         }).then(() => {
             // refreshPosts()
@@ -47,15 +40,12 @@ export default function CommentPost({ post, refreshPosts}) {
         
     }
 
-    console.log(post.id)
-
-
     const [comments, setComments] = useState ('')
-
 
     const getComments = () => {
     fetch('http://localhost:4000/feed/comments/' + post.id, {
-        method: 'GET'
+        method: 'GET',
+        headers: myHeader
     })
         .then(res => res.json())
         .then((res) => {
@@ -68,9 +58,6 @@ export default function CommentPost({ post, refreshPosts}) {
     useEffect(() => {
         getComments();
     }, []);
-
-
-    const theComments = singlePost.comments
 
 
     return (
@@ -89,11 +76,7 @@ export default function CommentPost({ post, refreshPosts}) {
                     />
                     <div className="comment-post__right--submit">
                         <Button variant="contained" color="primary" 
-
                             onClick={sendComment}
-                            // onclick={ () => console.log('postComment')}
-                            // onclick={sendComment}
-                            // onclick={handleSubmitComment}
                         > 
                             post
                         </Button>
@@ -116,48 +99,3 @@ export default function CommentPost({ post, refreshPosts}) {
         </div>
     )
 }
-
-
-
-
-
-
-
-// function sendComment() {
-//     // e.preventDefault();
-//     console.log('Le lien a été cliqué.');
-
-//     if ( !singlePost.comments ) {
-//         singlePost.comments = []
-
-//     }
-
-//     singlePost.comments.push({ 
-//         commentDesc : commentDesc,
-//         id : m,
-//         userId: userConnected.id,
-//         authorFirstName: userConnected.firstName,
-//         authorLastName: userConnected.lastName,
-//         authorImage: userConnected.image
-//     })
-
-//     const body = {
-//         userId: userConnected.id,
-//         commentDesc : commentDesc,
-//         authorFirstName: userConnected.firstName,
-//         authorLastName: userConnected.lastName,
-//         authorImage: userConnected.image
-//     }
-    
-    
-//     fetch('http://localhost:5000/posts/' + post.id, {
-//         method: 'PATCH',
-//         headers: { 'content-type': 'application/json' },
-//         body: JSON.stringify({ comments : singlePost.comments })
-//     }).then(() => {
-//         refreshPosts()
-//         setCommentDesc('')
-//     })
-
-    
-// }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -6,12 +6,9 @@ import Fade from '@material-ui/core/Fade';
 import Button from '@material-ui/core/Button';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import { EditOutlined, PhotoCamera } from '@material-ui/icons';
-// import { useHistory } from 'react-router-dom';
 import './modalEditPost.scss'
 import { IconButton } from '@material-ui/core';
-import { getPost } from '../../../api/posts';
-
-
+import {myHeader} from '../../../api/posts'
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -38,8 +35,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
-
 export default function ModalEditPost({
    post, image, refreshPosts
 }) {
@@ -60,32 +55,16 @@ export default function ModalEditPost({
     setOpen(false);
   };
 
-  // console.log(post)
-
-
-
-  // const [postId, setPostId] = useState('')
 
   const [postDesc, setPostDesc] = useState('')
   const [postImage, setPostImage] = useState('')
-
-
-  // const postId= 3
-  // const getPostId = () => { 
-  //   console.log("hey")
-  //   setPostId(post.id)
-    //or
-    // const postId = post.id
-    // console.log(postId)
-    
-  // }
-  // console.log(postId)
 
   // FETCH
   // GET single Post
     // const fetchSinglePost = (id) => fetch('http://localhost:4000/feed/post/' + id, {
     const fetchSinglePost = () => fetch('http://localhost:4000/feed/post/' + post.id, {
-      method: 'GET'
+      method: 'GET',
+      headers: myHeader
     })
     .then(singlePost => singlePost.json())
     // .then(data => console.log('data', data))
@@ -93,18 +72,6 @@ export default function ModalEditPost({
       console.log({singlePost})
       setPostDesc(singlePost.description)
     })
-
-    // useEffect(() => {
-    //   fetchSinglePost(post.id);
-    // }, []);
-
-    // console.log(postDesc)
-    // console.log(postImage)
-
-    // console.log(userFirstName)
-    // console.log(userLastName)
-    // console.log(userEmail)
-    // console.log(userImage)
     
     // API
     // PATCH user by id ______________________________________________________________
@@ -126,7 +93,7 @@ export default function ModalEditPost({
 
       const requestOptions = {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: myHeader,
         body: JSON.stringify(body)
         // body: JSON.stringify({firstName : userFirstName})
       };
@@ -140,12 +107,8 @@ export default function ModalEditPost({
         // .then(data => setUserFirstName(data.firstName));
         putPostById(post.id);
         
-
-      
     }
 
-
-    
 
 
   return (

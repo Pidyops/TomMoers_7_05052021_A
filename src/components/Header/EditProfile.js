@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from 'react';
-// import './avatarModal.scss';
-// import { userConnected } from '../../api/GlobalState'
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import ImageAvatars from '../Header/Avatar';
 import { TextField } from '@material-ui/core';
-import InputPassword from '../utils/button/InputPassword';
 import ButtonLarge from '../utils/button/Button';
-import { getUser } from '../../api/users'
-import { useHistory } from 'react-router-dom';
-// const axios = require('axios');
+import {myHeader} from '../../api/posts'
 
 
 
@@ -38,6 +32,7 @@ export default function EditProfile({ userConnected }) {
 
   const handleOpen = () => {
     setOpen(true);
+    fetchSingleUser(id);
   };
 
   const handleClose = () => {
@@ -47,12 +42,13 @@ export default function EditProfile({ userConnected }) {
   const [userFirstName, setUserFirstName] = useState('')
   const [userLastName, setUserLastName] = useState('')
   const [userEmail, setUserEmail] = useState('')
-  const [userImage, setUserImage] = useState('')
+  // const [userImage, setUserImage] = useState('')
 
   let id= sessionStorage.getItem('userConnectedId')
 
-  const fetchSingleUser = (id) => fetch('http://localhost:4000/auth//user/' + id, {
-    method: 'GET'
+  const fetchSingleUser = () => fetch('http://localhost:4000/auth//user/' + id, {
+    method: 'GET',
+    headers: myHeader
   })
   .then(singleUser => singleUser.json())
   // .then(data => console.log('data', data))
@@ -65,7 +61,7 @@ export default function EditProfile({ userConnected }) {
   })
 
     useEffect(() => {
-      fetchSingleUser(id);
+      fetchSingleUser();
     }, []);
 
 
@@ -87,15 +83,15 @@ export default function EditProfile({ userConnected }) {
       if (userConnected.email !== userEmail) {
         body.email = userEmail
       }
-      if (userConnected.image !== userImage) {
-        body.image = userImage
-      }
+      // if (userConnected.image !== userImage) {
+      //   body.image = userImage
+      // }
 
       console.log({body})
 
       const requestOptions = {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": id },
         body: JSON.stringify(body)
         // body: JSON.stringify({firstName : userFirstName})
       };
