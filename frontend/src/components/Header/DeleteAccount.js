@@ -5,7 +5,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import ButtonLarge from '../utils/button/Button';
 import { useHistory } from 'react-router-dom';
-import {myHeader} from '../../api/posts'
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -41,9 +41,9 @@ export default function DeleteAccount({ userConnected }) {
   const deleteUserById = async () => {
     try {
         // console.log(id)
-        await fetch('http://localhost:4000/auth/userDelete/' + id, {
+        await fetch('http://localhost:4000/auth/userDelete', {
             method: 'DELETE',
-            headers: myHeader,
+            headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')}
         })
         .then(res => res.json())
         .then(data => console.log(data))
@@ -77,7 +77,8 @@ export default function DeleteAccount({ userConnected }) {
         }}
       >
         <Fade in={open}>
-          <div className={classes.paper + ' ' + 'avatar-modal'}>
+          {/* <div className={classes.paper + ' ' + 'avatar-modal'}> */}
+          <div className={clsx(classes.paper, 'avatar-modal' )}>
             <h2 id="simple-modal-title">Delete Account</h2>
             <hr className="avatar-modal--hr"/>
             <form action="" className="avatar-modal__form">

@@ -1,10 +1,10 @@
 import { ThumbDownAltOutlined, ThumbUpAltOutlined } from '@material-ui/icons'
 import './like.scss'
 import React, { useEffect, useState } from 'react'
-import {myHeader} from '../../../api/posts'
 
 export default function Like(props) {
     const [like, setLike] = useState(props.post.likes_sum)
+    
     let userIsLiked = props.post.is_liked
     // console.log(userIsLiked)
 
@@ -13,16 +13,20 @@ export default function Like(props) {
     const [isLiked, setIsLiked] = useState(false)
     const [isDisliked, setIsDisliked] = useState(false)
 
-    const uploadUserLike = () => {
-        if (userIsLiked  === 1) {
-            setIsLiked(true)
-        } else if(userIsLiked === -1) {
-            setIsDisliked(true)
-        } else {
-            // console.log('the like is neutrale')
-        }
-    }
+    let like2Post = 0
+
+    
     useEffect(() => {
+        const uploadUserLike = () => {
+            if (userIsLiked  === 1) {
+                setIsLiked(true)
+            } else if(userIsLiked === -1) {
+                setIsDisliked(true)
+            } else {
+                // console.log('the like is neutrale')
+            }
+        }
+
         uploadUserLike()
     }, [userIsLiked]);
 
@@ -34,9 +38,11 @@ export default function Like(props) {
             setIsLiked(true)
             setIsDisliked(false)
 
+
         } else {
             setLike(isLiked ? like-1 : like+1)
             setIsLiked(!isLiked)
+
 
         }
     }
@@ -47,6 +53,7 @@ export default function Like(props) {
             setIsLiked(false)
             setIsDisliked(true)
 
+
         } else {
             setLike(isDisliked ? like+1 : like-1)
             setIsDisliked(!isDisliked)
@@ -54,39 +61,59 @@ export default function Like(props) {
         }
         
     }
-    const postLikes = () => {
 
-        let body = {
-            userId: userId,
-            postId: props.post.id,
-            like: like
+    useEffect(() => {
+
+
+        if(isLiked === true) {
+            console.log('1')
+            like2Post = 1
+        } else if (isDisliked === true) {
+            console.log('2')
+            like2Post = -1
+        } else {
+            console.log('3')
+            like2Post = 0
         }
+    }, [isLiked, isDisliked])
     
-        // console.log(body)
-    
-        fetch('http://localhost:4000/feed/likes', {
-        method: 'POST',
-        headers: myHeader,
-        body: JSON.stringify(body)
-        })
-        .then(res => res.json())
-        .then((res) => {
-            // console.log(res)
-        //   onPostCreated(); //refreshPosts()
-        })
-    
-    }
     
     useEffect(() => {
+        const postLikes = () => {
+
+            let body = {
+                userId: userId,
+                postId: props.post.id,
+                like: like2Post
+            }
+        
+            console.log(body)
+        
+            fetch('http://localhost:4000/feed/likes', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')},
+            body: JSON.stringify(body)
+            })
+            .then(res => res.json())
+            .then((res) => {
+                // console.log(res)
+            //   onPostCreated(); //refreshPosts()
+            })
+        }
+
+
         postLikes()
-    }, [like]);
+        
+
+        
+    }, [like, props.post.id, userId]);
 
     return (
         <div className="card-item__footer__left">
             <span onClick={likeHandler} ><ThumbUpAltOutlined 
                 className={isLiked ? 'like--active' : ''}
             /></span>
-            <span className="card-item__footer__left--likes">{like}</span>
+            <span className="card-item__footer__left--likes">{like == null ? 0 : like}</span>
             <span onClick={dislikeHandler} ><ThumbDownAltOutlined className={isDisliked ? 'like--active' : ''} /></span>
         </div>
             

@@ -1,6 +1,8 @@
 import './App.css';
+import './styles/index.scss'
 import Auth from './pages/Auth';
 import Forum from './pages/Forum';
+
 
 import NotFound from './pages/NotFound';
 import { useState } from 'react'

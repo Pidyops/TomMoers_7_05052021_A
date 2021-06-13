@@ -40,7 +40,7 @@ const StyledMenuItem = withStyles((theme) => ({
   },
 }))(MenuItem);
 
-export default function ProfileMenu({authValues, setAuthValues, userConnected}) {
+export default function ProfileMenu({authValues, setAuthValues, userConnected, onPostCreated}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -52,9 +52,10 @@ export default function ProfileMenu({authValues, setAuthValues, userConnected}) 
   };
 
   return (
-    <div>
+    <div className='header__right--container'>
 
       <PersonIcon
+        className='header__right--person'
         aria-controls="customized-menu"
         aria-haspopup="true"
         variant="contained"
@@ -82,6 +83,8 @@ export default function ProfileMenu({authValues, setAuthValues, userConnected}) 
                 authValues={authValues}
                 setAuthValues={setAuthValues}
                 userConnected={userConnected}
+                anchorClose={handleClose}
+                onPostCreated={onPostCreated}
             />
         </StyledMenuItem>
 
@@ -90,6 +93,7 @@ export default function ProfileMenu({authValues, setAuthValues, userConnected}) 
                 authValues={authValues}
                 setAuthValues={setAuthValues}
                 userConnected={userConnected}
+                anchorClose={handleClose}
             />
         </StyledMenuItem>
 

@@ -2,7 +2,6 @@ import { Container } from '@material-ui/core'
 import { useEffect, useState } from 'react'
 import Header from '../components/Header/Header'
 import PostCard from '../components/Forum/PostCard'
-import {myHeader} from '../api/posts'
 
 export const Forum = ({ authValues, setAuthValues, userConnected }) => {
 
@@ -12,18 +11,17 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
     const [date, setDate] = useState('') //session storage
 
     const userConnectedId = sessionStorage.getItem("userConnectedId");
+    const userJwt= sessionStorage.getItem("jwt");
     const [userId] = useState(userConnectedId) //session storage
     // const [like, setLike] = useState(0)
-    const [comment, setComment] = useState(0)
 
     const [posts, setPosts] = useState('')
 
 
     console.log('userConnectedId: ', userConnectedId)
-    const refreshPosts = () => 
-    fetch('http://localhost:4000/feed/posts/' + userConnectedId, {
+    const refreshPosts = () => fetch('http://localhost:4000/feed/posts', {
         method: 'GET',
-        headers: myHeader
+        headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')}
     })
         .then(res => res.json())
         .then((res) => {
@@ -34,7 +32,7 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
 
     useEffect(() => {
         refreshPosts();
-    }, []);
+    }, [userConnectedId, userJwt]);
 
 
     // DELETE post ______________________________________________________
@@ -44,7 +42,7 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
             // console.log(id)
             await fetch('http://localhost:4000/feed/postDelete/' + id, {
                 method: 'DELETE',
-                headers: myHeader
+                headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')}
             })
             .then(res => res.json())
             .then(data => console.log(data))
@@ -66,8 +64,6 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
                 date={date}
                 setDate={setDate}
                 userId={userId}
-                // like={like}
-                comment={comment}
                 userConnected={userConnected}
             />
 
@@ -79,13 +75,7 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
                             handleDeletePost={handleDeletePost} 
                             image={image} setImage={setImage}
                             date={date}
-                            refreshPosts={refreshPosts}
-                            // users={users}
                             userConnected={userConnected}
-                            // date={date} setDate={setDate}
-                            // userId={userId}
-                            // like={like}
-                            // comment={comment}
                             refreshPosts={refreshPosts}
 
                     /></div>

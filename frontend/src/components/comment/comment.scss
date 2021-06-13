@@ -8,7 +8,6 @@
     width: 700px;
     margin-top: 20px;
     padding: 20px;
-    border: tomato dashed 1px;
 
     &__post {
     }
@@ -18,5 +17,11 @@
 
     &__comment {
     }
+  }
+
+  &-module {
+    margin-left: 40px;
+    border-bottom: 1px solid lightgray;
+    margin-top: 15px;
   }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -6,9 +6,11 @@ import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Like from '../utils/like/Like';
+import Like from '../../utils/like/Like'
 import './collapse.scss'
-import Comment from '../comment/Comment';
+import Comment from '../Comment'
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,8 +41,24 @@ export default function RecipeReviewCard(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
+  const [comments, setComments] = useState ('')
+
+  const getComments = () => {
+    fetch('http://localhost:4000/feed/comments/' + props.post.id, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')},
+    })
+        .then(res => res.json())
+        .then((res) => {
+            setComments(res)
+            // console.log(res)
+            console.log(res)
+        })
+    }
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
+    getComments()
   };
 
 
@@ -57,8 +75,10 @@ export default function RecipeReviewCard(props) {
   }
 
 
+
+
   return (
-    <Card className={classes.root + " " + 'collapse'}
+    <Card className={clsx(classes.root, 'collapse')}
         elevation={0}
     
     >
@@ -93,6 +113,9 @@ export default function RecipeReviewCard(props) {
             userConnected={props.userConnected}
             post={props.post}
             refreshPosts={props.refreshPosts}
+            getComments={getComments}
+            comments={comments}
+            // setComments={props.setComments}
         />
       </Collapse>
     </Card>

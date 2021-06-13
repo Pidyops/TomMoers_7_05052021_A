@@ -5,7 +5,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import InputPassword from '../utils/button/InputPassword';
 import ButtonLarge from '../utils/button/Button';
-import {myHeader} from '../../api/posts'
+import clsx from 'clsx';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ChangePassword({ userConnected }) {
+export default function ChangePassword({ userConnected, anchorClose }) {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -40,21 +40,34 @@ export default function ChangePassword({ userConnected }) {
 
   let id= sessionStorage.getItem('userConnectedId')
 
-  const fetchSingleUser = (id) => fetch('http://localhost:4000/auth//user/' + id, {
-    method: 'GET',
-    headers: myHeader,
-  })
-  .then(singleUser => singleUser.json())
-  // .then(data => console.log('data', data))
-  .then((singleUser) => {
-    // console.log({singleUser})
-    setUserEmail(singleUser.email)
-  //     setUserImage(data.image)
-  })
+  // const fetchSingleUser = () => fetch('http://localhost:4000/auth//user/' + id, {
+  //   method: 'GET',
+  //   headers: myHeader,
+  // })
+  // .then(singleUser => singleUser.json())
+  // // .then(data => console.log('data', data))
+  // .then((singleUser) => {
+  //   // console.log({singleUser})
+  //   setUserEmail(singleUser.email)
+  // //     setUserImage(data.image)
+  // })
 
     useEffect(() => {
-      fetchSingleUser(id);
-    }, []);
+      const fetchSingleUser = () => fetch('http://localhost:4000/auth//user' , {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')},
+      })
+      .then(singleUser => singleUser.json())
+      // .then(data => console.log('data', data))
+      .then((singleUser) => {
+        // console.log({singleUser})
+        setUserEmail(singleUser.email)
+      //     setUserImage(data.image)
+        
+      })
+
+      fetchSingleUser();
+    }, [id]);
 
 
   const [newPassword , setNewPassword] = useState('')
@@ -87,7 +100,7 @@ export default function ChangePassword({ userConnected }) {
         headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": id  },
         body: JSON.stringify(body)
       };
-      const patchNewPassword = () => fetch('http://localhost:4000/auth/userPassword/' + id, requestOptions)
+      const patchNewPassword = () => fetch('http://localhost:4000/auth/userPassword', requestOptions)
         // .then(response => response.json())
         // .then(data => setUserFirstName(data.firstName));
         .then(res => res.json())
@@ -105,6 +118,7 @@ export default function ChangePassword({ userConnected }) {
                 // console.log(res.responseMessage)
 
                 handleClose()
+                anchorClose()
 
               })
     
@@ -130,7 +144,9 @@ export default function ChangePassword({ userConnected }) {
         }}
       >
         <Fade in={open}>
-          <div className={classes.paper + ' ' + 'avatar-modal'}>
+          {/* <div className={classes.paper + ' ' + 'avatar-modal'}> */}
+          <div className={clsx(classes.paper, 'create-post' )}>
+          
             <h2 id="simple-modal-title">Change Password</h2>
             <hr className="avatar-modal--hr"/>
             <form action="" className="avatar-modal__form">
@@ -143,7 +159,8 @@ export default function ChangePassword({ userConnected }) {
                     text='New Password'
                     authValues={newPassword} 
                     handleAuthChange={(e) => setNewPassword(e.target.value)}
-                    labelWidth={80}   
+                    labelwidth={80}   
+                    autoComplete="new-password"
                   />
 
                   <InputPassword 
@@ -154,7 +171,8 @@ export default function ChangePassword({ userConnected }) {
                     text='Confirm new password'
                     authValues={newPassword2} 
                     handleAuthChange={(e) => setNewPassword2(e.target.value)}
-                    labelWidth={140}   
+                    labelwidth={140}
+                    autoComplete="new-password"
                   />
 
                     <InputPassword 
@@ -165,7 +183,8 @@ export default function ChangePassword({ userConnected }) {
                     text='Current Password'
                     authValues={currentPassword} 
                     handleAuthChange={(e) => setCurrentPassword(e.target.value)}
-                    labelWidth={140}   
+                    labelwidth={140}
+                    autoComplete="current-password"
                   />
                   
                   <div className="avatar-modal__form--btn">

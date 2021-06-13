@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '../utils/button/Button'
@@ -7,21 +7,9 @@ import { TextField } from '@material-ui/core';
 import InputPassword from '../utils/button/InputPassword';
 import './signup.scss'
 import { useHistory } from 'react-router-dom';
-
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -48,12 +36,11 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
     setOpen(false);
   };
 
-  let responseMessage = ''
+  const [errorMessage, setErrorMessage] = useState('')
 
   const actionSignUp = e => {
     e.preventDefault();
 
-    // fetch('http://localhost:5000/accounts', {
     fetch('http://localhost:4000/auth/register', {
       method: 'POST',
       headers: {
@@ -70,23 +57,12 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
       return res.json()})
 
     .then((res) => {
-      console.log('2nd then',res)
+      console.log('2nd then: res: ',res)
 
       if(res.token) {
-        console.log('then if')
-        console.log({res})
-        console.log(res.token)
+        console.log('2nd then, if res:', res)
         sessionStorage.setItem('jwt', res.token)
-
-        sessionStorage.setItem('userConnectedId', 'test')
         sessionStorage.setItem('userConnectedId', res.userConnected.id)
-        sessionStorage.setItem('userConnectedFirstName', res.userConnected.first_name)
-        sessionStorage.setItem('userConnectedLastName', res.userConnected.last_name)
-        sessionStorage.setItem('userConnectedEmail', res.userConnected.email)
-
-
-        handleClose();
-        history.push('/Forum')
       
         setAuthValues({
           firstName: '',
@@ -96,35 +72,47 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
           password2: ''
         });
 
+        handleClose();
+        history.push('/Forum')
+
       } else {
         console.log(res)
         console.log('register: else (no token)')
-        responseMessage = res.message
-        console.log({responseMessage})
-        return responseMessage
+        if(res.message){
+          setErrorMessage (res.message)
+        }
+        else {
+          setErrorMessage (res)
+        }
       }
     })
   }
 
-  console.log({responseMessage})
+  useEffect(() => {
+    if (errorMessage){
+        toast.error(errorMessage, {className:'toast--error'} )
+        setErrorMessage('')
+    }
+
+  }, [errorMessage])
+
 
   const body = (
     // <div style={modalStyle} className={classes.paper}  >
-    <div className={classes.paper + ' ' + 'signup' }>
+    <div className={clsx(classes.paper, 'signup' )}>
       
       <h2 id="simple-modal-title">Sign Up</h2>
       <hr className="signup--hr"/>
       <div className="signup__wrapper">
             {/* <form action="" className="auth__form"> */}
               <TextField
-                className={classes.input}
+                className={clsx(classes.input, 'form__inputs--input' )}
                 // coupler les 2 classes?
                 // className="signup__wrapper--input"
                 label="first-name" variant="outlined" 
                 id='first-name' margin='dense'  
                 type="text" 
                 name="firstName" 
-                className="form__inputs--input" 
                 placeholder="Enter your first name"
                 value= {authValues.firstName} 
                 onChange={handleAuthChange}
@@ -177,23 +165,10 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
                 // setAuthValues={setAuthValues}
                 labelWidth={140}   
               />
-              <div>
-                {responseMessage}
-              </div>
-
-              {/* {{#if message }}
-                <h4 class="alert alert-danger mt-4">{{message}}</h4>
-              {{/if}} */}
 
               <div className="signup__wrapper--btn">
                 <ButtonLarge className={classes.signupBtn} color='primary' text='Sign Up' onClick={actionSignUp}/>
               </div>
-
-              <div>{responseMessage}</div>
-              
-                
-            {/* </form> */}
-            
             
         </div>
 

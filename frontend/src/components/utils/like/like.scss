@@ -8,6 +8,16 @@
   }
 
   &--active {
-    color: grey;
+    padding-bottom: 1px;
+    border-bottom: 1px solid;
+  }
+}
+
+.card-item__footer__left {
+  display: flex;
+  align-items: center;
+
+  &--likes {
+    padding: 10px;
   }
 }

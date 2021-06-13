@@ -5,6 +5,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import ButtonLarge from '../utils/button/Button';
 import { useHistory } from 'react-router-dom';
+import clsx from 'clsx';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -62,7 +63,7 @@ export default function Logout({ userConnected }) {
         }}
       >
         <Fade in={open}>
-          <div className={classes.paper + ' ' + 'avatar-modal'}>
+          <div className={clsx(classes.paper, 'avatar-modal')}>
             <h2 id="simple-modal-title">Logout</h2>
             <hr className="avatar-modal--hr"/>
             <form action="" className="avatar-modal__form">

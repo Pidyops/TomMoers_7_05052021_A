@@ -8,7 +8,9 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import { EditOutlined, PhotoCamera } from '@material-ui/icons';
 import './modalEditPost.scss'
 import { IconButton } from '@material-ui/core';
-import {myHeader} from '../../../api/posts'
+
+import clsx from 'clsx';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -64,7 +66,7 @@ export default function ModalEditPost({
     // const fetchSinglePost = (id) => fetch('http://localhost:4000/feed/post/' + id, {
     const fetchSinglePost = () => fetch('http://localhost:4000/feed/post/' + post.id, {
       method: 'GET',
-      headers: myHeader
+      headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')}
     })
     .then(singlePost => singlePost.json())
     // .then(data => console.log('data', data))
@@ -93,7 +95,7 @@ export default function ModalEditPost({
 
       const requestOptions = {
         method: 'PATCH',
-        headers: myHeader,
+        headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')},
         body: JSON.stringify(body)
         // body: JSON.stringify({firstName : userFirstName})
       };
@@ -113,9 +115,11 @@ export default function ModalEditPost({
 
   return (
     <div>
-      <button type="button" onClick={handleOpen}  >
+      {/* <button type="button" onClick={handleOpen}  >
         <EditOutlined />
-      </button>
+      </button> */}
+      <EditOutlinedIcon onClick={handleOpen} />
+      
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -130,7 +134,9 @@ export default function ModalEditPost({
       >
 
         <Fade in={open}>
-          <div className={classes.paper + ' ' + "create-post" }>
+          {/* <div className={classes.paper + ' ' + "create-post" }> */}
+          <div className={clsx(classes.paper, 'create-post' )}>
+          
             <form noValidate autoComplete="off">
               <h2 id="transition-modal-title">Edit your post</h2>
               <hr className="create-post--hr"/>
@@ -146,7 +152,7 @@ export default function ModalEditPost({
               <div>
                 <input
                   accept="image/*" className={classes.input} id="icon-button-file" type="file"
-                  value={image} onChange={(e) => setPostImage(e.target.value)}
+                  value={postImage} onChange={(e) => setPostImage(e.target.value)}
                 />
                 <label htmlFor="icon-button-file">
                   <IconButton color="primary" aria-label="upload picture" component="span">

@@ -1,19 +1,17 @@
 import './commentPost.scss'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Avatar, Button, TextareaAutosize } from '@material-ui/core'
-import moment from 'moment';
-import FeedHeader from '../feedHeader/FeedHeader'
-import FeedBody from '../feedBody/FeedBody'
+import FeedHeader from '../../utils/feedHeader/FeedHeader'
+import FeedBody from '../../utils/feedBody/FeedBody'
 // import './commentCard.scss'
-import {myHeader} from '../../../api/posts'
-import Pagination from '../Pagination/Pagination'
+import Pagination from '../../utils/Pagination/Pagination'
 
 
-export default function CommentPost({ post, refreshPosts}) {
+export default function CommentPost({ post, refreshPosts, comments, getComments}) {
 
     const userConnected = sessionStorage.getItem('userConnectedId')
 
-    const [singlePost, setSinglePost] = useState (post)
+
     const [commentDesc, setCommentDesc] = useState('')
 
     // API 
@@ -42,50 +40,50 @@ export default function CommentPost({ post, refreshPosts}) {
         
     }
 
-    const [comments, setComments] = useState ('')
 
 
 
-    const getComments = () => {
-    fetch('http://localhost:4000/feed/comments/' + post.id, {
-        method: 'GET',
-        headers: myHeader
-    })
-        .then(res => res.json())
-        .then((res) => {
-            setComments(res)
-            // console.log(res)
-            console.log(res)
-        })
-    }
 
-    useEffect(() => {
-        getComments();
-    }, []);
+    // const getComments = () => {
+    // fetch('http://localhost:4000/feed/comments/' + post.id, {
+    //     method: 'GET',
+    //     headers: myHeader
+    // })
+    //     .then(res => res.json())
+    //     .then((res) => {
+    //         setComments(res)
+    //         // console.log(res)
+    //         console.log(res)
+    //     })
+    // }
 
-    const [loading, setLoading] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage] = useState(5);
+    // useEffect(() => {
+    //     getComments();
+    // }, []);
 
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = comments.slice(indexOfFirstPost, indexOfLastPost);
+    // const [loading, setLoading] = useState(false);
+    // const [currentPage, setCurrentPage] = useState(1);
+    // const [postsPerPage] = useState(5);
+
+    // const indexOfLastPost = currentPage * postsPerPage;
+    // const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    // const currentPosts = comments.slice(indexOfFirstPost, indexOfLastPost);
 
     //Change Page
-    const paginate =(pageNumber)=> setCurrentPage(pageNumber)
+    // const paginate =(pageNumber)=> setCurrentPage(pageNumber)
 
 
 
     return (
-        <div>
+        <div className='comment-post--card'>
             <div className='comment-post'>
                 
-                <div className='comment-post__left'></div>
-                    <Avatar />
+                {/* <div className='comment-post__left'></div> */}
+                    {/* <Avatar /> */}
                 <div className='comment-post__right'>
                     <TextareaAutosize 
                         className='comment-post__right--comment'
-                        fullWidth='fullWidth' aria-label="minimum height" 
+                        fullwidth='fullwidth' aria-label="minimum height" 
                         rowsMin={3} placeholder="What do you have in mind?" 
                         value={commentDesc}
                         onChange={(e) => setCommentDesc(e.target.value)}
@@ -103,7 +101,7 @@ export default function CommentPost({ post, refreshPosts}) {
 
                   
                 <div>
-                {(comments && comments.length > 0) && currentPosts.map(c => (
+                {(comments && comments.length > 0) && comments.map(c => (
                     <div key={c.id} className='comment-module'>
                         <FeedHeader c={c} />
                         <FeedBody desc={c.description} />
@@ -111,8 +109,8 @@ export default function CommentPost({ post, refreshPosts}) {
                     </div>
                     
                 ))}
-                {comments.length > postsPerPage &&
-                <Pagination postsPerPage={postsPerPage} totalPosts={comments.length} paginate={paginate} />}
+                {/* {comments.length > postsPerPage &&
+                <Pagination postsPerPage={postsPerPage} totalPosts={comments.length} paginate={paginate} />} */}
                 
             </div>
             

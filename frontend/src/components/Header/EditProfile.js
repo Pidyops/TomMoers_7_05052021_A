@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { TextField } from '@material-ui/core';
 import ButtonLarge from '../utils/button/Button';
-import {myHeader} from '../../api/posts'
-
-
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -24,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EditProfile({ userConnected }) {
+export default function EditProfile({ userConnected, anchorClose, onPostCreated }) {
   const classes = useStyles();
 
 
@@ -32,7 +30,7 @@ export default function EditProfile({ userConnected }) {
 
   const handleOpen = () => {
     setOpen(true);
-    fetchSingleUser(id);
+    fetchSingleUser();
   };
 
   const handleClose = () => {
@@ -45,10 +43,22 @@ export default function EditProfile({ userConnected }) {
   // const [userImage, setUserImage] = useState('')
 
   let id= sessionStorage.getItem('userConnectedId')
+  // let jwt = sessionStorage.getItem('jwt')
+  // const myHeader  = new Headers({})
 
-  const fetchSingleUser = () => fetch('http://localhost:4000/auth//user/' + id, {
+  // useEffect (() => {
+  //   myHeader.append("jwt", jwt)
+  //   myHeader.append("id", id)
+  // }, [id, jwt])
+
+  // const myHeader  = new Headers({})
+  //   myHeader.append("jwt", sessionStorage.jwt)
+  //   myHeader.append("id", sessionStorage.userConnectedId)
+
+
+  const fetchSingleUser = () => fetch('http://localhost:4000/auth//user' , {
     method: 'GET',
-    headers: myHeader
+    headers: { 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')}
   })
   .then(singleUser => singleUser.json())
   // .then(data => console.log('data', data))
@@ -60,9 +70,9 @@ export default function EditProfile({ userConnected }) {
   //     setUserImage(data.image)
   })
 
-    useEffect(() => {
-      fetchSingleUser();
-    }, []);
+    // useEffect(() => {
+    //   fetchSingleUser();
+    // }, []);
 
 
     // console.log(userFirstName)
@@ -91,15 +101,21 @@ export default function EditProfile({ userConnected }) {
 
       const requestOptions = {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": id },
+        headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId') },
         body: JSON.stringify(body)
         // body: JSON.stringify({firstName : userFirstName})
       };
-      const putUserById = () => fetch('http://localhost:4000/auth/userPatch/' + id, requestOptions)
+      const putUserById = () => fetch('http://localhost:4000/auth/userPatch', requestOptions)
         .then(response => response.json())
         // .then(data => setUserFirstName(data.firstName));
+        .then(()=> {
+          handleClose();
+          anchorClose()
+          onPostCreated()
+        })
+        
+
         putUserById(id);
-        handleClose();
     }
   
         
@@ -122,7 +138,7 @@ export default function EditProfile({ userConnected }) {
         }}
       >
         <Fade in={open}>
-          <div className={classes.paper + ' ' + 'avatar-modal'}>
+          <div className={clsx(classes.paper, 'avatar-modal')}>
             <h2 id="simple-modal-title">Account information</h2>
             <hr className="avatar-modal--hr"/>
             <form action="" className="avatar-modal__form">
@@ -140,13 +156,12 @@ export default function EditProfile({ userConnected }) {
                       
                 
                   <TextField
-                    className="avatar-modal__form--input" 
+                    className="avatar-modal__form--input form__inputs--input" 
                     label="last-name" variant="outlined" 
                     size="small" margin='dense'  
                     id='last-name' 
                     type="text" 
                     name="lastName" 
-                    className="form__inputs--input" 
                     placeholder="Enter your new last name"
                     value={userLastName}
                     onChange={(e) => setUserLastName(e.target.value)}
@@ -154,13 +169,12 @@ export default function EditProfile({ userConnected }) {
                       
 
                   <TextField
-                    className="avatar-modal__form--input" 
+                    className="avatar-modal__form--input form__inputs--input" 
                     label="Email" variant="outlined" 
                     size="small" margin='dense'  
                     id='email' 
                     type="email" 
                     name="email" 
-                    className="form__inputs--input" 
                     placeholder="Enter your new email"
                     value={userEmail}
                     onChange={(e) => setUserEmail(e.target.value)}

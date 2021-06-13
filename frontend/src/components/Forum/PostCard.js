@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
 import './card.scss'
 import ModalEditPost from './modalEditPost/modalEditPost';
-import Collapse from '../collapse/Collapse';
+import Collapse from '../../components/comment/collapse/Collapse'
 import { useEffect, useState } from 'react';
 import moment from 'moment';
 
@@ -81,7 +81,7 @@ const PostCard = ({ post, handleDeletePost, image, setImage, userConnected, refr
         <Card className='card-item' elevation={3}>
             <div className="card-item__header">
                 <div className="card-item__header__left">
-                    <Avatar aria-label="recipe" className={classes.avatar}/>
+                    {/* <Avatar aria-label="recipe" className={classes.avatar}/> */}
                     
                     <div className="card-item__header__center">
                     <div className="card-item__header__center--name"> {post.users_concat}
@@ -102,7 +102,7 @@ const PostCard = ({ post, handleDeletePost, image, setImage, userConnected, refr
                         : <div className='card__to-read--color'></div>}  
                 </div>
                 
-                {parseInt(userConnectedId) === post.user_id &&
+                {parseInt(userConnectedId) === post.user_id ?
                     <div className="card-item__header__right">
                         <div className="card-item__header__right--edit">
                             {/* <EditOutlined /> */}
@@ -112,6 +112,8 @@ const PostCard = ({ post, handleDeletePost, image, setImage, userConnected, refr
                             <DeleteOutlined onClick={() => handleDeletePost(post.id)} />
                         </div>
                     </div>
+                    :
+                    <div> </div>
                 }
             </div>
             

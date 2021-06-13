@@ -5,9 +5,8 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Button from '@material-ui/core/Button';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import './createPostModal.scss';
 import ImageUploader from "react-images-upload";
-import {myHeader} from '../../../api/posts'
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -51,8 +50,7 @@ export default function CreatePostModal({
     setOpen(false);
   };
 
-  // Upload
-  // const [pictures, setPictures] = useState([]);
+
   const [imageTest, setImageTest] = useState('')
 
   const onDrop = picture => {
@@ -66,17 +64,10 @@ export default function CreatePostModal({
   const handleSubmitPost = async (e) => {
     e.preventDefault();
 
-    // let myHeader = new Headers({})
-    // myHeader.append("jwt", sessionStorage.jwt)
-    // myHeader.append("id", sessionStorage.userConnectedId)
-    // console.log(myHeader)
-
     const formData = new FormData();
     formData.append("image", imageTest);
     formData.append("description", description);
     formData.append("userId", userId);
-    // setTitleError(false)
-    // setDetailsError(false)
 
     // if (title == '') {
     //   setTitleError(true)
@@ -86,24 +77,11 @@ export default function CreatePostModal({
     // }
     // if (title && details)
 
-    // fetch('http://localhost:5000/posts', {
-    // fetch('http://localhost:4000/feed/post', {
-    //   method: 'POST',
-    //   headers: { 'content-type': 'application/json' },
-    //   body: JSON.stringify({ description, date, userId, like, comment })
-    // })
-    //   // .then(() => {
-    //   //   onPostCreated(); //refreshPosts()
-    //   //   handleClose();
-    //   //   setDescription('');
-
-    //   // })
-
 
       
-    const res = await fetch("http://localhost:4000/feed/post",{
+    fetch("http://localhost:4000/feed/post",{
       method: 'POST',
-      headers: myHeader,
+      headers: { 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')},
       body: formData
     }).then(res => res.json())
     // alert(JSON.stringify(res))
@@ -143,7 +121,7 @@ export default function CreatePostModal({
       >
 
         <Fade in={open}>
-          <div className={classes.paper + ' ' + "create-post" }>
+          <div className={clsx(classes.paper, "create-post" )}>
             <form noValidate autoComplete="off" onSubmit={handleSubmitPost}>
               <h2 id="transition-modal-title">Create your post</h2>
               <hr className="create-post--hr"/>
@@ -159,19 +137,23 @@ export default function CreatePostModal({
               <ImageUploader
                 // {...props}
                 withIcon={true}
+                buttonText={'upload Image'}
                 onChange={onDrop}
                 imgExtension={[".jpg", ".gif", ".png", ".gif"]}
                 maxFileSize={5242880}
                 withPreview={true}
               />
 
+              <div className="create-post--submit">
               <Button
+                
                 type='submit'
                 color='secondary'
                 variant='contained'
               >
                 Submit
               </Button>
+              </div>
             </form>
           </div>
         </Fade>

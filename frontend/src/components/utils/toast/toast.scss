@@ -1,0 +1,16 @@
+.toast {
+  &--error {
+    background-color: lightcoral;
+    color: black;
+  }
+
+  &--success {
+    background-color: lightcoral;
+    color: crimson;
+  }
+
+  &--warning {
+    background-color: lightcoral;
+    color: crimson;
+  }
+}

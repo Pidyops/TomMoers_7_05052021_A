@@ -9,11 +9,13 @@
   font-family: "PT Sans", sans-serif;
 }
 
-// $color-1: blue;
-// $color-2: lightgrey;
+$color-1: #607d8b;
+$color-2: lightgrey;
 // $color-3: blue;
 // $color-4: blue;
 // $color-5: blue;
+
+// background-color: $lighten-color-secondary;
 
 // body {
 //   margin: 0.4rem auto;
@@ -32,4 +34,37 @@
 // }
 // a:visited {
 //   color: $color-3;
+// }
+
+%shadow-card {
+  -webkit-box-shadow: 2px 4px 7px 4px rgba(148, 148, 148, 0.46);
+  box-shadow: 2px 4px 7px 4px rgba(148, 148, 148, 0.46);
+}
+
+// @extend %shadow-card;
+
+// .avatar-modal {
+//   //   top: 50%;
+//   //   left: 50%;
+//   //   transform: translate(-50%, -50%);
+//   h2 {
+//     color: #607d8b;
+//   }
+//   &--hr {
+//     margin-top: 10px;
+//     margin-bottom: 20px;
+//   }
+
+//   &__form {
+//     display: flex;
+//     flex-direction: column;
+
+//     &--input {
+//     }
+//     &--btn {
+//       margin-top: 20px;
+//       display: flex;
+//       justify-content: space-between;
+//     }
+//   }
 // }

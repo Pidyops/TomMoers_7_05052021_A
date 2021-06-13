@@ -1,9 +1,8 @@
-import ButtonSizes from './ButtonSizes'
-import CreatePostModal from './modalCreatePost/CreatePostModal'
+import CreatePostModal from './CreatePostModal'
 import ProfileMenu from './ProfileMenu'
 
 
-const Header = ({ date, comment, authValues, setAuthValues, description, setDescription, image, setImage, onPostCreated, userId, userConnected }) => {
+const Header = ({ date, authValues, setAuthValues, description, setDescription, image, setImage, onPostCreated, userId, userConnected }) => {
 
     return (
         <header className='header'>
@@ -20,9 +19,7 @@ const Header = ({ date, comment, authValues, setAuthValues, description, setDesc
 
             <div className='header__right'>
                 <CreatePostModal
-                    // post={post} setPost={setPost} 
                     description={description} setDescription={setDescription}
-                    // comment={comment} like={like}
                     image={image} setImage={setImage}
                     onPostCreated={onPostCreated}
                     date={date} userId={userId}
@@ -33,6 +30,7 @@ const Header = ({ date, comment, authValues, setAuthValues, description, setDesc
                     authValues={authValues}
                     setAuthValues={setAuthValues}
                     userConnected={userConnected}
+                    onPostCreated={onPostCreated}
                 />
 
             </div>

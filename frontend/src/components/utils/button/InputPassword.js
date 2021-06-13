@@ -35,9 +35,9 @@ export default function InputPassword({authValues, handleAuthChange,
   // console.log(authValues)
   // console.log(authValues.password2)
 
-  // const handleChange = (prop) => (event) => {
-  //   setValues({ ...values, [prop]: event.target.value });
-  // };
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
 
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
@@ -51,7 +51,7 @@ export default function InputPassword({authValues, handleAuthChange,
     <div className={classes.root}>
       <div>
         <FormControl 
-            className={clsx(classes.margin, classes.textField, className)} 
+            className={clsx(classes.margin, classes.textField, 'signin__wrapper__right__form--item')} 
             variant="outlined" {...restProps} fullWidth={true}
             margin='dense'
         >
@@ -75,7 +75,7 @@ export default function InputPassword({authValues, handleAuthChange,
                 </IconButton>
               </InputAdornment>
             }
-            labelWidth={labelWidth}
+            // labelwidth='true'
           />
         </FormControl>
 

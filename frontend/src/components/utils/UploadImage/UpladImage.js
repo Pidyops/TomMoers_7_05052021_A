@@ -1,6 +1,6 @@
 import ImageUploader from "react-images-upload";
 
-https://github.com/jakehartnell/react-images-upload#readme
+// https://github.com/jakehartnell/react-images-upload#readme
 
 const UploadImage = ({post, setPost, image, setImage}) => {
   // const [pictures, setPictures] = useState([]);
@@ -9,9 +9,9 @@ const UploadImage = ({post, setPost, image, setImage}) => {
   //   setPictures([...pictures, picture]);
   // };
 
-  console.log(post)
-  console.log('editImgM',image)
-  console.log(setImage)
+  // console.log(post)
+  // console.log('editImgM',image)
+  // console.log(setImage)
   
   return (
     <ImageUploader

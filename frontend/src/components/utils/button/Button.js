@@ -9,11 +9,11 @@ const useStyles = makeStyles((theme) => ({
 
   }));
 
-export default function ButtonLarge({variant, color, text, onClick, fullWidth}) {
+export default function ButtonLarge({variant, color, text, onClick, fullwidth}) {
     const classes = useStyles();
 
   return (
-        <Button fullWidth={fullWidth} color={color} variant={variant} size="large" onClick={onClick} className={classes.margin}>
+        <Button fullwidth={fullwidth} color={color} variant={variant} size="large" onClick={onClick} className={classes.margin}>
         {text}
         </Button>
   );
