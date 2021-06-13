@@ -75,7 +75,7 @@ exports.login = async (req, res) => {
       }
   
       db.query('SELECT * FROM users WHERE email = ?', [email], async (error, results) => {
-        console.log('82',results);
+        // console.log('82',results);
         if( !results || !(await bcrypt.compare(password, results[0].password)) ) { //if no valid email || password not correct
             console.log('info not matching')
             return res.status(400).json({message: 'Email or Password is incorrect'})
@@ -83,6 +83,7 @@ exports.login = async (req, res) => {
         } else {
             console.log('else')
           const id = results[0].id;
+            console.log(results[0])
 
           const token = jwt.sign({ id }, process.env.JWT_SECRET, {
             expiresIn: process.env.JWT_EXPIRES_IN
@@ -107,52 +108,13 @@ exports.login = async (req, res) => {
     }
 }
 
-exports.isLoggedIn = async (req, res, next) => {
-    // req.message = 'Inside middleware'; // create message variable
-    console.log(req.cookies)
-    if(req.cookies.jwt) {
-        try {
-            // 1 verfiy token: decoded = { id: 4, iat: 1622620025, exp: 1630396025 }
-            const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET);
-            console.log('decoded',decoded)
-
-            // 2 check if the user exist
-            db.query('SELECT * FROM users WHERE id = ?', [decoded.id], (error, result) => {
-                console.log(result);
-                if(!result) {
-                    return next();
-
-                }
-
-                req.user = result[0];
-                return next()
-            });
-
-        } catch (error) {
-            console.log(error)
-            return next()
-        }
-
-    } else {
-        next();
-    }
-}
-
-exports.logout = async (req, res) => {
-    res.cookie('jwt', 'logout', { //create a cookie (will overwrite the existing one)
-        expires: new Date(Date.now() + 2 * 1000),
-        htttpOnly: true
-    })
-
-    res.status(200).redirect('/');
-}
-
 exports.getSingleUser = async (req, res) => {
-    console.log('getSingleUser')
-    const singleUserId = parseInt(req.params.id)
-        console.log(singleUserId)
+    console.log('----- getSingleUser -----')
+    userId = req.userId
+    console.log(userId)
+
     try {
-        db.query('SELECT first_name, last_name, email FROM users WHERE id = ?', [singleUserId], (error, result) => {
+        db.query('SELECT first_name, last_name, email FROM users WHERE id = ?', [ userId ], (error, result) => {
         // console.log(result)
         res.status(200).json(result[0])
         
@@ -167,12 +129,10 @@ exports.getSingleUser = async (req, res) => {
 
 exports.patchUser  = async (req, res) => {
     console.log('----- patchUser -----');
-    
-    console.log('params',req.params)
-    console.log('body',req.body)
 
     const {firstName, lastName, email} = req.body;
-    const id = parseInt(req.params.id)
+
+    id = parseInt(req.userId)
     console.log('id', id)
 
     try {
@@ -214,10 +174,9 @@ exports.deleteUser = async (req, res) => {
     try {
         console.log('deletePost try:')
 
-        const postId = parseInt(req.params.id)
-        console.log(postId )
+        userId = req.userId
 
-        const sqlRequest = await db.query('DELETE FROM users WHERE id = ?', [postId], (error, result) => {
+        const sqlRequest = await db.query('DELETE FROM users WHERE id = ?', [userId], (error, result) => {
             // console.log(result)
 
             console.log(sqlRequest.sql)
@@ -235,14 +194,11 @@ exports.deleteUser = async (req, res) => {
 
 exports.changePassword = async (req, res) => {
     console.log('----- Change password -----')
-    console.log(req.body);
-    console.log(req.params)
     var newToken = ''
     var responseMessage=''
 
-    const id = req.params.id
+    id = req.userId
     const {newPassword, newPassword2, currentPassword, email} = req.body;
-    console.log(newPassword, newPassword2, currentPassword, email )
 
     if(newPassword !== newPassword2) {
         console.log('New password do not match')
@@ -250,7 +206,7 @@ exports.changePassword = async (req, res) => {
 
     } else {
 
-        db.query('SELECT * FROM users WHERE email = ?', [email], async (error, results) => {
+        db.query('SELECT * FROM users WHERE id = ?', [id], async (error, results) => {
             console.log('82',results);
             if( !results || !(await bcrypt.compare(currentPassword, results[0].password)) ) { //if no valid email || password not correct
                 console.log('current password', results[0].password)

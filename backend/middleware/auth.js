@@ -3,24 +3,29 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => { // export our middleware
     console.log('------- middleware auth -------')
-    // console.log('req.headers: ',req.headers)
     // console.log('req: ',req) no id in request
-    console.log('req.headers.jwt: ',req.headers.jwt)
-    console.log('req.headers: ',req.headers.id)
+    // console.log('req.headers.jwt: ',req.headers.jwt)
+    // console.log('req.headers: ',req.headers.id)
     // headersId = parseInt(3)
     headersId = parseInt(req.headers.id)
+    console.log('headersId', headersId)
 
      try {
         const token = req.headers.jwt; 
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET) 
+        console.log('decodedToken', decodedToken)
         const userId = decodedToken.id; 
-        console.log('userId (by token): ', userId, typeof userId)
-        console.log('req.headers', headersId, typeof headersId)
+        // console.log('userId (by token): ', userId, typeof userId)
+        // console.log('req.headers', headersId, typeof headersId)
         if (headersId === userId) { // check if there is a user id and if yes, if it the same extracted from the token
             console.log('token valid')
+            req.userId = userId
+            console.log('req.userId', req.userId)
             next();
         } else {
             console.log('token does not match')
+            
+            
             // throw 'Invalid user ID';
             return res.status(403).json('Invalid Token')
 

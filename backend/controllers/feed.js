@@ -10,8 +10,8 @@ const db = mysql.createConnection({
 
 exports.createPost = async (req, res) => {
     console.log('------- Create Post -------')
-    const {description, image, date, userId, like, comments} = req.body
-    console.log('req.body', req.body)
+    const {description, like} = req.body
+    userId = req.userId
     let imageUrl = ''
 
     try {
@@ -20,15 +20,15 @@ exports.createPost = async (req, res) => {
         if(req.file){
             const url = req.protocol + '://' + req.get('host');
             imageUrl = url + '/images/' + req.file.filename
-            console.log('img url',imageUrl)
+            // console.log('img url',imageUrl)
         }
 
-        const sqlRequest = await db.query('INSERT INTO posts SET ?', {description: description, image: imageUrl, user_id: userId, likes: like }, (error, results) => {
+        const sqlRequest = await db.query('INSERT INTO posts SET ?', {description: description, image: imageUrl, user_id: userId}, (error, results) => {
             if(error) {
               console.log(error);
             } else {
                 console.log(sqlRequest.sql)
-              console.log(results);
+            //   console.log(results);
               res.status(201).json('post Created')
             }
           })
@@ -41,27 +41,17 @@ exports.createPost = async (req, res) => {
 
 exports.getAllPosts = async (req, res) => {
     console.log('----- getAllPosts -----')
-    let userId = parseInt(req.params.id)
-    console.log('userId: ', userId)
+    userId = req.userId
+    // console.log('userId: ', userId)
     try {
-        const sqlRequest = db.query("SELECT DISTINCT posts.id, posts.user_id, posts.description, users_request.users_concat,  posts.image, (UNIX_TIMESTAMP(posts.date)) AS publish_date, readPostStatus_request.read_status, likes_request.likes_sum, likes_request_id.is_liked, comments_request.comments_count FROM posts LEFT JOIN (SELECT id, CONCAT(first_name, ' ' , last_name) AS users_concat FROM groupomania.users) AS users_request ON posts.user_id = users_request.id LEFT JOIN (SELECT post_id, read_status FROM groupomania.readPostStatus WHERE readPostStatus.user_id = ?) AS readPostStatus_request  ON posts.id = readPostStatus_request.post_id LEFT JOIN (SELECT post_id, COUNT(*) AS comments_count  FROM groupomania.comments GROUP BY post_id) AS comments_request ON posts.id = comments_request.post_id LEFT JOIN (SELECT post_id, SUM(is_liked) AS likes_sum FROM groupomania.likes GROUP BY post_id) AS likes_request ON posts.id = likes_request.post_id LEFT JOIN (SELECT post_id, is_liked FROM groupomania.likes WHERE likes.user_id = ?) AS likes_request_id  ON posts.id = likes_request_id.post_id ORDER BY posts.id;",
+        const sqlRequest = db.query("SELECT DISTINCT posts.id, posts.user_id, posts.description, users_request.users_concat,  posts.image, (UNIX_TIMESTAMP(posts.date)) AS publish_date, readPostStatus_request.read_status, likes_request.likes_sum, likes_request_id.is_liked, comments_request.comments_count FROM posts LEFT JOIN (SELECT id, CONCAT(first_name, ' ' , last_name) AS users_concat FROM groupomania.users) AS users_request ON posts.user_id = users_request.id LEFT JOIN (SELECT post_id, read_status FROM groupomania.readPostStatus WHERE readPostStatus.user_id = ?) AS readPostStatus_request  ON posts.id = readPostStatus_request.post_id LEFT JOIN (SELECT post_id, COUNT(*) AS comments_count  FROM groupomania.comments GROUP BY post_id) AS comments_request ON posts.id = comments_request.post_id LEFT JOIN (SELECT post_id, SUM(is_liked) AS likes_sum FROM groupomania.likes GROUP BY post_id) AS likes_request ON posts.id = likes_request.post_id LEFT JOIN (SELECT post_id, is_liked FROM groupomania.likes WHERE likes.user_id = ?) AS likes_request_id  ON posts.id = likes_request_id.post_id ORDER BY posts.id DESC;",
 
         [userId, userId], (error, result) => {
-            console.log(sqlRequest.sql)
+            // console.log(sqlRequest.sql)
             // console.log(result)
             res.status(200).json(result)
         
         });
-
-
-        
-        // db.query('SELECT id, user_id, description, image, date FROM posts', (error, result) => {
-        //     // console.log(result)
-        //     res.status(200).json(result)
-            
-        //     });
-
-
         
     } catch (error) {
         // console.error(error.message)
@@ -73,7 +63,7 @@ exports.getAllPosts = async (req, res) => {
 exports.getSinglePost = async (req, res) => {
     console.log('----- getSinglePost -----')
     const singlePostId = parseInt(req.params.id)
-        console.log('singlePostId',singlePostId)
+        // console.log('singlePostId',singlePostId)
     try {
         db.query('SELECT description, image FROM posts WHERE id = ?', [singlePostId], (error, result) => {
         // console.log(result)
@@ -83,7 +73,7 @@ exports.getSinglePost = async (req, res) => {
         });
         
     } catch (error) {
-        console.error(error.message)
+        // console.error(error.message)
         res.status(500).json(error.message)
     }
 
@@ -91,19 +81,32 @@ exports.getSinglePost = async (req, res) => {
 
 exports.modifyPost  = async (req, res) => {
     console.log('----- modifyPost -----');
+    userId = req.userId
     
-    const id = req.params.id
+    const id = parseInt(req.params.id)
     const desc = req.body.desc
     console.log({id: id, desc: desc})
 
     try {
 
-        const sqlRequest = db.query('UPDATE posts SET description = ? WHERE id = ?', [desc, id], (error, result) => {
-            console.log(sqlRequest.sql)
-            console.log(result)
-            res.status(200).json('post upadated')
-            
+        const sqlRequest1 = await db.query('SELECT user_id FROM posts WHERE user_id = ? AND id = ?', [userId, id], (error, result) => {
+            console.log(result[0])
+            console.log(sqlRequest1.sql)
+            if(result[0]) {
+                const sqlRequest = db.query('UPDATE posts SET description = ? WHERE id = ?', [desc, id], (error, result) => {
+                    // console.log(sqlRequest.sql)
+                    // console.log(result)
+                    res.status(200).json('post upadated')
+                });
+
+            } else {
+                console.log('not allowed')
+                res.status(400).json('not allowed')
+            }
+
         });
+
+
 
         
         
@@ -116,43 +119,56 @@ exports.modifyPost  = async (req, res) => {
 
 exports.deletePost = async (req, res) => {
     console.log('----- deletePost -----')
-
+    
     try {
         // console.log('deletePost try:')
         const postId = parseInt(req.params.id)
+        userId = req.userId
         // console.log(postId )
 
-        db.query('SELECT image FROM posts WHERE id = ?', [req.params.id], (error, result) => {
-            // console.log(result)
-            // res.status(200).json(result[0])
-            // res.status(200).json('hello')
-            console.log('reslut[0]', result[0] )
+        const sqlRequest1 = await db.query('SELECT user_id FROM posts WHERE user_id = ? AND id = ?', [userId, postId], (error, result) => {
+            if(result[0]) {
 
-            if (result[0].image){
-                const filename = result[0].image.split('/images/')[1];
-                console.log(filename)
-                fs.unlink('images/' + filename, () => {
-                    console.log('file deleted')
-                })
+                db.query('SELECT image FROM posts WHERE id = ?', [req.params.id], (error, result) => {
+                    // console.log(result)
+                    // res.status(200).json(result[0])
+                    // res.status(200).json('hello')
+                    console.log('reslut[0]', result[0] )
+        
+                    if (result[0].image){
+                        const filename = result[0].image.split('/images/')[1];
+                        console.log(filename)
+                        fs.unlink('images/' + filename, () => {
+                            console.log('file deleted')
+                        })
+                    }
+                    
+                });
+        
+                db.query('DELETE FROM posts WHERE id = ?', [postId], (error, result) => {
+                    // console.log(result)
+                    try {
+                        // console.log(sqlRequest.sql)
+        
+                        // console.log(result)
+                        res.status(200).json('The post have been deleted') 
+                        
+                    } catch (error) {
+                        console.log('deletePost sql catch:')
+                        console.error(error.message)
+                        res.status(500).json(error.message)
+                    }
+        
+                });
+
+            } else {
+                console.log('not allowed')
+                res.status(400).json('not allowed')
             }
-            
+    
         });
 
-        const sqlRequest = await db.query('DELETE FROM posts WHERE id = ?', [postId], (error, result) => {
-            // console.log(result)
-            try {
-                console.log(sqlRequest.sql)
-
-                console.log(result)
-                res.status(200).json('The post have been deleted') 
-                
-            } catch (error) {
-                console.log('deletePost sql catch:')
-                console.error(error.message)
-                res.status(500).json(error.message)
-            }
-
-        });
+        
         
     } catch (error) {
         console.log('deletePost catch:')
@@ -165,9 +181,10 @@ exports.deletePost = async (req, res) => {
 // READ
 exports.handleRead = async (req, res) => {
     console.log('------- handle Read -------')
-    console.log(req.body)
+    // console.log(req.body)
+    userId = req.userId
 
-    const {userId, postId, isRead} = req.body
+    const { postId, isRead} = req.body
     
 
     try {
@@ -189,9 +206,9 @@ exports.handleRead = async (req, res) => {
 
 exports.postComments = async (req, res) => {
     console.log('------- Post Comments -------')
-    console.log(req.body)
-
-    const { postId, userId, commentDesc} = req.body
+    // console.log(req.body)
+    userId = req.userId
+    const { postId, commentDesc} = req.body
 
 
     try {
@@ -213,12 +230,12 @@ exports.postComments = async (req, res) => {
 
 exports.getComments = async (req, res) => {
     console.log('------- Get Comments -------')
-    console.log(req.params.id)
+    // console.log(req.params.id)
     const id = parseInt(req.params.id)
 
 
     try {
-        const sqlRequest = await db.query("SELECT comments.id, (UNIX_TIMESTAMP(comments.publish_date)) AS publish_date, comments.description, comments.user_id, users_request.comment_author FROM comments LEFT JOIN (SELECT id, CONCAT(first_name, ' ' , last_name) AS comment_author FROM users) as users_request ON comments.user_id = users_request.id WHERE post_id = ?", [id], (error, result) => {
+        const sqlRequest = await db.query("SELECT comments.id, (UNIX_TIMESTAMP(comments.publish_date)) AS publish_date, comments.description, comments.user_id, users_request.comment_author FROM comments LEFT JOIN (SELECT id, CONCAT(first_name, ' ' , last_name) AS comment_author FROM users) as users_request ON comments.user_id = users_request.id WHERE post_id = ? ORDER BY comments.id DESC", [id], (error, result) => {
             if(!result['']) {
                 console.log(sqlRequest.sql)
                 console.log(result)
@@ -239,9 +256,10 @@ exports.getComments = async (req, res) => {
 
 // Likes
 exports.postLikes = async (req, res) => {
-    // console.log('------- Post Likes -------')
-    // console.log(req.body)
-    const { postId, userId, like} = req.body
+    console.log('------- Post Likes -------')
+    console.log(req.body)
+    const { postId, like} = req.body
+    userId = req.userId
 
     try {
         //  check if exist
@@ -260,8 +278,8 @@ exports.postLikes = async (req, res) => {
                     if(error) {
                         console.log(error);
                     } else {
-                        console.log(sqlRequest.sql)
-                        console.log(results);
+                        // console.log(sqlRequest.sql)
+                        // console.log(results);
                         res.status(201).json('Like uploladed')
                     }
                   })
@@ -288,30 +306,3 @@ exports.postLikes = async (req, res) => {
     }
 }
 
-
-// exports.getReadStatus = async (req, res) => {
-//     // console.log('------- Get Read Status -------')
-//     const userId = req.params.id
-//     // console.log('user.id', userId)
-
-//     // try {
-//     //     const sqlRequest = await db.query
-//     //         ('SELECT readPostStatus.post_id, posts.description, posts.image, readPostStatus.user_id, readPostStatus.read_status FROM posts INNER JOIN readPostStatus ON posts.id = readPostStatus.post_id WHERE readPostStatus.user_id = ? ORDER BY posts.id', 
-//     //         [userId], (error, result) => {
-
-//     //         // console.log(sqlRequest.sql)
-//     //         // console.log(result)
-//     //         res.status(200).json(result)
-        
-//     //     });
-        
-//     // } catch (error) {
-//     //     console.error(error.message)
-//     //     res.status(500).json(error.message)
-//     // }
-// }
-
-
-
-
-// COMMENTS
