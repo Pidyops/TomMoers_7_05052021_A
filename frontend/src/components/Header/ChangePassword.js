@@ -40,29 +40,14 @@ export default function ChangePassword({ userConnected, anchorClose }) {
 
   let id= sessionStorage.getItem('userConnectedId')
 
-  // const fetchSingleUser = () => fetch('http://localhost:4000/auth//user/' + id, {
-  //   method: 'GET',
-  //   headers: myHeader,
-  // })
-  // .then(singleUser => singleUser.json())
-  // // .then(data => console.log('data', data))
-  // .then((singleUser) => {
-  //   // console.log({singleUser})
-  //   setUserEmail(singleUser.email)
-  // //     setUserImage(data.image)
-  // })
-
     useEffect(() => {
       const fetchSingleUser = () => fetch('http://localhost:4000/auth//user' , {
         method: 'GET',
         headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')},
       })
       .then(singleUser => singleUser.json())
-      // .then(data => console.log('data', data))
       .then((singleUser) => {
-        // console.log({singleUser})
         setUserEmail(singleUser.email)
-      //     setUserImage(data.image)
         
       })
 
@@ -73,17 +58,9 @@ export default function ChangePassword({ userConnected, anchorClose }) {
   const [newPassword , setNewPassword] = useState('')
   const [newPassword2 , setNewPassword2] = useState('')
   const [currentPassword , setCurrentPassword] = useState('')
-  // let currentToken = sessionStorage.getItem('jwt')
 
-    // console.log(id)
-    // console.log(newPassword)
-    // console.log(newPassword2)
-    // console.log(currentPassword)
-
-    
     // API
     // PATCH user by id ______________________________________________________________
-
     const handleNewPassword = () => {
       const body = {
           newPassword: newPassword, 
@@ -101,25 +78,14 @@ export default function ChangePassword({ userConnected, anchorClose }) {
         body: JSON.stringify(body)
       };
       const patchNewPassword = () => fetch('http://localhost:4000/auth/userPassword', requestOptions)
-        // .then(response => response.json())
-        // .then(data => setUserFirstName(data.firstName));
         .then(res => res.json())
-            //   .then(res => console.log(res))
               .then((res) => {
                 setNewPassword('')
                 setNewPassword2('')
                 setCurrentPassword('')
-                console.log('res', res)
-                // console.log(res.newToken)
-
-                
                 sessionStorage.setItem('jwt', res.newToken)
-                // sessionStorage.setItem('jwt', res.token)
-                // console.log(res.responseMessage)
-
                 handleClose()
                 anchorClose()
-
               })
     
         patchNewPassword();
@@ -144,7 +110,6 @@ export default function ChangePassword({ userConnected, anchorClose }) {
         }}
       >
         <Fade in={open}>
-          {/* <div className={classes.paper + ' ' + 'avatar-modal'}> */}
           <div className={clsx(classes.paper, 'create-post' )}>
           
             <h2 id="simple-modal-title">Change Password</h2>
@@ -199,19 +164,3 @@ export default function ChangePassword({ userConnected, anchorClose }) {
     </div>
   );
 }
-
-
-
-
-
-
-// const requestOptions = {
-//   method: 'PATCH',
-//   headers: { 'Content-Type': 'application/json' },
-//   body: JSON.stringify(body)
-//   // body: JSON.stringify({firstName : userFirstName})
-// };
-// const putUserById = () => fetch('http://localhost:5000/Accounts/' + id, requestOptions)
-//   .then(response => response.json())
-//   // .then(data => setUserFirstName(data.firstName));
-//   putUserById(id);

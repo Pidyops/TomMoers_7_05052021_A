@@ -1,26 +1,38 @@
-// import { Avatar } from '@material-ui/core'
-import { DeleteOutlined, EditOutlined } from '@material-ui/icons'
-import moment from 'moment';
 import './feedHeader.scss'
+import { DeleteOutlined } from '@material-ui/icons'
+import moment from 'moment';
+import EditComment from '../../comment/editComment/EditComment';
 
-export default function HeaderFeed({arial, id, date, c}) {
+export default function HeaderFeed({ c, refreshPosts, getComments}) {
     const userConnected = sessionStorage.getItem('userConnectedId')
     const userConnectedInt = parseInt(userConnected)
-    // console.log(c.user_id)
 
-    console.log(c)
     const dateSQL = c.publish_date
-    console.log(dateSQL)
     const timeFromNow = moment.unix(dateSQL).fromNow();
-    console.log(timeFromNow)
 
-    // console.log(c)
+
+    // DELETE post ______________________________________________________
+    const handleDeleteComment = async () => {
+
+        try {
+            await fetch('http://localhost:4000/feed/commentDelete/' + c.id, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')}
+            })
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .then(() => {
+                refreshPosts()
+                getComments()
+            })
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     return (
         <div className="header-feed">
-
         <div className="header-feed__left">
-            {/* <Avatar aria-label={arial} className='header-feed__left'/> */}
-            
             <div className="header-feed__center">
                 <div className="header-feed__center--name">{c.comment_author}
                 </div>
@@ -32,11 +44,10 @@ export default function HeaderFeed({arial, id, date, c}) {
         {userConnectedInt === c.user_id &&    
             <div className="header-feed__right">
                 <div className="header-feed__right--edit">
-                    <EditOutlined onClick={() => console.log(c.user_id)} />
-                    {/* <ModalEditPost onClick={() => console.log(id)}  /> */}
+                    <EditComment c={c} refreshPosts={refreshPosts} getComments={getComments} />
                 </div>
                 <div className="header-feed__right--delete">
-                    <DeleteOutlined onClick={() => console.log(id)} />
+                    <DeleteOutlined onClick={handleDeleteComment} />
                 </div>
             </div>
         }

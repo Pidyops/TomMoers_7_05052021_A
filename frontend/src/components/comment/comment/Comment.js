@@ -1,25 +1,8 @@
 import { Card } from "@material-ui/core";
 import "./comment.scss";
-import CommentPost from "./commentPost/CommentPost"
-
-
+import CommentPost from "../commentPost/CommentPost"
 
 export default function Comment(props) {
-
-  // const [comments, setComments] = useState ('')
-
-  // const getComments = () => {
-  //   fetch('http://localhost:4000/feed/comments/' + props.post.id, {
-  //       method: 'GET',
-  //       headers: myHeader
-  //   })
-  //       .then(res => res.json())
-  //       .then((res) => {
-  //           setComments(res)
-  //           // console.log(res)
-  //           console.log(res)
-  //       })
-  //   }
 
   return (
     <div className="comment">

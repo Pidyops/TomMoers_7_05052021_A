@@ -1,20 +1,16 @@
 import { Container } from '@material-ui/core'
 import { useEffect, useState } from 'react'
 import Header from '../components/Header/Header'
-import PostCard from '../components/Forum/PostCard'
+import PostCard from '../components/Forum/postCard/PostCard'
 
 export const Forum = ({ authValues, setAuthValues, userConnected }) => {
 
     const [description, setDescription] = useState('')
     const [image, setImage] = useState('')
-
-    const [date, setDate] = useState('') //session storage
-
+    const [date, setDate] = useState('')
     const userConnectedId = sessionStorage.getItem("userConnectedId");
     const userJwt= sessionStorage.getItem("jwt");
-    const [userId] = useState(userConnectedId) //session storage
-    // const [like, setLike] = useState(0)
-
+    const [userId] = useState(userConnectedId) 
     const [posts, setPosts] = useState('')
 
 
@@ -26,7 +22,6 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
         .then(res => res.json())
         .then((res) => {
             setPosts(res)
-            // console.log(res)
             console.log('posts', res)
         })
 
@@ -39,7 +34,6 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
     const handleDeletePost = async (id) => {
 
         try {
-            // console.log(id)
             await fetch('http://localhost:4000/feed/postDelete/' + id, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')}

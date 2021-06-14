@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import './signup.scss'
+import 'react-toastify/dist/ReactToastify.css'
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '../utils/button/Button'
 import ButtonLarge from '../utils/button/Button';
 import { TextField } from '@material-ui/core';
 import InputPassword from '../utils/button/InputPassword';
-import './signup.scss'
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SimpleModal({authValues, handleAuthChange, setAuthValues, text, color, variant}) {
   const history = useHistory();
   const classes = useStyles();
-  // const [modalStyle] = React.useState(getModalStyle);
+
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
@@ -48,9 +48,6 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
       },
       body: JSON.stringify(authValues)
     })
-  
-    // .then(res => res.json())
-    // .then(data => console.log(data))
 
     .then((res) => {
       console.log('first then')
@@ -98,17 +95,13 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
 
 
   const body = (
-    // <div style={modalStyle} className={classes.paper}  >
     <div className={clsx(classes.paper, 'signup' )}>
       
       <h2 id="simple-modal-title">Sign Up</h2>
       <hr className="signup--hr"/>
-      <div className="signup__wrapper">
-            {/* <form action="" className="auth__form"> */}
+      <form className="signup__wrapper">
               <TextField
                 className={clsx(classes.input, 'form__inputs--input' )}
-                // coupler les 2 classes?
-                // className="signup__wrapper--input"
                 label="first-name" variant="outlined" 
                 id='first-name' margin='dense'  
                 type="text" 
@@ -150,8 +143,8 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
                 text='Password'
                 authValues={authValues.password} 
                 handleAuthChange={handleAuthChange}
-                // setAuthValues={setAuthValues}
-                labelWidth={80}   
+                autoComplete="off"
+                labelWidth={80}
               />
 
               <InputPassword 
@@ -159,10 +152,9 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
                 id='password2'
                 name='password2'
                 text='Confirm password'
-                
+                autoComplete="off"
                 authValues={authValues.password2} 
                 handleAuthChange={handleAuthChange}
-                // setAuthValues={setAuthValues}
                 labelWidth={140}   
               />
 
@@ -170,7 +162,7 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
                 <ButtonLarge className={classes.signupBtn} color='primary' text='Sign Up' onClick={actionSignUp}/>
               </div>
             
-        </div>
+        </form>
 
     </div>
   );
@@ -185,8 +177,7 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        // aria-describedby="simple-modal-description"
+        aria-labelledby="Signup modal"
       >
         {body}
       </Modal>

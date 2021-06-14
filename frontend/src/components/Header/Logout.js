@@ -7,7 +7,6 @@ import ButtonLarge from '../utils/button/Button';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 
-
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
@@ -81,19 +80,3 @@ export default function Logout({ userConnected }) {
     </div>
   );
 }
-
-
-
-
-
-
-// const requestOptions = {
-//   method: 'PATCH',
-//   headers: { 'Content-Type': 'application/json' },
-//   body: JSON.stringify(body)
-//   // body: JSON.stringify({firstName : userFirstName})
-// };
-// const putUserById = () => fetch('http://localhost:5000/Accounts/' + id, requestOptions)
-//   .then(response => response.json())
-//   // .then(data => setUserFirstName(data.firstName));
-//   putUserById(id);

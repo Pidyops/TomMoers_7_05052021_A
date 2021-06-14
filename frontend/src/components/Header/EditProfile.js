@@ -40,45 +40,19 @@ export default function EditProfile({ userConnected, anchorClose, onPostCreated 
   const [userFirstName, setUserFirstName] = useState('')
   const [userLastName, setUserLastName] = useState('')
   const [userEmail, setUserEmail] = useState('')
-  // const [userImage, setUserImage] = useState('')
 
   let id= sessionStorage.getItem('userConnectedId')
-  // let jwt = sessionStorage.getItem('jwt')
-  // const myHeader  = new Headers({})
-
-  // useEffect (() => {
-  //   myHeader.append("jwt", jwt)
-  //   myHeader.append("id", id)
-  // }, [id, jwt])
-
-  // const myHeader  = new Headers({})
-  //   myHeader.append("jwt", sessionStorage.jwt)
-  //   myHeader.append("id", sessionStorage.userConnectedId)
-
 
   const fetchSingleUser = () => fetch('http://localhost:4000/auth//user' , {
     method: 'GET',
     headers: { 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')}
   })
   .then(singleUser => singleUser.json())
-  // .then(data => console.log('data', data))
   .then((singleUser) => {
-    // console.log({singleUser})
     setUserFirstName(singleUser.first_name)
     setUserLastName(singleUser.last_name)
     setUserEmail(singleUser.email)
-  //     setUserImage(data.image)
   })
-
-    // useEffect(() => {
-    //   fetchSingleUser();
-    // }, []);
-
-
-    // console.log(userFirstName)
-    // console.log(userLastName)
-    // console.log(userEmail)
-    // console.log(userImage)
     
     // API
     // PATCH user by id ______________________________________________________________
@@ -93,9 +67,6 @@ export default function EditProfile({ userConnected, anchorClose, onPostCreated 
       if (userConnected.email !== userEmail) {
         body.email = userEmail
       }
-      // if (userConnected.image !== userImage) {
-      //   body.image = userImage
-      // }
 
       console.log({body})
 
@@ -103,11 +74,9 @@ export default function EditProfile({ userConnected, anchorClose, onPostCreated 
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId') },
         body: JSON.stringify(body)
-        // body: JSON.stringify({firstName : userFirstName})
       };
       const putUserById = () => fetch('http://localhost:4000/auth/userPatch', requestOptions)
         .then(response => response.json())
-        // .then(data => setUserFirstName(data.firstName));
         .then(()=> {
           handleClose();
           anchorClose()

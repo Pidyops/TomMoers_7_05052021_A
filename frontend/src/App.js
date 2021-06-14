@@ -35,6 +35,7 @@ const App = () => {
     password: '',
     password2: ''
   });
+
   
   const [userConnected, setUserConnected] = useState('')
 

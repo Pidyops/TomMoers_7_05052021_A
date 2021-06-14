@@ -39,7 +39,6 @@ export default function DeleteAccount({ userConnected }) {
 
   const deleteUserById = async () => {
     try {
-        // console.log(id)
         await fetch('http://localhost:4000/auth/userDelete', {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')}
@@ -76,7 +75,6 @@ export default function DeleteAccount({ userConnected }) {
         }}
       >
         <Fade in={open}>
-          {/* <div className={classes.paper + ' ' + 'avatar-modal'}> */}
           <div className={clsx(classes.paper, 'avatar-modal' )}>
             <h2 id="simple-modal-title">Delete Account</h2>
             <hr className="avatar-modal--hr"/>
@@ -86,10 +84,9 @@ export default function DeleteAccount({ userConnected }) {
             Are you sure you want to delete your account?
             </div>
                       
-                  
-                  <div className="avatar-modal__form--btn">
-                    <ButtonLarge variant='outlined' color='error' text='Delete account' onClick={deleteUserById}/>
-                  </div>
+              <div className="avatar-modal__form--btn">
+                <ButtonLarge variant='outlined' color='error' text='Delete account' onClick={deleteUserById}/>
+              </div>
                   
             </form>
         </div>

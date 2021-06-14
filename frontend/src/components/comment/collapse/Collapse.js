@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './collapse.scss'
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -7,21 +8,9 @@ import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Like from '../../utils/like/Like'
-import './collapse.scss'
-import Comment from '../Comment'
-
-
+import Comment from '../comment/Comment'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    // maxWidth: 345,
-    // justifyContent: "space-between",
-
-  },
-//   media: {
-//     height: 0,
-//     paddingTop: '56.25%', // 16:9
-//   },
   expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
@@ -32,15 +21,12 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: 'rotate(180deg)',
   },
-//   avatar: {
-//     backgroundColor: red[500],
-//   },
 }));
 
 export default function RecipeReviewCard(props) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
 
+  const [expanded, setExpanded] = React.useState(false);
   const [comments, setComments] = useState ('')
 
   const getComments = () => {
@@ -61,26 +47,15 @@ export default function RecipeReviewCard(props) {
     getComments()
   };
 
-
-  
-  
-  // const storage = 
-  // props.post.comments
-
-  // console.log(props.post.comments)
   let numberOfComments = 0
 
   if( props.post.comments_count) {
     numberOfComments = props.post.comments_count
   }
 
-
-
-
   return (
     <Card className={clsx(classes.root, 'collapse')}
         elevation={0}
-    
     >
       
       <CardActions className='collapse__action'>
@@ -100,10 +75,7 @@ export default function RecipeReviewCard(props) {
                 >
                 <ExpandMoreIcon />
             </IconButton>
-               
         </div>
-        
-        
         
         </CardActions>
 

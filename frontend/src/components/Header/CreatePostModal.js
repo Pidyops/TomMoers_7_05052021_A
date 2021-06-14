@@ -54,12 +54,8 @@ export default function CreatePostModal({
   const [imageTest, setImageTest] = useState('')
 
   const onDrop = picture => {
-    // setPictures([...pictures, picture]);
     setImageTest(picture[0]);
   }
-
-  // console.log('pictures',pictures)
-  // console.log({imageTest})  
 
   const handleSubmitPost = async (e) => {
     e.preventDefault();
@@ -68,27 +64,16 @@ export default function CreatePostModal({
     formData.append("image", imageTest);
     formData.append("description", description);
     formData.append("userId", userId);
-
-    // if (title == '') {
-    //   setTitleError(true)
-    // }
-    // if (details == '') {
-    //   setDetailsError(true)
-    // }
-    // if (title && details)
-
-
       
     fetch("http://localhost:4000/feed/post",{
       method: 'POST',
       headers: { 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')},
       body: formData
     }).then(res => res.json())
-    // alert(JSON.stringify(res))
 
     .then((res) => {
       console.log(res)
-      onPostCreated(); //refreshPosts()
+      onPostCreated();
       handleClose();
       setDescription('');
       setImageTest('')
@@ -135,7 +120,6 @@ export default function CreatePostModal({
               />
 
               <ImageUploader
-                // {...props}
                 withIcon={true}
                 buttonText={'upload Image'}
                 onChange={onDrop}
@@ -161,25 +145,3 @@ export default function CreatePostModal({
     </div>
   );
 }
-
-
-
-
-
-
-// import {useForm} from 'react-hook-form'
-
-  // const {register, handleSubmit } = useForm()
-
-  // const onSubmit = async (data) => {
-  //   const formData = new FormData()
-  //   formData.append('picture', data.picture[0])
-
-  //   const res = await fetch("http://localhost:4000/feed/post",{
-  //     method: 'POST',
-  //     body: formData
-  //   }).then(res => res.json())
-  //   alert(JSON.stringify(res))
-  // }
-
-

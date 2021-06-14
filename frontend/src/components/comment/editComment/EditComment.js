@@ -5,9 +5,6 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Button from '@material-ui/core/Button';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import ImageUploader from "react-images-upload";
-import './modalEditPost.scss'
-
 import clsx from 'clsx';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
@@ -36,77 +33,64 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function ModalEditPost({
-   post, refreshPosts
+export default function EditComment({
+   c, refreshPosts, getComments
 }) {
-
+  // console.log(image)
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
     setOpen(true);
-    fetchSinglePost(post.id);
+    fetchSingleComment();
   };
-
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const [imageTest, setImageTest] = useState('')
-
-  const onDrop = picture => {
-    setImageTest(picture[0]);
-  }
-
-
-  const [postDesc, setPostDesc] = useState('')
+  const [commentDesc, setCommentDesc] = useState('')
 
 
   // FETCH
   // GET single Post
-
-    const fetchSinglePost = () => fetch('http://localhost:4000/feed/post/' + post.id, {
+    const fetchSingleComment = () => fetch('http://localhost:4000/feed/comment/' + c.id, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')}
     })
-    .then(singlePost => singlePost.json())
-    .then((singlePost) => {
-      // console.log({singlePost})
-      setPostDesc(singlePost.description)
-    })
+    .then(singleComment => singleComment.json())
+    // .then(data => console.log('data', data))
+    .then((singleComment) => {
+      console.log({singleComment})
+      setCommentDesc(singleComment.description)
 
+    })
     
     // API
     // PATCH user by id ______________________________________________________________
+
     const savePostInformation = (e) => {
       e.preventDefault();
-      console.log('save post information')
 
-      console.log('imageTest: ',imageTest)
-      console.log('postDesc', postDesc)
-
-      const formData = new FormData();
-      formData.append("image", imageTest);
-      formData.append("description", postDesc);
+      let body= {desc: commentDesc}
+      console.log('body', body)
 
       const requestOptions = {
         method: 'PATCH',
-        headers: { 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')},
-        body: formData
+        headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')},
+        body: JSON.stringify(body)
       };
-      const putPostById = () => fetch('http://localhost:4000/feed/post/' + post.id, requestOptions)
+      const putCommentsById = () => fetch('http://localhost:4000/feed/comment/' + c.id, requestOptions)
         .then(res => res.json())
         .then(data => console.log(data))
         .then(()=> {
           handleClose()
           refreshPosts()
+          getComments()
         })
 
-        putPostById(post.id);
-        
+        putCommentsById();
     }
-
 
 
   return (
@@ -130,23 +114,15 @@ export default function ModalEditPost({
           <div className={clsx(classes.paper, 'create-post' )}>
           
             <form noValidate autoComplete="off">
-              <h2 id="transition-modal-title">Edit your post</h2>
+              <h2 id="transition-modal-title">Edit your comment</h2>
               <hr className="create-post--hr"/>
               <TextareaAutosize
                 className={classes.textArea}
                 aria-label="empty textarea to write your post"
                 rowsMin={4}
                 placeholder="Write you post"
-                value={postDesc}
-                onChange={(e) => setPostDesc(e.target.value)}
-              />
-              <ImageUploader
-                withIcon={true}
-                buttonText={'Replace the actual image?'}
-                onChange={onDrop}
-                imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-                maxFileSize={5242880}
-                withPreview={true}
+                value={commentDesc}
+                onChange={(e) => setCommentDesc(e.target.value)}
               />
               
               <Button
@@ -172,20 +148,3 @@ export default function ModalEditPost({
 
 
 
-
-
-
-
-
-  // FETCH
-  // GET single comment
-  // const fetchSingleComment = (post) => getPost(post) //res is what we get
-  //   .then(data => {
-
-  //     // console.log(data)
-  //     // setPostId(post.id)
-  //     setPostDesc(data.description)
-  //     setPostImage(data.image)
-
-  //   })
-  

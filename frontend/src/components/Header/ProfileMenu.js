@@ -63,14 +63,6 @@ export default function ProfileMenu({authValues, setAuthValues, userConnected, o
         onClick={handleClick}
       />
 
-      
-        {/* <AvatarModal
-            aria-controls="customized-menu"
-            aria-haspopup="true"
-            variant="contained"
-            color="primary"
-            onClick={handleClick}
-        /> */}
       <StyledMenu
         id="customized-menu"
         anchorEl={anchorEl}
@@ -112,8 +104,6 @@ export default function ProfileMenu({authValues, setAuthValues, userConnected, o
                 userConnected={userConnected}
             />
         </StyledMenuItem>
-
-
 
       </StyledMenu>
     </div>

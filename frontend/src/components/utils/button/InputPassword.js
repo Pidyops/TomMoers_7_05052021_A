@@ -10,19 +10,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 const useStyles = makeStyles((theme) => ({
-//   root: {
-//     display: 'flex',
-//     flexWrap: 'wrap',
-//   },
-//   margin: {
-//     margin: theme.spacing(1),
-//   },
-//   withoutLabel: {
-//     marginTop: theme.spacing(3),
-//   },
-//   textField: {
-//     width: '25ch',
-//   },
+
 }));
 
 export default function InputPassword({authValues, handleAuthChange, 
@@ -31,13 +19,6 @@ export default function InputPassword({authValues, handleAuthChange,
   const [values, setValues] = React.useState({
     showPassword: false,
   });
-
-  // console.log(authValues)
-  // console.log(authValues.password2)
-
-  // const handleChange = (prop) => (event) => {
-  //   setValues({ ...values, [prop]: event.target.value });
-  // };
 
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
@@ -52,11 +33,12 @@ export default function InputPassword({authValues, handleAuthChange,
       <div>
         <FormControl 
             className={clsx(classes.margin, classes.textField, 'signin__wrapper__right__form--item')} 
-            variant="outlined" {...restProps} fullWidth={true}
+            variant="outlined"  fullWidth={true}
             margin='dense'
         >
           <InputLabel htmlFor={htmlFor}>{text}</InputLabel>
           <OutlinedInput
+            autoComplete="off"
             
             id={id}
             name={name}
@@ -75,7 +57,7 @@ export default function InputPassword({authValues, handleAuthChange,
                 </IconButton>
               </InputAdornment>
             }
-            // labelwidth='true'
+
           />
         </FormControl>
 
@@ -83,46 +65,3 @@ export default function InputPassword({authValues, handleAuthChange,
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React from 'react';
-// import { makeStyles } from '@material-ui/core/styles';
-// import TextField from '@material-ui/core/TextField';
-
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-
-//   },
-// }));
-
-// export default function TextFieldsOutlined({
-//     label, id, type, name, placeholder, 
-//     authValues, handleAuthChange
-// }) {
-//   const classes = useStyles();
-//   console.log(authValues)
-
-//   return (
-//     <TextField 
-//         variant="outlined" size='small'
-        
-//         label={label} id={id} 
-//         type={type} name={name}
-//         placeholder={placeholder}
-//         value={authValues.firstName} 
-//         onChange={handleAuthChange}
-//     />
-//   );
-// }

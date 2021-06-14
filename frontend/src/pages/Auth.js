@@ -2,8 +2,6 @@ import SignIn from '../components/signIn/SignIn'
 
 const Auth = ({authValues, setAuthValues, setUserConnected, userConnected}) => {
 
-
-
     return (
         <div>
             <SignIn 

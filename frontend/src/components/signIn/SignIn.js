@@ -1,14 +1,13 @@
+import { useState, useEffect } from 'react';
 import './signin.scss'
+import 'react-toastify/dist/ReactToastify.css'
 import { useHistory } from 'react-router-dom';
 import ButtonLarge from '../utils/button/Button';
 import Signup from '../Signup/Signup';
 import { TextField } from '@material-ui/core';
 import InputPassword from '../utils/button/InputPassword';
-import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 import Toast from '../utils/toast/Toast';
-// import ModalAvatar from '../Header/ModalAvatar'
 
 
 const Signin = ({ authValues, setAuthValues, userConnected, setUserConnected}) => {
@@ -70,14 +69,8 @@ const Signin = ({ authValues, setAuthValues, userConnected, setUserConnected}) =
                     } else {
                         setErrorMessage(res)
                     }
-                    
                 }
-                
             })
-
-
-
-
     }
 
 
@@ -86,7 +79,6 @@ const Signin = ({ authValues, setAuthValues, userConnected, setUserConnected}) =
             toast.error(errorMessage, {className:'toast--error'} )
             setErrorMessage('')
         }
-
 
     }, [errorMessage])
 
@@ -109,7 +101,6 @@ const Signin = ({ authValues, setAuthValues, userConnected, setUserConnected}) =
 
                 <div className="signin__wrapper__right">
                     <form action="" className="signin__wrapper__right__form">
-                    {/* <form action="" className="auth__form" onSubmit={actionAuth} > */}
 
                         <TextField
                             className="signin__wrapper__right__form--item form__inputs--input"
@@ -137,7 +128,7 @@ const Signin = ({ authValues, setAuthValues, userConnected, setUserConnected}) =
                             <ButtonLarge fullwidth='fullwidth'  color='primary' text='Sign In' className="signin__wrapper__right__form--btn" onClick={actionSignIn}/>
                         </div>
                         
-                        <a className="signin__wrapper__right__form--forgot" href='top'>Forgot your password?</a>
+                        <a className="signin__wrapper__right__form--forgot" href="mailto:account@groupomania.com">Forgot your password?</a>
 
                         <hr className="signin__wrapper__right__form--hr"/>
 
