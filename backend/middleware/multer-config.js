@@ -1,5 +1,4 @@
-
-const multer = require('multer'); //import
+const multer = require('multer');
 
 const MIME_TYPE = {
     'image/jpg' : 'jpg',
@@ -9,20 +8,16 @@ const MIME_TYPE = {
 
 const storage = multer.diskStorage({
     
-    destination: (req, file, callback) => { // where to store
-        callback(null, "images"); // call it and pass 2 arguments (error, file)
+    destination: (req, file, callback) => { 
+        callback(null, "images"); 
     },
-    filename: (req, file, callback) => { //file name function
-        // console.log('multer: file',file)
-        const name = file.originalname.split(' ').join('_'); // keep the original name without any space error
+    filename: (req, file, callback) => { 
+        const name = file.originalname.split(' ').join('_');
         const stringName = JSON.stringify(name);
-        const extension = MIME_TYPE[file.mimetype]; // file extension
-        // callback(null, name + Date.now() + '.' + extension); //say how we name the image. (we add date to avoid doublon)
-        callback(null, Date.now() + '--' + name); //say how we name the image. (we add date to avoid doublon)
-        // callback(null, name);
-        console.log('multer storage')
+        const extension = MIME_TYPE[file.mimetype]; 
+        callback(null, Date.now() + '--' + name); 
     }
 })
 
 
-module.exports = multer({storage: storage}).single('image');   //({key: name of the const}) one file
+module.exports = multer({storage: storage}).single('image'); 

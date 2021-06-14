@@ -12,38 +12,31 @@ const db = mysql.createConnection({
 
 
 exports.register = (req, res) => {
-    console.log(req.body);
     let responseMessage = ''
-
     const {firstName, lastName, email, password, password2 } = req.body;
 
     // Check if the email exist in db
     db.query('SELECT email FROM users WHERE email = ?', [email], async (error, results) => {
         if(error) {
-            console.log('sql error',error)
+            // console.log('sql error',error)
         }
 
         if(results.length > 0 ) {
-            console.log('email already in use')
             return res.status(403).json({message: 'email already in use'})
             
         } else if(password !== password2) {
-            console.log('password do not match')
             return res.status(403).json({message: 'Password not match'})
         }
 
         // Hash the pw
         let hashedPassword = await bcrypt.hash(password, 8)
-        console.log('password hashed', hashedPassword)
 
         // Insert user in db
         db.query('INSERT INTO users SET ?', {first_name: firstName, last_name: lastName, email: email, password: hashedPassword}, (error, results) => {
             if(error) {
-                console.log({error});
+                // console.log({error});
             } else {
                 responseMessage = 'User registered'
-                // return res.status(201).json({message: 'User registered'})
-                console.log('register: user saved in db', results)
             }
         })
 
@@ -54,20 +47,15 @@ exports.register = (req, res) => {
               });
 
             const userConnected = result[0]
-            console.log(result)
 
-            console.log("The token is sent: " + token);
             res.json({ token, hashedPassword, userConnected, responseMessage })
         });
     });
 } 
 
 exports.login = async (req, res) => {
-    console.log('login',req.body.password)
     try {
       const { email, password } = req.body;
-      console.log(email)
-      console.log(password)
   
       if( !email || !password ) {
         console.log('login: Please provide an email and password')
