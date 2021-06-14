@@ -36,7 +36,6 @@ export default function DeleteAccount({ userConnected }) {
     setOpen(false);
   };
 
-  let id= sessionStorage.getItem('userConnectedId')
 
   const deleteUserById = async () => {
     try {

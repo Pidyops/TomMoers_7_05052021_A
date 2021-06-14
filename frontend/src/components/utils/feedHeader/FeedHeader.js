@@ -1,4 +1,4 @@
-import { Avatar } from '@material-ui/core'
+// import { Avatar } from '@material-ui/core'
 import { DeleteOutlined, EditOutlined } from '@material-ui/icons'
 import moment from 'moment';
 import './feedHeader.scss'
@@ -19,7 +19,7 @@ export default function HeaderFeed({arial, id, date, c}) {
         <div className="header-feed">
 
         <div className="header-feed__left">
-            <Avatar aria-label={arial} className='header-feed__left'/>
+            {/* <Avatar aria-label={arial} className='header-feed__left'/> */}
             
             <div className="header-feed__center">
                 <div className="header-feed__center--name">{c.comment_author}

@@ -1,10 +1,10 @@
 import './commentPost.scss'
 import React, { useState } from 'react'
-import { Avatar, Button, TextareaAutosize } from '@material-ui/core'
+import { Button, TextareaAutosize } from '@material-ui/core'
 import FeedHeader from '../../utils/feedHeader/FeedHeader'
 import FeedBody from '../../utils/feedBody/FeedBody'
 // import './commentCard.scss'
-import Pagination from '../../utils/Pagination/Pagination'
+// import Pagination from '../../utils/Pagination/Pagination'
 
 
 export default function CommentPost({ post, refreshPosts, comments, getComments}) {

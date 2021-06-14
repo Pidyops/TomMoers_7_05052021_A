@@ -1,33 +1,33 @@
 import Card from '@material-ui/core/Card';
-import { Avatar} from '@material-ui/core';
+// import { Avatar} from '@material-ui/core';
 import { DeleteOutlined } from '@material-ui/icons';
-import { makeStyles } from '@material-ui/core/styles';
-import { red } from '@material-ui/core/colors';
+// import { makeStyles } from '@material-ui/core/styles';
+// import { red } from '@material-ui/core/colors';
 import './card.scss'
 import ModalEditPost from './modalEditPost/modalEditPost';
-import Collapse from '../../components/comment/collapse/Collapse'
+import Collapse from '../../components/comment/collapse/Collapse';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
 
-const useStyles = makeStyles((theme) => ({
+// const useStyles = makeStyles((theme) => ({
 
-    expand: {
-        transform: 'rotate(0deg)',
-        marginLeft: 'auto',
-        transition: theme.transitions.create('transform', {
-          duration: theme.transitions.duration.shortest,
-        }),
-    },
-    expandOpen: {
-        transform: 'rotate(180deg)',
-    },
-    avatar: {
-        backgroundColor: red[500],
-    },
-  }));
+//     expand: {
+//         transform: 'rotate(0deg)',
+//         marginLeft: 'auto',
+//         transition: theme.transitions.create('transform', {
+//           duration: theme.transitions.duration.shortest,
+//         }),
+//     },
+//     expandOpen: {
+//         transform: 'rotate(180deg)',
+//     },
+//     avatar: {
+//         backgroundColor: red[500],
+//     },
+//   }));
 
 const PostCard = ({ post, handleDeletePost, image, setImage, userConnected, refreshPosts }) => {
-    const classes = useStyles();
+    // const classes = useStyles();
 
     const dateSQL = post.publish_date
     const timeFromNow = moment.unix(dateSQL).fromNow();

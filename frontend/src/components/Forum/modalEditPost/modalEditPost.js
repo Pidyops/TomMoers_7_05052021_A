@@ -5,9 +5,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Button from '@material-ui/core/Button';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import { EditOutlined, PhotoCamera } from '@material-ui/icons';
 import './modalEditPost.scss'
-import { IconButton } from '@material-ui/core';
 
 import clsx from 'clsx';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
@@ -59,7 +57,7 @@ export default function ModalEditPost({
 
 
   const [postDesc, setPostDesc] = useState('')
-  const [postImage, setPostImage] = useState('')
+  // const [postImage, setPostImage] = useState('')
 
   // FETCH
   // GET single Post
@@ -149,17 +147,7 @@ export default function ModalEditPost({
                 onChange={(e) => setPostDesc(e.target.value)}
               />
               {/* <UploadImage post={post} setPost={setPost} image={image} setImage={setImage} /> */}
-              <div>
-                <input
-                  accept="image/*" className={classes.input} id="icon-button-file" type="file"
-                  value={postImage} onChange={(e) => setPostImage(e.target.value)}
-                />
-                <label htmlFor="icon-button-file">
-                  <IconButton color="primary" aria-label="upload picture" component="span">
-                    <PhotoCamera />
-                  </IconButton>
-                </label>
-              </div>
+              
               <Button
                 type='submit'
                 color='secondary'
