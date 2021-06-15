@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Button, TextareaAutosize } from '@material-ui/core'
 import FeedHeader from '../../utils/feedHeader/FeedHeader'
 import FeedBody from '../../utils/feedBody/FeedBody'
+import Avatar from '@material-ui/core/Avatar';
 
 export default function CommentPost({ post, refreshPosts, comments, getComments}) {
 
@@ -35,6 +36,7 @@ export default function CommentPost({ post, refreshPosts, comments, getComments}
     return (
         <div className='comment-post--card'>
             <div className='comment-post'>
+                <Avatar></Avatar>
                 <div className='comment-post__right'>
                     <TextareaAutosize 
                         className='comment-post__right--comment'

@@ -89,7 +89,7 @@ const Signin = ({ authValues, setAuthValues, userConnected, setUserConnected}) =
 
             <div className="signin__wrapper">
                 <div className="signin__wrapper__left">
-                    <img src="/assets/logo.png" alt="logo" className="signin__wrapper__left--logo"/>
+                    <img src="/assets/logo-grey.jpg" alt="logo" className="signin__wrapper__left--logo"/>
                     <div className="signin__wrapper__left--desc">
                         With Grouponamina Social Media, keep in touch with your collegues
                     </div>

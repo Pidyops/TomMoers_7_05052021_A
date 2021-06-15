@@ -68,35 +68,3 @@ const App = () => {
 }
 
 export default App
-
-
-
-
-
-
-  // useEffect(() => {
-  //   if (sessionStorage.getItem('jwt')){
-  //     console.log('super token')
-
-  //     // Get token from db and check if same as the ls
-  //     // => user ID
-
-  //     // set userConnected
-
-
-
-  //   } else {
-  //     console.log('need token')
-  //   }
-  // },[]);
-
-  // console.log('userConnected', userConnected)
-
-  // const fetchUserConnected = (userConnectedId) => getUser(userConnectedId) //res is what we get
-  //   .then(data => setUserConnected(data)) 
-
-  // useEffect(() => {
-  //   fetchUserConnected(userConnectedId)
-  // }, []);
-
-  // console.log(userConnected)

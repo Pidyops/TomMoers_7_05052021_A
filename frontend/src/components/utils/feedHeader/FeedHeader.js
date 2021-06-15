@@ -2,6 +2,7 @@ import './feedHeader.scss'
 import { DeleteOutlined } from '@material-ui/icons'
 import moment from 'moment';
 import EditComment from '../../comment/editComment/EditComment';
+import Avatar from '@material-ui/core/Avatar';
 
 export default function HeaderFeed({ c, refreshPosts, getComments}) {
     const userConnected = sessionStorage.getItem('userConnectedId')
@@ -33,6 +34,7 @@ export default function HeaderFeed({ c, refreshPosts, getComments}) {
     return (
         <div className="header-feed">
         <div className="header-feed__left">
+            <Avatar></Avatar>
             <div className="header-feed__center">
                 <div className="header-feed__center--name">{c.comment_author}
                 </div>

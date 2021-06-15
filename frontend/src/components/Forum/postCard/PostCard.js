@@ -5,6 +5,7 @@ import { DeleteOutlined } from '@material-ui/icons';
 import ModalEditPost from '../modalEditPost/modalEditPost';
 import Collapse from '../../comment/collapse/Collapse';
 import moment from 'moment';
+import Avatar from '@material-ui/core/Avatar';
 
 const PostCard = ({ post, handleDeletePost, image, setImage, userConnected, refreshPosts }) => {
 
@@ -58,6 +59,7 @@ const PostCard = ({ post, handleDeletePost, image, setImage, userConnected, refr
         <Card className='card-item' elevation={3}>
             <div className="card-item__header">
                 <div className="card-item__header__left">
+                    <Avatar></Avatar>
                     <div className="card-item__header__center">
                     <div className="card-item__header__center--name"> {post.users_concat}</div>
                     <div className="card-item__header__center--date">{timeFromNow}</div>
