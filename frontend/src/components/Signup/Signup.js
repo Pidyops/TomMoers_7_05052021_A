@@ -50,14 +50,14 @@ export default function SimpleModal({authValues, handleAuthChange, setAuthValues
     })
 
     .then((res) => {
-      console.log('first then')
+
       return res.json()})
 
     .then((res) => {
-      console.log('2nd then: res: ',res)
+
 
       if(res.token) {
-        console.log('2nd then, if res:', res)
+
         sessionStorage.setItem('jwt', res.token)
         sessionStorage.setItem('userConnectedId', res.userConnected.id)
       

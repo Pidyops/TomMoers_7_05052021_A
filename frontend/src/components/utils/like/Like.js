@@ -39,13 +39,10 @@ export default function Like(props) {
         let like2Post = 0
 
         if(isLiked === true) {
-            console.log('1')
             like2Post = 1
         } else if (isDisliked === true) {
-            console.log('2')
             like2Post = -1
         } else {
-            console.log('3')
             like2Post = 0
         }
 
@@ -57,7 +54,6 @@ export default function Like(props) {
                 like: like2Post
             }
         
-            console.log(body)
         
             fetch('http://localhost:4000/feed/likes', {
             method: 'POST',

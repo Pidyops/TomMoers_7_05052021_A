@@ -14,7 +14,7 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
     const [posts, setPosts] = useState('')
 
 
-    console.log('userConnectedId: ', userConnectedId)
+    // console.log('userConnectedId: ', userConnectedId)
     const refreshPosts = () => fetch('http://localhost:4000/feed/posts', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')}
@@ -22,7 +22,7 @@ export const Forum = ({ authValues, setAuthValues, userConnected }) => {
         .then(res => res.json())
         .then((res) => {
             setPosts(res)
-            console.log('posts', res)
+            // console.log('posts', res)
         })
 
     useEffect(() => {

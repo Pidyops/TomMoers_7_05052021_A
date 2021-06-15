@@ -17,7 +17,11 @@ const theme = createMuiTheme({
     // primary: {
     //   main: '#fefefe'
     // },
-    primary: blueGrey,
+    primary: {
+      light: blueGrey[600],
+      main: blueGrey[600],
+      dark: blueGrey[900]
+    },
     secondary: {
       light: teal[600],
       main: teal[700],

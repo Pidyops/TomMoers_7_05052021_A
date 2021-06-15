@@ -38,7 +38,7 @@ export default function RecipeReviewCard(props) {
         .then((res) => {
             setComments(res)
             // console.log(res)
-            console.log(res)
+
         })
     }
 

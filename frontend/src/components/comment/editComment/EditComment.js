@@ -61,7 +61,6 @@ export default function EditComment({
     .then(singleComment => singleComment.json())
     // .then(data => console.log('data', data))
     .then((singleComment) => {
-      console.log({singleComment})
       setCommentDesc(singleComment.description)
 
     })
@@ -73,7 +72,6 @@ export default function EditComment({
       e.preventDefault();
 
       let body= {desc: commentDesc}
-      console.log('body', body)
 
       const requestOptions = {
         method: 'PATCH',
@@ -82,7 +80,7 @@ export default function EditComment({
       };
       const putCommentsById = () => fetch('http://localhost:4000/feed/comment/' + c.id, requestOptions)
         .then(res => res.json())
-        .then(data => console.log(data))
+        // .then(data => console.log(data))
         .then(()=> {
           handleClose()
           refreshPosts()

@@ -21,7 +21,7 @@ export default function HeaderFeed({ c, refreshPosts, getComments}) {
                 headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')}
             })
             .then(res => res.json())
-            .then(data => console.log(data))
+            // .then(data => console.log(data))
             .then(() => {
                 refreshPosts()
                 getComments()

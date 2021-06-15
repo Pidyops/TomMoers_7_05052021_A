@@ -17,12 +17,10 @@ const PostCard = ({ post, handleDeletePost, image, setImage, userConnected, refr
 
     const readStatus = () => {
         if (post.read_status ===0 || post.read_status === undefined ) {
-            console.log('not read')
         } else if (post.read_status === 1) {
-            console.log('to read')
             setIsRead(true)
         } else {
-            console.log('status undefined -> not read')
+            // console.log('status undefined -> not read')
         }
     }
 
@@ -50,7 +48,7 @@ const PostCard = ({ post, handleDeletePost, image, setImage, userConnected, refr
             })
 
         } else {
-            console.log('message already set as seen', isRead)
+            // console.log('message already set as seen', isRead)
         }
     }
 

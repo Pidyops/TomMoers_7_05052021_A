@@ -44,7 +44,7 @@ export default function DeleteAccount({ userConnected }) {
             headers: { 'Content-Type': 'application/json', 'jwt': sessionStorage.getItem('jwt'), "id": sessionStorage.getItem('userConnectedId')}
         })
         .then(res => res.json())
-        .then(data => console.log(data))
+        // .then(data => console.log(data))
         .then(() => {
           sessionStorage.setItem('jwt', '')
           sessionStorage.setItem('userConnectedId', '')
@@ -85,7 +85,7 @@ export default function DeleteAccount({ userConnected }) {
             </div>
                       
               <div className="avatar-modal__form--btn">
-                <ButtonLarge variant='outlined' color='error' text='Delete account' onClick={deleteUserById}/>
+                <ButtonLarge  color='primary' text='Delete account' onClick={deleteUserById}/>
               </div>
                   
             </form>

@@ -9,7 +9,7 @@ const Header = ({ date, authValues, setAuthValues, description, setDescription, 
         <header className='header'>
 
             <div className="header__left">
-                <img src="/assets/logo.png" className="header-logo" alt="logo" />
+                <img src="/assets/logo.png" className="header-logo" alt="logo of Groupomania" />
             </div>
 
             <div className='header__right'>

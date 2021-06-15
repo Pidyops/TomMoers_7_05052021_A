@@ -68,7 +68,7 @@ export default function EditProfile({ userConnected, anchorClose, onPostCreated 
         body.email = userEmail
       }
 
-      console.log({body})
+      // console.log({body})
 
       const requestOptions = {
         method: 'PATCH',

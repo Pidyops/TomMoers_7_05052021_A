@@ -81,10 +81,10 @@ export default function ModalEditPost({
     // PATCH user by id ______________________________________________________________
     const savePostInformation = (e) => {
       e.preventDefault();
-      console.log('save post information')
+      // console.log('save post information')
 
-      console.log('imageTest: ',imageTest)
-      console.log('postDesc', postDesc)
+      // console.log('imageTest: ',imageTest)
+      // console.log('postDesc', postDesc)
 
       const formData = new FormData();
       formData.append("image", imageTest);
@@ -97,7 +97,7 @@ export default function ModalEditPost({
       };
       const putPostById = () => fetch('http://localhost:4000/feed/post/' + post.id, requestOptions)
         .then(res => res.json())
-        .then(data => console.log(data))
+        // .then(data => console.log(data))
         .then(()=> {
           handleClose()
           refreshPosts()

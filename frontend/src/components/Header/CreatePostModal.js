@@ -72,7 +72,6 @@ export default function CreatePostModal({
     }).then(res => res.json())
 
     .then((res) => {
-      console.log(res)
       onPostCreated();
       handleClose();
       setDescription('');
